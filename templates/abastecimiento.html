@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Abastecimiento</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background:
+                linear-gradient(rgba(20,30,60,0.15), rgba(60, 40, 20, 0.2)),
+                url("https://i.postimg.cc/zBq4wWCg/Gemini-Generated-Image-estpntestpntestp.png");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        * {
+            font-family: "Times New Roman", Times, serif !important;
+        }
+
+        .navbar-custom {
+            background-color: #F2E124 !important;
+        }
+
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: #000 !important;
+        }
+
+        .saludo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .saludo-container h1 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .contenido {
+            max-width: 900px;
+            margin-left: 50px;
+        }
+
+        .card-custom {
+            background: rgba(255,255,255,0.45);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.12);
+            width: 85%;
+        }
+
+        .card-custom h5,
+        .card-custom p {
+            color: #000;
+            font-size: 18px;
+        }
+
+        .logos-fijos {
+            position: fixed;
+            top: 150px;
+            right: 1cm;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 2000;
+        }
+
+        .logo-card {
+            width: 130px;
+            height: 130px;
+            background: rgba(255,255,255,0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-card img {
+            max-width: 110%;
+            max-height: 110%;
+        }
+
+        .logo-grande img {
+            transform: scale(1.14);
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom px-4">
+    <div class="container-fluid">
+
+        <a class="navbar-brand fw-bold"
+           href="{{ url_for('dashboard', usuario=usuario, empresa=empresa) }}">
+            {{ empresa | upper }}
+        </a>
+
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="{{ url_for('abastecimiento', seccion='campanas') }}">Campañas</a>
+            <a class="nav-link" href="{{ url_for('abastecimiento', seccion='clientes') }}">Clientes</a>
+            <a class="nav-link" href="{{ url_for('abastecimiento', seccion='ventas') }}">Ventas</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid mt-4">
+
+    <div class="saludo-container">
+        <h1>{{ saludo }}, {{ usuario }}</h1>
+    </div>
+
+    <div class="contenido">
+
+        {% if seccion == "campanas" %}
+
+            <div class="card-custom">
+                <h5>Campañas activas</h5>
+                <p>Seguimiento de campañas vigentes y resultados obtenidos.</p>
+            </div>
+
+        {% elif seccion == "clientes" %}
+
+            <div class="card-custom">
+                <h5>Gestión de clientes</h5>
+                <p>Análisis de comportamiento, segmentación y fidelización.</p>
+            </div>
+
+        {% elif seccion == "ventas" %}
+
+            <div class="card-custom">
+                <h5>Desempeño comercial</h5>
+                <p>Evaluación de ventas, cumplimiento de metas y tendencias.</p>
+            </div>
+
+        {% else %}
+
+            {% for n in noticias %}
+
+                {% if loop.first %}
+                <div class="card-custom">
+                    <h3>Noticias</h3>
+                    <hr>
+                    <h5>{{ n.titulo }}</h5>
+                    <p>{{ n.texto }}</p>
+                </div>
+                {% else %}
+                <div class="card-custom">
+                    <h5>{{ n.titulo }}</h5>
+                    <p>{{ n.texto }}</p>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="logos-fijos">
+    {% for url in logos or [] %}
+        <div class="logo-card {% if loop.index == 2 %}logo-grande{% endif %}">
+            <img src="{{ url }}">
+        </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

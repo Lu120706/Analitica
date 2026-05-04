@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Informes{% endblock %}
+
+{% block content %}
+
+<h3>Módulo de Informes</h3>
+
+<div class="mt-4">
+
+    <a class="btn btn-dark mb-2" href="{{ url_for('informe_ventas') }}">
+        Informe de Ventas
+    </a>
+
+    <a class="btn btn-dark mb-2" href="{{ url_for('balance_lineas') }}">
+        Balance de Líneas
+    </a>
+
+    <a class="btn btn-dark mb-2" href="{{ url_for('estado_financiero') }}">
+        Estado Financiero
+    </a>
+
+</div>
+
+{% endblock %}
