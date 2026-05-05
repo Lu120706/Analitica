@@ -204,16 +204,6 @@ def tesoreria():
         noticias= noticias_tesoreria
     )
 
-@app.route('/informes')
-def informes():
-    usuario, empresa, config = get_context()
-
-    return render_template(
-        'informes.html',
-        empresa=empresa,
-        usuario=usuario
-    )
-
 @app.route('/informe/ventas')
 def informe_ventas():
     usuario, empresa, config = get_context()

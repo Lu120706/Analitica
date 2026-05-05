@@ -1,0 +1,45 @@
+/* informes.css */
+
+.informe-container {
+    position: relative;
+    width: 60%;
+    height: 710px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.55);
+}
+
+.informe-container iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: auto;
+    border: none;
+}
+
+/* fullscreen */
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    background: white;
+}
+
+.fullscreen iframe {
+    width: 100%;
+    height: 100%;
+}
+
+body.fullscreen-active .navbar {
+    display: none;
+}
+
+.btn-full {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
+}
