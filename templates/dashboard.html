@@ -112,6 +112,22 @@
             color: #000;
         }
 
+        /* Conf barra desplegable*/
+        .dropdown-menu {
+            background-color: #000 !important;
+        }
+
+        .dropdown-item {
+            color: #fff !important;
+        }
+
+        .dropdown-item:hover,
+        .dropdown-item:active,
+        .dropdown-item.active {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+
     </style>
 </head>
 
@@ -122,7 +138,6 @@
 
         <div class="d-flex align-items-center">
 
-            <!-- DROPDOWN INFORMES -->
             <div class="dropdown me-3">
 
                 <button class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown">
@@ -130,37 +145,18 @@
                 </button>
 
                 <ul class="dropdown-menu">
-
-                    <li>
-                        <a class="dropdown-item" href="{{ url_for('informe_ventas') }}">
-                            Ventas
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="{{ url_for('balance_lineas') }}">
-                            Balance de Líneas
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="{{ url_for('estado_financiero') }}">
-                            Estado Financiero
-                        </a>
-                    </li>
-
+                    <li><a class="dropdown-item" href="{{ url_for('informe_ventas') }}">Informe Ventas</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('balance_lineas') }}">Balance de Líneas</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('estado_financiero') }}">Informe Financiero</a></li>
                 </ul>
 
             </div>
-
-            <!-- EMPRESA -->
             <a href="{{ url_for('dashboard') }}" class="navbar-brand">
                 {{ empresa | upper }}
             </a>
 
         </div>
 
-        <!-- DERECHA -->
         <div class="d-flex align-items-center ms-auto">
 
             <div class="navbar-nav me-4">
@@ -180,7 +176,6 @@
     </div>
 </nav>
 
-<!-- CONTENIDO -->
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
@@ -214,7 +209,6 @@
 
 </div>
 
-<!-- LOGOS -->
 <div class="logos-fijos">
     {% for url in logos %}
         <div class="logo-card {% if loop.index == 2 %}logo-grande{% endif %}">

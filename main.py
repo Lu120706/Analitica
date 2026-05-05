@@ -206,19 +206,47 @@ def tesoreria():
 
 @app.route('/informes')
 def informes():
-    return render_template('informes.html')
+    usuario, empresa, config = get_context()
+
+    return render_template(
+        'informes.html',
+        empresa=empresa,
+        usuario=usuario
+    )
 
 @app.route('/informe/ventas')
 def informe_ventas():
-    return render_template('informe_ventas.html')
+    usuario, empresa, config = get_context()
+
+    return render_template(
+        'informe_ventas.html',
+        empresa=empresa,
+        usuario=usuario,
+        logos=config.get("logos", [])
+    )
 
 @app.route('/informe/balance')
 def balance_lineas():
-    return render_template('balance_lineas.html')
+    usuario, empresa, config = get_context()
+
+    return render_template(
+        'balance_lineas.html',
+        empresa=empresa,
+        usuario=usuario,
+        logos=config.get("logos", [])
+    )
+
 
 @app.route('/informe/financiero')
 def estado_financiero():
-    return render_template('estado_financiero.html')
+    usuario, empresa, config = get_context()
+
+    return render_template(
+        'informe_financiero.html',
+        empresa=empresa,
+        usuario=usuario,
+        logos=config.get("logos", [])
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
