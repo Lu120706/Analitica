@@ -33,24 +33,27 @@
         <h1>{{ saludo }}, {{ usuario }}</h1>
     </div>
 
-    <div class="card-custom">
-        <h5>Noticias</h5>
+    <div class="row">
 
-        <div class="row">
-            {% if noticias %}
-                {% for noticia in noticias %}
-                    <div class="col-12">
-                        <p>
-                            <strong>{{ noticia.titulo }}</strong><br>
-                            {{ noticia.texto }}
-                        </p>
+        {% if noticias_contabilidad %}
+            {% for noticia in noticias_contabilidad %}
+                <div class="col-12">
+                    <div class="card-custom mb-3">
+
+                        {% if loop.first %}
+                            <h5>Noticias</h5>
+                            <hr>
+                        {% endif %}
+
+                        <strong>{{ noticia.titulo }}</strong><br>
+                        {{ noticia.texto }}
+
                     </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-</div>
+    </div>
 
 <div class="logos-fijos">
     {% for url in logos or [] %}

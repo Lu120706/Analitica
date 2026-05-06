@@ -16,11 +16,12 @@
 }
 
 .card-custom {
-    background: rgba(255,255,255,0.45);
+    background: rgba(255, 255, 255, 0.45);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
 }
 
 .card-custom h5 {
@@ -30,4 +31,8 @@
 .card-custom p {
     color: #000;
     font-size: 18px;
+}
+
+.contenido-izquierda {
+    padding-left: 40px;
 }

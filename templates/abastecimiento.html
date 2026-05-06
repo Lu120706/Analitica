@@ -36,50 +36,27 @@
 
     <div class="contenido">
 
-        {% if seccion == "campanas" %}
+        {% set data = noticias_abastecimiento.get("abastecimiento", []) %}
 
-            <div class="card-custom">
-                <h5>Campañas activas</h5>
-                <p>Seguimiento de campañas vigentes y resultados obtenidos.</p>
-            </div>
+        {% for n in data %}
 
-        {% elif seccion == "clientes" %}
-
-            <div class="card-custom">
-                <h5>Gestión de clientes</h5>
-                <p>Análisis de comportamiento, segmentación y fidelización.</p>
-            </div>
-
-        {% elif seccion == "ventas" %}
-
-            <div class="card-custom">
-                <h5>Desempeño comercial</h5>
-                <p>Evaluación de ventas, cumplimiento de metas y tendencias.</p>
-            </div>
-
-        {% else %}
-
-            {% for n in noticias %}
+            <div class="card-custom mb-3">
 
                 {% if loop.first %}
-                <div class="card-custom">
-                    <h3>Noticias</h3>
+                    <h4>Noticias</h4>
                     <hr>
-                    <h5>{{ n.titulo }}</h5>
-                    <p>{{ n.texto }}</p>
-                </div>
-                {% else %}
-                <div class="card-custom">
-                    <h5>{{ n.titulo }}</h5>
-                    <p>{{ n.texto }}</p>
-                </div>
                 {% endif %}
 
-            {% endfor %}
+                <h5>{{ n.titulo }}</h5>
+                <p>{{ n.texto }}</p>
 
-        {% endif %}
+            </div>
+
+        {% endfor %}
 
     </div>
+
+</div>
 
 </div>
 

@@ -9,7 +9,9 @@ from data import (
     noticias_indicadores,
     noticias_abastecimiento,
     noticias_tic, 
-    noticias_tesoreria
+    noticias_tesoreria,
+    noticias_contraloria,
+    noticias_comercio
 )
 import pytz
 
@@ -110,7 +112,7 @@ def contabilidad():
         usuario=usuario,
         empresa=empresa,
         saludo=get_saludo(),
-        noticias=noticias_contabilidad,
+        noticias_contabilidad=noticias_contabilidad,
         logos=config.get("logos", [])
     )
 
@@ -124,7 +126,8 @@ def contraloria():
         usuario=usuario,
         empresa=empresa,
         saludo=get_saludo(),
-        logos=config.get("logos", [])
+        logos=config.get("logos", []),
+        noticias_contraloria=noticias_contraloria,
     )
 
 @app.route("/abastecimiento")
@@ -138,7 +141,7 @@ def abastecimiento():
         empresa=empresa,
         saludo=get_saludo(),
         logos=config.get("logos", []),
-        noticias=noticias_abastecimiento
+        noticias_abastecimiento=noticias_abastecimiento
     )
 
 
@@ -148,20 +151,15 @@ def indicadores():
     usuario, empresa, config = get_context()
     seccion = request.args.get("seccion")
 
-    if seccion in noticias_indicadores:
-        noticias = noticias_indicadores[seccion]
-    else:
-        noticias = noticias_indicadores["default"]
-
     return render_template(
         "indicadores.html",
         usuario=usuario,
         empresa=empresa,
         saludo=get_saludo(),
         logos=config.get("logos", []),
-        noticias=noticias
+        seccion=seccion,
+        noticias_indicadores=noticias_indicadores
     )
-
 
 @app.route("/tic")
 @login_required
@@ -174,7 +172,7 @@ def tic():
         empresa=empresa,
         saludo=get_saludo(),
         logos=config.get("logos", []),
-        noticias=noticias_tic
+        noticias_tic=noticias_tic
     )
 
 @app.route("/comercio")
@@ -187,7 +185,8 @@ def comercio():
         usuario=usuario,
         empresa=empresa,
         saludo=get_saludo(),
-        logos=config.get("logos", [])
+        logos=config.get("logos", []),
+        noticias_comercio=noticias_comercio
     )
 
 @app.route("/tesoreria")

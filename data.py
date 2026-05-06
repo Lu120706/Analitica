@@ -62,11 +62,13 @@ noticias_indicadores = {
 }
 
 #Noticias areas
-noticias_abastecimiento = [
-    {"titulo": "Nueva campaña comercial", "texto": "Se lanzaron campañas enfocadas en clientes estratégicos."},
-    {"titulo": "Actualización de clientes", "texto": "Se optimizó la segmentación para mejorar decisiones."},
-    {"titulo": "Resultados de ventas", "texto": "Incremento del 10% frente al mes anterior."}
-]
+noticias_abastecimiento = {
+    "abastecimiento": [
+        {"titulo": "Nueva campaña comercial", "texto": "Se lanzaron campañas enfocadas en clientes estratégicos."},
+        {"titulo": "Actualización de clientes", "texto": "Se optimizó la segmentación para mejorar decisiones."},
+        {"titulo": "Resultados de ventas", "texto": "Incremento del 10% frente al mes anterior."}
+    ]
+}
 
 noticias_contabilidad = [
     {"titulo": "Cierre mensual", "texto": "Fecha límite 30 abril"},
@@ -84,4 +86,24 @@ noticias_tesoreria = [
     {"titulo": "Flujo de caja actualizado", "texto": "Se actualizó el flujo de caja del mes."},
     {"titulo": "Pagos programados", "texto": "Se programaron pagos a proveedores."},
     {"titulo": "Conciliación bancaria", "texto": "Se está revisando la conciliación de bancos."}
+]
+
+noticias_comercio = [
+    {"titulo": "Campañas", "texto": "Seguimiento a campañas activas y resultados."},
+    {"titulo": "Clientes", "texto": "Segmentación y comportamiento de clientes."},
+    {"titulo": "Ventas", "texto": "Análisis de desempeño comercial."}
+]
+
+noticias_indicadores = {
+    "default": [
+        {"titulo": "Resumen ejecutivo", "texto": "Los indicadores reflejan estabilidad operativa con oportunidades de mejora en eficiencia."},
+        {"titulo": "Cumplimiento de metas", "texto": "El 87% de los objetivos estratégicos han sido alcanzados en el periodo actual."},
+        {"titulo": "Áreas críticas", "texto": "Se identifican oportunidades de mejora en tiempos de respuesta y procesos internos."},
+        {"titulo": "Proyección", "texto": "Se proyecta crecimiento positivo si se mantienen las condiciones actuales."}
+    ]
+}
+
+noticias_contraloria = [
+    {"titulo": "Control Interno", "texto": "Gestión de auditorías y control de procesos."},
+    {"titulo": "Riesgos", "texto": "Identificación y mitigación de riesgos."},
 ]

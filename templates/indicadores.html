@@ -37,61 +37,27 @@
 
     <div class="contenido-izquierda">
 
-        {% if seccion == "indicadores" %}
-            <div class="card-custom">
-                <h5>KPIs de desempeño</h5>
-                <p>Los indicadores estratégicos muestran cumplimiento del 95% en metas operativas.</p>
+        {% set data = noticias_indicadores.get(seccion, noticias_indicadores["default"]) %}
+
+        {% for item in data %}
+
+            <div class="card-custom mb-3">
+
+                {% if loop.first %}
+                    <h4 class="mb-2">Noticias</h4>
+                    <hr>
+                {% endif %}
+
+                <h5>{{ item.titulo }}</h5>
+                <p>{{ item.texto }}</p>
+
             </div>
 
-            <div class="card-custom">
-                <h5>Productividad por área</h5>
-                <p>El área comercial lidera con mayor volumen de gestión y cierre de procesos.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Tendencia mensual</h5>
-                <p>Se mantiene crecimiento sostenido en indicadores clave durante el trimestre.</p>
-            </div>
-
-        {% elif seccion == "reportes" %}
-            <div class="card-custom">
-                <h5>Reporte consolidado</h5>
-                <p>Disponible el informe general con análisis de desempeño por área.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Comparativo histórico</h5>
-                <p>Se evidencia mejora frente al mismo periodo del año anterior.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Alertas de desviación</h5>
-                <p>Se detectaron variaciones en indicadores financieros que requieren seguimiento.</p>
-            </div>
-
-        {% else %}
-            <div class="card-custom">
-                <h5>Resumen ejecutivo</h5>
-                <p>Los indicadores reflejan estabilidad operativa con oportunidades de mejora en eficiencia.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Cumplimiento de metas</h5>
-                <p>El 87% de los objetivos estratégicos han sido alcanzados en el periodo actual.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Áreas críticas</h5>
-                <p>Se identifican oportunidades de mejora en tiempos de respuesta y procesos internos.</p>
-            </div>
-
-            <div class="card-custom">
-                <h5>Proyección</h5>
-                <p>Se proyecta crecimiento positivo si se mantienen las condiciones actuales.</p>
-            </div>
-        {% endif %}
+        {% endfor %}
 
     </div>
+
+</div>
 
 </div>
 
