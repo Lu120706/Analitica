@@ -1,0 +1,33 @@
+{
+    "tic": [
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "hoy se genero un nuevo informe que ya pueden visualizar "
+        }
+    ],
+    "contabilidad": [
+        {
+            "titulo": "auditoria programada ",
+            "texto": "mañana"
+        }
+    ],
+    "contraloria": [
+        {
+            "titulo": "Nuevo informe de contabilidad",
+            "texto": "informe"
+        },
+        {
+            "titulo": "nuevo reporte ",
+            "texto": "generamos un nuevo reporte "
+        }
+    ],
+    "abastecimiento": [],
+    "indicadores": [],
+    "comercio": [],
+    "tesoreria": [
+        {
+            "titulo": "reunion para campañas ",
+            "texto": "se generara una nueva reunion para conversar sobre las campañas"
+        }
+    ]
+}

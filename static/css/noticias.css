@@ -1,0 +1,57 @@
+body {
+    background: #f4f6f9;
+}
+
+
+
+.contenido-izquierda {
+    max-width: 600px;
+    margin-left: 3cm;
+}
+
+.card-custom {
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    max-width: 550px;
+    margin-left: 0;
+}
+
+.card-custom:hover {
+    transform: translateY(-3px);
+}
+
+.card-custom h5 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.card-custom p {
+    color: #4b5563;
+    margin-top: 8px;
+}
+
+/* Estilos de noticias unificados */
+
+.card-custom small {
+    color: gray;
+}
+
+@media(max-width: 992px) {
+
+    .logos-fijos {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .contenido-izquierda {
+        max-width: 100%;
+    }
+
+}

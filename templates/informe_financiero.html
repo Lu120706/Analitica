@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block title %}Ventas{% endblock %}
 
@@ -8,15 +8,16 @@
 
 <div class="informe-container">
 
-    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"></iframe>
+    <iframe
+        src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"></iframe>
     <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
 </div>
 
 <div class="logos-fijos">
     {% for url in logos or [] %}
-        <div class="logo-card {% if loop.index == 2 %}logo-grande img{% endif %}">
-            <img src="{{ url }}">
-        </div>
+    <div class="logo-card {% if loop.index == 2 or loop.length == 1 %}logo-grande{% endif %}">
+        <img src="{{ url }}">
+    </div>
     {% endfor %}
 </div>
 

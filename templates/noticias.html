@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="saludo-container">
+        <h5>{{ saludo }}, {{ usuario }}</h5>
+    </div>
+
+    <div class="contenido-izquierda">
+
+        <div class="card-custom">
+
+            <h5>Noticias generales</h5>
+            <hr>
+
+            {% if noticias %}
+            {% for n in noticias %}
+
+            <div class="mb-3">
+                <strong>{{ n.titulo }}</strong>
+                <p>{{ n.texto }}</p>
+            </div>
+            <hr>
+
+            {% endfor %}
+            {% else %}
+
+            <p>No hay noticias disponibles</p>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card-custom mt-4">
+
+            <h5>Contacto TIC</h5>
+
+            <div class="row">
+                {% for c in contactos_tic %}
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>{{ c.nombre }}</strong><br>
+                    <span>{{ c.rol }}</span><br>
+                    <small>{{ c.email }}</small>
+
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="logos-fijos">
+
+    {% for url in logos %}
+    <div class="logo-card {% if loop.index == 2 %}logo-grande{% endif %}">
+        <img src="{{ url }}">
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

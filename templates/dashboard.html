@@ -1,101 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+{% extends 'base.html' %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-</head>
+{% block title %}Dashboard{% endblock %}
 
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
 
-<nav class="navbar navbar-expand-lg navbar-custom px-3">
-    <div class="container-fluid">
+{% block content %}
 
-        <div class="d-flex align-items-center">
+<div class="saludo-container">
+    <h5>{{ saludo }}, {{ usuario }}</h5>
+</div>
 
-            <div class="dropdown me-3">
+<div class="contenido-izquierda d-flex align-items-start gap-4 flex-wrap">
 
-                <button class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                    ☰  
-                </button>
-
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ url_for('informe_ventas') }}">Informe Ventas</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('balance_lineas') }}">Balance de Líneas</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('estado_financiero') }}">Informe Financiero</a></li>
-                </ul>
-
-            </div>
-            <a href="{{ url_for('dashboard') }}" class="navbar-brand">
-                {{ empresa | upper }}
-            </a>
-
-        </div>
-
-        <div class="d-flex align-items-center ms-auto">
-
-            <div class="navbar-nav me-4">
-                <a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
-                <a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
-                <a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
-                <a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
-                <a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
-                <a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
-                <a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
-            </div>
-
-            <a href="/logout" class="btn btn-dark btn-sm">Cerrar sesión</a>
-
-        </div>
-
-    </div>
-</nav>
-
-<div class="container-fluid mt-4">
-
-    <div class="saludo-container">
-        <h5>{{ saludo }}, {{ usuario }}</h5>
+    <div class="card-custom card-noticias">
+        <h5>Noticias</h5>
+        {% for n in noticias %}
+        <p><strong>{{ n.titulo }}</strong><br>{{ n.texto }}</p>
+        <hr>
+        {% endfor %}
     </div>
 
-    <div class="contenido-izquierda">
 
-        <div class="card-custom">
-            <h5>Noticias</h5>
-            {% for n in noticias %}
-                <p><strong>{{ n.titulo }}</strong><br>{{ n.texto }}</p>
-                <hr>
-            {% endfor %}
+</div>
+
+<div class="card-custom card-tic">
+    <h5>Contacto TIC</h5>
+    <hr>
+    <div class="row">
+        {% for c in contactos_tic %}
+        <div class="col-md-4 mb-2">
+            <strong>{{ c.nombre }}</strong><br>
+            <span>{{ c.rol }}</span><br>
+            <small>{{ c.email }}</small>
         </div>
-
-        <div class="card-custom">
-            <h5>Contacto TIC</h5>
-            <div class="row">
-                {% for c in contactos_tic %}
-                    <div class="col-md-4 mb-2">
-                        <strong>{{ c.nombre }}</strong><br>
-                        <span>{{ c.rol }}</span><br>
-                        <small>{{ c.email }}</small>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
+
+</div>
 
 </div>
 
 <div class="logos-fijos">
-    {% for url in logos %}
-        <div class="logo-card {% if loop.index == 2 %}logo-grande{% endif %}">
-            <img src="{{ url }}">
+    <!-- Buscador encima de los logos -->
+    <div class="search-container-fixed mb-3">
+        <div class="position-relative">
+            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off" placeholder="Buscar...">
+            <span class="lupa-icono">🔍</span>
+            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none" style="z-index: 1000;"></div>
         </div>
+    </div>
+
+    {% for url in logos %}
+    <div class="logo-card {% if loop.index == 2 or loop.length == 1 %}logo-grande{% endif %}">
+        <img src="{{ url }}">
+    </div>
     {% endfor %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
 
-</body>
-</html>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
+{% endblock %}

@@ -1,17 +1,8 @@
-.saludo-container {
-    text-align: center;
-    margin-bottom: 25px;
-}
 
-.saludo-container h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #000;
-}
 
 .contenido {
-    max-width: 900px;
-    margin-left: 50px;
+    max-width: 600px;
+    margin-left: 3cm;
 }
 
 .card-custom {
@@ -19,8 +10,9 @@
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.12);
-    width: 85%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    max-width: 550px;
+    margin-left: 0;
 }
 
 .card-custom h5,
