@@ -20,32 +20,18 @@
     </div>
 
     <div class="contenido-izquierda">
-
         {% if noticias_tic %}
-
-        {% for n in noticias_tic %}
-
-        <div class="card-custom card-noticias">
-
-            {% if loop.first %}
-            <h5>Noticias</h5>
-            <hr>
-            {% endif %}
-
-            <strong>{{ n.titulo }}</strong>
-
-            <p>{{ n.texto }}</p>
-
-        </div>
-
-        {% endfor %}
-
-        {% else %}
-
-        <p>No hay noticias disponibles</p>
-
+            {% for n in noticias_tic %}
+            <div class="card-custom card-noticias">
+                {% if loop.first %}
+                <h5>Noticias</h5>
+                <hr>
+                {% endif %}
+                <strong>{{ n.titulo }}</strong>
+                <p>{{ n.texto }}</p>
+            </div>
+            {% endfor %}
         {% endif %}
-
     </div>
 
 </div>

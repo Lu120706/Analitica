@@ -8,7 +8,8 @@
         <div class="mb-3">
             <label class="form-label">Sección</label>
             <select name="seccion" class="form-select" required>
-                <option value="tic">TIC (Noticias Generales)</option>
+                <option value="general">General (Dashboard)</option>
+                <option value="tic">TIC</option>
                 <option value="contabilidad">Contabilidad</option>
                 <option value="contraloria">Contraloría</option>
                 <option value="abastecimiento">Abastecimiento</option>
@@ -25,7 +26,12 @@
             <label class="form-label">Contenido</label>
             <textarea name="texto" class="form-control" rows="4" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Publicar Noticia</button>
+        <div class="mb-3">
+            <label class="form-label">Fecha de expiración (opcional)</label>
+            <input type="date" name="fecha_expiracion" class="form-control">
+            <div class="form-text">Si la dejas vacía, la noticia no vencerá.</div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-2">Publicar Noticia</button>
     </form>
 </div>
 {% endblock %}

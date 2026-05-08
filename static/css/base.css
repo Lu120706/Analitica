@@ -1,0 +1,160 @@
+/* general.css */
+
+* {
+    font-family: "Times New Roman", Times, serif !important;
+}
+
+body {
+    background:
+        linear-gradient(rgba(20, 30, 60, 0.15), rgba(60, 40, 20, 0.2)),
+        url("https://i.postimg.cc/zBq4wWCg/Gemini-Generated-Image-estpntestpntestp.png");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.navbar-custom {
+    background-color: #F2E124 !important;
+}
+
+.navbar-brand {
+    color: #000 !important;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-right: 30px;
+}
+
+.nav-link {
+    color: #000 !important;
+    font-size: 0.9rem;
+    margin-right: 10px;
+}
+
+.logos-fijos {
+    position: fixed;
+    top: 150px;
+    right: 1cm;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    z-index: 2000;
+}
+
+.logo-card {
+    width: 125px;
+    height: 125px;
+    background: #9c9b8f;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.logo-card img {
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+}
+
+.logo-grande img {
+    transform: scale(1.14);
+}
+
+/* Estilo global para tarjetas de noticias */
+.card-noticias {
+    max-width: 550px !important;
+}
+
+/* Tarjetas Genéricas */
+.card-custom {
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    font-size: 18px;
+}
+
+.card-custom p, .card-custom h6, .card-custom small {
+    color: #000;
+}
+
+.card-custom p {
+    font-size: 18px;
+}
+
+.card-custom h6 {
+    font-weight: bold;
+}
+
+/* Menús Desplegables Globales */
+.dropdown-menu {
+    background-color: #000 !important;
+}
+
+.dropdown-item {
+    color: #fff !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item.active {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* Saludo Global */
+.saludo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.saludo-container h5, .saludo-container h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Botón flotante de Soporte TIC */
+.btn-soporte-flotante {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #F2E124;
+    border: none;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-soporte-flotante:hover {
+    transform: scale(1.12) translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* Modal de Soporte TIC */
+.modal-soporte {
+    max-width: 480px;
+}
+
+.modal-soporte-content {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.modal-soporte-header {
+    background: #F2E124;
+    border-bottom: none;
+}

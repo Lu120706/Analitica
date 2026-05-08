@@ -1,4 +1,13 @@
 {
+    "general": [
+        {
+            "titulo": "a",
+            "texto": "dcfvbgnm,.-",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-05-08"
+        }
+    ],
     "tic": [
         {
             "titulo": "Nuevo informe generado",
