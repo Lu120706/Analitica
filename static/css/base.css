@@ -41,8 +41,8 @@ body {
 }
 
 .logo-card {
-    width: 125px;
-    height: 125px;
+    width: 120px;
+    height: 120px;
     background: #9c9b8f;
     border-radius: 50%;
     display: flex;
@@ -54,21 +54,17 @@ body {
 }
 
 .logo-card img {
-    width: 115px;
-    height: 115px;
-    object-fit: contain;
+    max-width: 130px;
+    max-height: 130px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
 }
 
-.logo-grande img {
-    transform: scale(1.14);
-}
-
-/* Estilo global para tarjetas de noticias */
 .card-noticias {
     max-width: 550px !important;
 }
 
-/* Tarjetas Genéricas */
 .card-custom {
     background: rgba(255, 255, 255, 0.45);
     border-radius: 12px;
@@ -78,7 +74,9 @@ body {
     font-size: 18px;
 }
 
-.card-custom p, .card-custom h6, .card-custom small {
+.card-custom p,
+.card-custom h6,
+.card-custom small {
     color: #000;
 }
 
@@ -90,7 +88,6 @@ body {
     font-weight: bold;
 }
 
-/* Menús Desplegables Globales */
 .dropdown-menu {
     background-color: #000 !important;
 }
@@ -106,19 +103,18 @@ body {
     color: #fff !important;
 }
 
-/* Saludo Global */
 .saludo-container {
     text-align: center;
     margin-bottom: 30px;
 }
 
-.saludo-container h5, .saludo-container h1 {
+.saludo-container h5,
+.saludo-container h1 {
     font-size: 1.6rem;
     font-weight: 700;
     color: #000;
 }
 
-/* Botón flotante de Soporte TIC */
 .btn-soporte-flotante {
     position: fixed;
     bottom: 28px;
@@ -129,7 +125,7 @@ body {
     background: #F2E124;
     border: none;
     font-size: 1.6rem;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     z-index: 9999;
     transition: all 0.3s ease;
@@ -140,10 +136,9 @@ body {
 
 .btn-soporte-flotante:hover {
     transform: scale(1.12) translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Modal de Soporte TIC */
 .modal-soporte {
     max-width: 480px;
 }
@@ -157,4 +152,72 @@ body {
 .modal-soporte-header {
     background: #F2E124;
     border-bottom: none;
-}
+}
+
+/* Botón flotante */
+.btn-soporte-flotante {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #F2E124;
+    border: none;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-soporte-flotante:hover {
+    transform: scale(1.12) translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.modal-soporte {
+    max-width: 480px;
+}
+
+.modal-soporte-content {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.modal-soporte-header {
+    background: #F2E124;
+    border-bottom: none;
+}
+
+.iframe-soporte {
+    width: 100%;
+    height: 440px;
+    border: none;
+    max-width: 100%;
+}
+
+.lista-informes {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.lista-informes li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.lista-informes a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+}

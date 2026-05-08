@@ -45,19 +45,20 @@
 </div>
 
 <div class="logos-fijos">
-    <!-- Buscador encima de los logos -->
     <div class="search-container-fixed mb-3">
         <div class="position-relative">
-            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off" placeholder="Buscar...">
+            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off"
+                placeholder="Buscar...">
             <span class="lupa-icono">🔍</span>
-            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none" style="z-index: 1000;"></div>
+            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none"
+                style="z-index: 1000;"></div>
         </div>
     </div>
 
-    {% for url in logos %}
-    <div class="logo-card {% if loop.index == 2 or loop.length == 1 %}logo-grande{% endif %}">
-        <img src="{{ url }}">
-    </div>
+    {% for logo in logos %}
+    <a href="{{ url_for('empresa', nombre=logo.nombre) }}" class="logo-card">
+        <img src="{{ logo.url }}" alt="logo {{ logo.nombre }}">
+    </a>
     {% endfor %}
 </div>
 

@@ -16,22 +16,22 @@ contactos_tic = [
 # empresas
 empresas_config = {
     "Colmena": {
-        "logos": ["https://cdn.phototourl.com/free/2026-04-28-4a9e8bed-aa35-4a34-b73f-e93ee7e59627.png"],
+        "logos": ["https://cdn.phototourl.com/free/2026-05-08-5729c248-9b06-4eec-85a9-656cabf66c54.png"],
         "pbi": "https://app.powerbi.com/",
     },
     "Almasa": {
-        "logos": ["https://cdn.phototourl.com/member/2026-03-24-3b7755ae-b4ae-4423-b0a9-a70e72c6a815.png"],
+        "logos": ["https://cdn.phototourl.com/free/2026-05-08-96a31c18-592e-4d88-ad11-2b32bc4c58aa.png"],
         "pbi": "https://app.powerbi.com/",
     },
     "GyJ Ferreterias": {
-        "logos": ["https://cdn.phototourl.com/member/2026-03-24-cd01a241-a822-499e-880f-81e6e291a732.png"],
+        "logos": ["https://cdn.phototourl.com/free/2026-05-08-c4138ab4-2de9-48d8-a38a-0c85bc40a293.png"],
         "pbi": "https://app.powerbi.com/",
     },
     "Organizacion GYJ": {
         "logos": [
-            "https://cdn.phototourl.com/member/2026-03-24-cd01a241-a822-499e-880f-81e6e291a732.png",
-            "https://cdn.phototourl.com/free/2026-04-28-4a9e8bed-aa35-4a34-b73f-e93ee7e59627.png",
-            "https://cdn.phototourl.com/member/2026-03-24-3b7755ae-b4ae-4423-b0a9-a70e72c6a815.png"
+            "https://cdn.phototourl.com/free/2026-05-08-c4138ab4-2de9-48d8-a38a-0c85bc40a293.png",
+            "https://cdn.phototourl.com/free/2026-05-08-5729c248-9b06-4eec-85a9-656cabf66c54.png",
+            "https://cdn.phototourl.com/free/2026-05-08-96a31c18-592e-4d88-ad11-2b32bc4c58aa.png"
         ],
         "pbi": "https://app.powerbi.com/",
     }

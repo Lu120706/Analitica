@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ empresa }}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Informes</h2>
+
+    <div class="logos-fijos">
+        {% for url in logos or [] %}
+        <div class="logo-card">
+            <img src="{{ url }}">
+        </div>
+        {% endfor %}
+    </div>
+
+    <ul class="lista-informes">
+
+        {% for informe in informes %}
+        <li>
+            {{ informe }}
+            <a href="{{ url_for('informe_ventas') }}">
+                Ver informe
+            </a>
+        </li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endblock %}

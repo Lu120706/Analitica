@@ -1,14 +1,30 @@
 from flask import render_template, request, redirect, url_for, session
 from data import contactos_tic
-from utils import cargar_noticias, guardar_noticias, get_saludo, get_context, login_required, role_required, filtrar_noticias
+from utils import (
+    cargar_noticias,
+    guardar_noticias,
+    get_saludo,
+    get_context,
+    login_required,
+    role_required,
+    filtrar_noticias
+)
 
 @login_required
 def dashboard():
     data = cargar_noticias()
     usuario, empresa, logos = get_context()
+
+    logos_transformados = []
+    for logo in logos:
+        logos_transformados.append({
+            "nombre": empresa,
+            "url": logo
+        })
+
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("general", []), usuario, rol)
-    
+
     return render_template(
         "dashboard.html",
         usuario=usuario,
@@ -16,9 +32,10 @@ def dashboard():
         rol=rol,
         saludo=get_saludo(),
         noticias=noticias_filtradas,
-        logos=logos,
+        logos=logos_transformados,
         contactos_tic=contactos_tic
     )
+
 
 @role_required(["admin"])
 @login_required
@@ -30,9 +47,12 @@ def crear_noticia():
         roles_raw = request.form.get("roles", "")
         usuarios_raw = request.form.get("usuarios", "")
         fecha_expiracion = request.form.get("fecha_expiracion", "").strip()
+
         roles = [r.strip().lower() for r in roles_raw.split(",") if r.strip()]
         usuarios = [u.strip().lower() for u in usuarios_raw.split(",") if u.strip()]
+
         data = cargar_noticias()
+
         nueva = {
             "titulo": titulo,
             "texto": texto,
@@ -40,8 +60,34 @@ def crear_noticia():
             "usuarios": usuarios,
             "fecha_expiracion": fecha_expiracion if fecha_expiracion else None
         }
+
         if seccion in data:
             data[seccion].append(nueva)
+
         guardar_noticias(data)
         return redirect(url_for("dashboard"))
+
     return render_template("crear_noticia.html")
+
+
+@login_required
+def empresa(nombre):
+
+    usuario, empresa_ctx, logos = get_context()
+
+    informes = [
+        "Cartera",
+        "IBR",
+        "Ventas gestion",
+        "Ventas mostrador",
+        "EVA",
+        "Venta perdida",
+        "Cumplimiento presupuestal",
+    ]
+
+    return render_template(
+        "empresa.html",
+        empresa=nombre,
+        informes=informes,
+        logos=logos
+    )

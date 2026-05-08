@@ -52,7 +52,7 @@
 
 <div class="logos-fijos">
     {% for url in logos or [] %}
-    <div class="logo-card {% if loop.index == 2 or loop.length == 1 %}logo-grande{% endif %}">
+    <div class="logo-card">
         <img src="{{ url }}">
     </div>
     {% endfor %}
