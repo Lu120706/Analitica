@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ empresa }}{% endblock %}
+{% block title %}{{ nombre_empresa_informe }}{% endblock %}
 
 {% block content %}
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Informes</h2>
+    <h2 class="mb-4">Informes - {{ nombre_empresa_informe }}</h2>
 
     <div class="logos-fijos">
         {% for url in logos or [] %}

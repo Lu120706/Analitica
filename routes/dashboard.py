@@ -16,14 +16,22 @@ def dashboard():
     data = cargar_noticias()
     usuario, empresa, logos = get_context()
 
+    rol = session.get("rol")
+    
     logos_transformados = []
     for logo in logos:
+        nombre_real = empresa
+        if rol == "admin" and empresa == "Organizacion GYJ":
+            for nombre_emp, conf in empresas_config.items():
+                if nombre_emp != "Organizacion GYJ" and logo in conf.get("logos", []):
+                    nombre_real = nombre_emp
+                    break
+        
         logos_transformados.append({
-            "nombre": empresa,
+            "nombre": nombre_real,
             "url": logo
         })
 
-    rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("general", []), usuario, rol)
 
     return render_template(
@@ -41,6 +49,9 @@ def dashboard():
 @role_required(["admin"])
 @login_required
 def crear_noticia():
+    usuario, empresa, logos = get_context()
+    rol = session.get("rol")
+    
     if request.method == "POST":
         seccion = request.form.get("seccion")
         titulo = request.form.get("titulo")
@@ -68,7 +79,7 @@ def crear_noticia():
         guardar_noticias(data)
         return redirect(url_for("dashboard"))
 
-    return render_template("crear_noticia.html")
+    return render_template("crear_noticia.html", empresa=empresa, logos=logos, rol=rol)
 
 
 @login_required
@@ -77,11 +88,11 @@ def empresa(nombre):
     usuario, empresa_ctx, logos_ctx = get_context()
     config = empresas_config.get(nombre, {})
     informes = config.get("informes", [])
-    logos = config.get("logos", [])
 
     return render_template(
         "empresa.html",
-        empresa=nombre,
+        empresa=empresa_ctx,
+        nombre_empresa_informe=nombre,
         informes=informes,
-        logos=logos
+        logos=logos_ctx
     )

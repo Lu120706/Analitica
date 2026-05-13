@@ -35,9 +35,11 @@
     </form>
 </div>
 
-<div class="logos-header">
+<div class="logos-fijos">
     {% for url in logos or [] %}
-    <img src="{{ url }}" class="logo-img">
+    <div class="logo-card">
+        <img src="{{ url }}">
+    </div>
     {% endfor %}
 </div>
 
