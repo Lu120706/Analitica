@@ -8,7 +8,7 @@
         <div class="mb-3">
             <label class="form-label">Sección</label>
             <select name="seccion" class="form-select" required>
-                <option value="general">General (Dashboard)</option>
+                <option value="general">General</option>
                 <option value="tic">TIC</option>
                 <option value="contabilidad">Contabilidad</option>
                 <option value="contraloria">Contraloría</option>
@@ -27,11 +27,18 @@
             <textarea name="texto" class="form-control" rows="4" required></textarea>
         </div>
         <div class="mb-3">
-            <label class="form-label">Fecha de expiración (opcional)</label>
+            <label class="form-label">Fecha de expiracion</label>
             <input type="date" name="fecha_expiracion" class="form-control">
-            <div class="form-text">Si la dejas vacía, la noticia no vencerá.</div>
+            <div class="form-text">Si la dejas vacia, la noticia no vencerá.</div>
         </div>
         <button type="submit" class="btn btn-primary w-100 mt-2">Publicar Noticia</button>
     </form>
 </div>
+
+<div class="logos-header">
+    {% for url in logos or [] %}
+    <img src="{{ url }}" class="logo-img">
+    {% endfor %}
+</div>
+
 {% endblock %}

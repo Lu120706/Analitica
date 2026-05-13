@@ -1,4 +1,5 @@
 from flask import session, redirect, url_for
+from django.shortcuts import render
 from datetime import datetime
 from functools import wraps
 import pytz
@@ -55,7 +56,6 @@ def role_required(roles_permitidos):
     return wrapper
 
 def _noticia_vigente(n):
-    """Retorna True si la noticia no ha vencido o no tiene fecha de expiración."""
     fecha_exp = n.get("fecha_expiracion")
     if not fecha_exp:
         return True
@@ -65,16 +65,12 @@ def _noticia_vigente(n):
         vence = datetime.strptime(fecha_exp, "%Y-%m-%d").date()
         return hoy <= vence
     except ValueError:
-        return True  # Si el formato es incorrecto, no ocultamos la noticia
+        return True
 
 def filtrar_noticias(noticias_lista, usuario_actual, rol_actual):
     if not noticias_lista:
         return []
-
-    # Primero descartar noticias vencidas (para todos los roles)
     vigentes = [n for n in noticias_lista if _noticia_vigente(n)]
-
-    # El administrador ve todas las vigentes
     if rol_actual == "admin":
         return vigentes
     
@@ -83,20 +79,20 @@ def filtrar_noticias(noticias_lista, usuario_actual, rol_actual):
         roles_permitidos = n.get("roles", [])
         usuarios_permitidos = n.get("usuarios", [])
         
-        # 1. Verificación por usuario específico
         if usuario_actual in usuarios_permitidos:
             filtradas.append(n)
             continue
-            
-        # 2. Verificación por rol específico
         if rol_actual in roles_permitidos:
             filtradas.append(n)
             continue
-
-        # 3. Lógica para noticias "Generales" (sin restricciones en el JSON)
         if not roles_permitidos and not usuarios_permitidos:
-            # Si no hay restricciones, solo los gerentes (y admin) las ven
             if rol_actual == "gerente":
                 filtradas.append(n)
-            
     return filtradas
+
+def organizacion (request):
+    data =empresas_config ["Organizacion GyJ"]
+
+    empresas = data ["empresas"]
+    return render(request, "Organizacion.html", {"empresas": empresas, "empresas_config": empresas_config})
+    

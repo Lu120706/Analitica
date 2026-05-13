@@ -1,3 +1,4 @@
+from data import empresas_config
 from flask import render_template, request, redirect, url_for, session
 from data import contactos_tic
 from utils import (
@@ -73,17 +74,10 @@ def crear_noticia():
 @login_required
 def empresa(nombre):
 
-    usuario, empresa_ctx, logos = get_context()
-
-    informes = [
-        "Cartera",
-        "IBR",
-        "Ventas gestion",
-        "Ventas mostrador",
-        "EVA",
-        "Venta perdida",
-        "Cumplimiento presupuestal",
-    ]
+    usuario, empresa_ctx, logos_ctx = get_context()
+    config = empresas_config.get(nombre, {})
+    informes = config.get("informes", [])
+    logos = config.get("logos", [])
 
     return render_template(
         "empresa.html",

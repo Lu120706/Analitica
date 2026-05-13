@@ -19,9 +19,10 @@
     <ul class="lista-informes">
 
         {% for informe in informes %}
-        <li>
-            {{ informe }}
-            <a href="{{ url_for('informe_ventas') }}">
+        <li class="item-informe">
+            <span>{{ informe.nombre }}</span>
+
+            <a href="{{ url_for(informe.ruta) }}">
                 Ver informe
             </a>
         </li>
