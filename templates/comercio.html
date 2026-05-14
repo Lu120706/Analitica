@@ -14,34 +14,59 @@
 
 {%block content%}
 <div class="saludo-container">
-    <h1>{{ saludo }}, {{ usuario }}</h1>
+    <h1 id="saludo">Cargando...</h1>
 </div>
 
-<div class="contenido-izquierda">
-
-    {% for n in noticias_comercio %}
-
-    <div class="card-custom card-noticias">
-
-        {% if loop.first %}
-        <h5>Noticias</h5>
-        <hr>
-        {% endif %}
-
-        <strong>{{ n.titulo }}</strong>
-        <p>{{ n.texto }}</p>
-
-    </div>
-
-    {% endfor %}
-
+<div class="contenido-izquierda" id="noticias-content">
+    <p>Cargando noticias...</p>
 </div>
 
-<div class="logos-fijos">
-    {% for url in logos or [] %}
-    <div class="logo-card">
-        <img src="{{ url }}">
-    </div>
-    {% endfor %}
+<div class="logos-fijos" id="logos-content">
+    <p>Cargando logos...</p>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/comercio')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
+
+                const noticiasDiv = document.getElementById('noticias-content');
+                if (data.noticias.length > 0) {
+                    noticiasDiv.innerHTML = '<h5>Noticias</h5><hr>';
+                    data.noticias.forEach(noticia => {
+                        noticiasDiv.innerHTML += `
+                            <div class="card-custom card-noticias">
+                                <strong>${noticia.titulo}</strong>
+                                <p>${noticia.texto}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
+                }
+
+                const logosDiv = document.getElementById('logos-content');
+                logosDiv.innerHTML = '';
+                data.logos.forEach(url => {
+                    logosDiv.innerHTML += `
+                        <div class="logo-card">
+                            <img src="${url}">
+                        </div>
+                    `;
+                });
+            } else {
+                alert('Error al cargar datos: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al conectar con la API');
+        });
+});
+</script>
 {% endblock %}

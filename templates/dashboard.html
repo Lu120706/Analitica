@@ -9,35 +9,25 @@
 {% block content %}
 
 <div class="saludo-container">
-    <h5>{{ saludo }}, {{ usuario }}</h5>
+    <h5 id="saludo">Cargando...</h5>
 </div>
 
 <div class="contenido-izquierda d-flex align-items-start gap-4 flex-wrap">
 
-    {% if noticias %}
     <div class="card-custom card-noticias">
         <h5>Noticias</h5>
-        {% for n in noticias %}
-        <p><strong>{{ n.titulo }}</strong><br>{{ n.texto }}</p>
-        <hr>
-        {% endfor %}
+        <div id="noticias-content">
+            <p>Cargando noticias...</p>
+        </div>
     </div>
-    {% endif %}
-
 
 </div>
 
 <div class="card-custom card-tic">
     <h5>Contacto TIC</h5>
     <hr>
-    <div class="row">
-        {% for c in contactos_tic %}
-        <div class="col-md-4 mb-2">
-            <strong>{{ c.nombre }}</strong><br>
-            <span>{{ c.rol }}</span><br>
-            <small>{{ c.email }}</small>
-        </div>
-        {% endfor %}
+    <div class="row" id="contactos-tic">
+        <p>Cargando contactos...</p>
     </div>
 
 </div>
@@ -55,15 +45,62 @@
         </div>
     </div>
 
-    {% for logo in logos %}
-    <a href="{{ url_for('empresa', nombre=logo.nombre) }}" class="logo-card">
-        <img src="{{ logo.url }}" alt="logo {{ logo.nombre }}">
-    </a>
-    {% endfor %}
+    <div id="logos-content">
+        <p>Cargando logos...</p>
+    </div>
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/dashboard')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
+
+                const noticiasDiv = document.getElementById('noticias-content');
+                if (data.noticias.length > 0) {
+                    noticiasDiv.innerHTML = '';
+                    data.noticias.forEach(n => {
+                        noticiasDiv.innerHTML += `<p><strong>${n.titulo}</strong><br>${n.texto}</p><hr>`;
+                    });
+                } else {
+                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
+                }
+
+                const contactosDiv = document.getElementById('contactos-tic');
+                contactosDiv.innerHTML = '';
+                data.contactos_tic.forEach(c => {
+                    contactosDiv.innerHTML += `
+                        <div class="col-md-4 mb-2">
+                            <strong>${c.nombre}</strong><br>
+                            <span>${c.rol}</span><br>
+                            <small>${c.email}</small>
+                        </div>
+                    `;
+                });
+
+                const logosDiv = document.getElementById('logos-content');
+                logosDiv.innerHTML = '';
+                data.logos.forEach(logo => {
+                    logosDiv.innerHTML += `
+                        <a href="/empresa/${logo.nombre}" class="logo-card">
+                            <img src="${logo.url}" alt="logo ${logo.nombre}">
+                        </a>
+                    `;
+                });
+            } else {
+                alert('Error al cargar datos: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al conectar con la API');
+        });
+});
+</script>
 {% endblock %}

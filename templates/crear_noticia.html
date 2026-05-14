@@ -4,7 +4,9 @@
 {% block content %}
 <div class="card-custom" style="max-width: 600px; margin: auto;">
     <h3>Crear nueva noticia</h3>
-    <form method="POST">
+    <div id="success-message" class="alert alert-success d-none"></div>
+    <div id="error-message" class="alert alert-danger d-none"></div>
+    <form id="crear-noticia-form">
         <div class="mb-3">
             <label class="form-label">Sección</label>
             <select name="seccion" class="form-select" required>
@@ -35,12 +37,71 @@
     </form>
 </div>
 
-<div class="logos-fijos">
-    {% for url in logos or [] %}
-    <div class="logo-card">
-        <img src="{{ url }}">
-    </div>
-    {% endfor %}
+<div class="logos-fijos" id="logos-content">
+    <p>Cargando logos...</p>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar logos
+    fetch('/api/dashboard')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const logosDiv = document.getElementById('logos-content');
+                logosDiv.innerHTML = '';
+                data.logos.forEach(logo => {
+                    logosDiv.innerHTML += `
+                        <a href="/empresa/${logo.nombre}" class="logo-card">
+                            <img src="${logo.url}" alt="logo ${logo.nombre}">
+                        </a>
+                    `;
+                });
+            }
+        })
+        .catch(error => console.error('Error cargando logos:', error));
+
+    // Manejar form
+    document.getElementById('crear-noticia-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {
+            seccion: formData.get('seccion'),
+            titulo: formData.get('titulo'),
+            texto: formData.get('texto'),
+            fecha_expiracion: formData.get('fecha_expiracion') || null
+        };
+
+        fetch('/api/noticias', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                document.getElementById('success-message').textContent = result.message;
+                document.getElementById('success-message').classList.remove('d-none');
+                document.getElementById('error-message').classList.add('d-none');
+                this.reset();
+            } else {
+                document.getElementById('error-message').textContent = result.message;
+                document.getElementById('error-message').classList.remove('d-none');
+                document.getElementById('success-message').classList.add('d-none');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('error-message').textContent = 'Error de conexión';
+            document.getElementById('error-message').classList.remove('d-none');
+            document.getElementById('success-message').classList.add('d-none');
+        });
+    });
+});
+</script>
 {% endblock %}

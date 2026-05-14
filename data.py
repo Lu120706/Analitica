@@ -13,7 +13,7 @@ contactos_tic = [
     {"nombre": "Carlos López", "rol": "Analista TIC", "email": "carlos.lopez@empresa.com"}
 ]
 
-# empresas
+# empresasx
 empresas_config = {
     "Colmena": {
         "logos": [
@@ -22,12 +22,12 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Gestion Col","ruta": "informe_ventas"},
-            {"nombre": "Informe despachos", "ruta": "balance_lineas"},
-            {"nombre": "Informe ventas", "ruta": "informe_ventas"},
-            {"nombre": "IBR Colmena", "ruta": "estado_financiero"},
-            {"nombre": "Inventario a un corte", "ruta": "balance_lineas"},
-            {"nombre": "Venta perdida", "ruta": "estado_financiero"}
+            {"nombre": "Gestion Col","ruta": "informe_ventas_page"},
+            {"nombre": "Informe despachos", "ruta": "balance_lineas_page"},
+            {"nombre": "Informe ventas", "ruta": "informe_ventas_page"},
+            {"nombre": "IBR Colmena", "ruta": "estado_financiero_page"},
+            {"nombre": "Inventario a un corte", "ruta": "balance_lineas_page"},
+            {"nombre": "Venta perdida", "ruta": "estado_financiero_page"}
         ]
     },
 
@@ -38,11 +38,11 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Contraloria", "ruta": "estado_financiero"},
-            {"nombre": "Gestion clientes", "ruta": "informe_ventas"},
-            {"nombre": "IBR Almasa","ruta": "balance_lineas"},
-            {"nombre": "Informe ventas", "ruta": "informe_ventas"},
-            {"nombre": "Venta perdida", "ruta": "estado_financiero"}
+            {"nombre": "Contraloria", "ruta": "estado_financiero_page"},
+            {"nombre": "Gestion clientes", "ruta": "informe_ventas_page"},
+            {"nombre": "IBR Almasa","ruta": "balance_lineas_page"},
+            {"nombre": "Informe ventas", "ruta": "informe_ventas_page"},
+            {"nombre": "Venta perdida", "ruta": "estado_financiero_page"}
         ]
     },
 
@@ -54,12 +54,12 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Gestion clientes", "ruta": "informe_ventas"},
-            {"nombre": "Balance de lineas","ruta": "balance_lineas"},
-            {"nombre": "Cupo UNES", "ruta": "estado_financiero"},
-            {"nombre": "IBR GyJ","ruta": "balance_lineas"},
-            {"nombre": "Informe ventas","ruta": "informe_ventas"},
-            {"nombre": "Venta perdida","ruta": "estado_financiero"}
+            {"nombre": "Gestion clientes", "ruta": "informe_ventas_page"},
+            {"nombre": "Balance de lineas","ruta": "balance_lineas_page"},
+            {"nombre": "Cupo UNES", "ruta": "estado_financiero_page"},
+            {"nombre": "IBR GyJ","ruta": "balance_lineas_page"},
+            {"nombre": "Informe ventas","ruta": "informe_ventas_page"},
+            {"nombre": "Venta perdida","ruta": "estado_financiero_page"}
         ]
     },
 

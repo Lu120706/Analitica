@@ -1,35 +1,66 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ nombre_empresa_informe }}{% endblock %}
+{% block title %}<span id="empresa-title">Empresa</span>{% endblock %}
 
 {% block content %}
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Informes - {{ nombre_empresa_informe }}</h2>
+    <h2 class="mb-4">Informes - <span id="empresa-name">Cargando...</span></h2>
 
-    <div class="logos-fijos">
-        {% for url in logos or [] %}
-        <div class="logo-card">
-            <img src="{{ url }}">
-        </div>
-        {% endfor %}
+    <div class="logos-fijos" id="logos-content">
+        <p>Cargando logos...</p>
     </div>
 
-    <ul class="lista-informes">
-
-        {% for informe in informes %}
-        <li class="item-informe">
-            <span>{{ informe.nombre }}</span>
-
-            <a href="{{ url_for(informe.ruta) }}">
-                Ver informe
-            </a>
-        </li>
-        {% endfor %}
-
+    <ul class="lista-informes" id="informes-list">
+        <li>Cargando informes...</li>
     </ul>
 
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pathParts = window.location.pathname.split('/');
+    const nombre = pathParts[pathParts.length - 1];
+
+    document.title = nombre;
+
+    fetch(`/api/empresa/${nombre}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('empresa-title').textContent = data.nombre_empresa_informe;
+                document.getElementById('empresa-name').textContent = data.nombre_empresa_informe;
+
+                const logosDiv = document.getElementById('logos-content');
+                logosDiv.innerHTML = '';
+                data.logos.forEach(url => {
+                    logosDiv.innerHTML += `
+                        <div class="logo-card">
+                            <img src="${url}">
+                        </div>
+                    `;
+                });
+
+                const informesList = document.getElementById('informes-list');
+                informesList.innerHTML = '';
+                data.informes.forEach(informe => {
+                    informesList.innerHTML += `
+                        <li class="item-informe">
+                            <span>${informe.nombre}</span>
+                            <a href="${informe.ruta}">Ver informe</a>
+                        </li>
+                    `;
+                });
+            } else {
+                alert('Error al cargar datos: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al conectar con la API');
+        });
+});
+</script>
 {% endblock %}

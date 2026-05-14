@@ -20,3 +20,31 @@
 .card-custom p {
     color: #000;
 }
+
+.reporte-dropdown {
+    margin: 20px 0;
+    max-width: 360px;
+}
+
+.reporte-dropdown label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #0b2c54;
+}
+
+.reporte-dropdown select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #c0c0c0;
+    background: #f8f8f8;
+    font-size: 15px;
+    color: #0b2c54;
+}
+
+.reporte-dropdown select:focus {
+    outline: none;
+    border-color: #4a6fb1;
+    box-shadow: 0 0 0 3px rgba(74, 111, 177, 0.15);
+}

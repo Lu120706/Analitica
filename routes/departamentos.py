@@ -1,5 +1,17 @@
-from flask import render_template, request, session
+from flask import request, session, jsonify
 from utils import cargar_noticias, get_saludo, get_context, login_required, filtrar_noticias
+
+
+def _build_section_response(section_name, noticias):
+    return {
+        "status": "success",
+        "section": section_name,
+        "usuario": session.get("usuario"),
+        "empresa": get_context()[1],
+        "saludo": get_saludo(),
+        "noticias": noticias
+    }
+
 
 @login_required
 def contabilidad():
@@ -7,14 +19,16 @@ def contabilidad():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("contabilidad", []), usuario, rol)
-    return render_template(
-        "contabilidad.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        noticias_contabilidad=noticias_filtradas,
-        logos=logos
-    )
+    return jsonify({
+        "status": "success",
+        "section": "contabilidad",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def contraloria():
@@ -22,14 +36,16 @@ def contraloria():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("contraloria", []), usuario, rol)
-    return render_template(
-        "contraloria.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        noticias_contraloria=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": "contraloria",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def abastecimiento():
@@ -37,14 +53,16 @@ def abastecimiento():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("abastecimiento", []), usuario, rol)
-    return render_template(
-        "abastecimiento.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        noticias_abastecimiento=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": "abastecimiento",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def indicadores():
@@ -53,15 +71,16 @@ def indicadores():
     rol = session.get("rol")
     seccion = request.args.get("seccion")
     noticias_filtradas = filtrar_noticias(data.get("indicadores", []), usuario, rol)
-    return render_template(
-        "indicadores.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        seccion=seccion,
-        noticias_indicadores=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": seccion or "indicadores",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def tic():
@@ -69,14 +88,16 @@ def tic():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("tic", []), usuario, rol)
-    return render_template(
-        "tic.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        noticias_tic=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": "tic",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def comercio():
@@ -84,14 +105,16 @@ def comercio():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("comercio", []), usuario, rol)
-    return render_template(
-        "comercio.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        noticias_comercio=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": "comercio",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })
+
 
 @login_required
 def tesoreria():
@@ -99,11 +122,12 @@ def tesoreria():
     usuario, empresa, logos = get_context()
     rol = session.get("rol")
     noticias_filtradas = filtrar_noticias(data.get("tesoreria", []), usuario, rol)
-    return render_template(
-        "tesoreria.html",
-        usuario=usuario,
-        empresa=empresa,
-        saludo=get_saludo(),
-        logos=logos,
-        noticias_tesoreria=noticias_filtradas
-    )
+    return jsonify({
+        "status": "success",
+        "section": "tesoreria",
+        "usuario": usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "logos": logos,
+        "noticias": noticias_filtradas
+    })

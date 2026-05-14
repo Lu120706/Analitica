@@ -2,17 +2,17 @@
 const informes = [
     {
         nombre: "Informe de Ventas",
-        url: "/informe/ventas",
+        url: "/api/informe/ventas",
         keywords: ["ventas", "ingresos", "vendedores", "comercial"]
     },
     {
         nombre: "Balance de Líneas",
-        url: "/informe/balance",
+        url: "/api/informe/balance",
         keywords: ["balance", "lineas", "produccion", "eficiencia"]
     },
     {
         nombre: "Informe Financiero",
-        url: "/informe/financiero",
+        url: "/api/informe/financiero",
         keywords: ["financiero", "finanzas", "bancos", "tesoreria", "contabilidad"]
     }
 ];

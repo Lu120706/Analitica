@@ -16,38 +16,62 @@
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
-        <h5>{{ saludo }}, {{ usuario }}</h5>
+        <h5 id="saludo">Cargando...</h5>
     </div>
 
-    <div class="contenido-izquierda">
-
-        {% for item in noticias_indicadores %}
-
-        <div class="card-custom card-noticias mb-3">
-
-            {% if loop.first %}
-            <h4 class="mb-2">Noticias</h4>
-            <hr>
-            {% endif %}
-
-            <h5>{{ item.titulo }}</h5>
-
-            <p>{{ item.texto }}</p>
-
-        </div>
-
-        {% endfor %}
-
+    <div class="contenido-izquierda" id="noticias-content">
+        <p>Cargando noticias...</p>
     </div>
 
 </div>
 
-<div class="logos-fijos">
-    {% for url in logos or [] %}
-    <div class="logo-card">
-        <img src="{{ url }}">
-    </div>
-    {% endfor %}
+<div class="logos-fijos" id="logos-content">
+    <p>Cargando logos...</p>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/indicadores')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
+
+                const noticiasDiv = document.getElementById('noticias-content');
+                if (data.noticias.length > 0) {
+                    noticiasDiv.innerHTML = '<h4 class="mb-2">Noticias</h4><hr>';
+                    data.noticias.forEach(noticia => {
+                        noticiasDiv.innerHTML += `
+                            <div class="card-custom card-noticias mb-3">
+                                <h5>${noticia.titulo}</h5>
+                                <p>${noticia.texto}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
+                }
+
+                const logosDiv = document.getElementById('logos-content');
+                logosDiv.innerHTML = '';
+                data.logos.forEach(url => {
+                    logosDiv.innerHTML += `
+                        <div class="logo-card">
+                            <img src="${url}">
+                        </div>
+                    `;
+                });
+            } else {
+                alert('Error al cargar datos: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al conectar con la API');
+        });
+});
+</script>
 {% endblock %}

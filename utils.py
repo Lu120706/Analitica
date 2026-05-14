@@ -4,6 +4,8 @@ from datetime import datetime
 from functools import wraps
 import pytz
 import json
+import os
+import sqlite3
 from data import usuarios, contactos_tic, empresas_config
 
 def cargar_noticias():
@@ -95,4 +97,59 @@ def organizacion (request):
 
     empresas = data ["empresas"]
     return render(request, "Organizacion.html", {"empresas": empresas, "empresas_config": empresas_config})
+    
+DB_PATH = os.path.join("data", "comentarios.db")
+
+
+def init_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS comentarios (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre_usuario TEXT,
+                email TEXT,
+                comentario TEXT,
+                empresa TEXT,
+                fecha_envio TEXT
+            )
+        """)
+
+
+def guardar_comentarios(datos):
+    try:
+        init_db()
+        with sqlite3.connect(DB_PATH) as conn:
+            conn.execute(
+                """
+                INSERT INTO comentarios (nombre_usuario, email, comentario, empresa, fecha_envio)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    datos.get("nombre_usuario"),
+                    datos.get("email"),
+                    datos.get("comentario"),
+                    datos.get("empresa"),
+                    datos.get("fecha")
+                )
+            )
+        return True, None
+
+    except Exception as e:
+        error_msg = str(e)
+        print("!!! ERROR DETECTADO AL GUARDAR EN SQLITE !!!")
+        print(f"Datos enviados: {datos}")
+        print(f"Mensaje de error: {error_msg}")
+        print("----------------------------------")
+        return False, error_msg
+
+
+def obtener_comentarios():
+    init_db()
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.execute(
+            "SELECT id, nombre_usuario, email, comentario, empresa, fecha_envio FROM comentarios ORDER BY id DESC"
+        )
+        return [dict(row) for row in cursor.fetchall()]
     
