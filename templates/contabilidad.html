@@ -14,62 +14,41 @@
 {% block content %}
 
 <div class="saludo-container">
-    <h1 id="saludo">Cargando...</h1>
+    {# El saludo y usuario cargan de inmediato desde Python #}
+    <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
 </div>
 
+{# Solo se renderiza el row si hay noticias, si no, no aparece ni el título ni el espacio #}
+{% if data.noticias and data.noticias|length > 0 %}
 <div class="row" id="noticias-row">
-    <p>Cargando noticias...</p>
+    <div class="col-12">
+        <h5>Noticias</h5>
+        <hr>
+    </div>
+    {% for noticia in data.noticias %}
+    <div class="col-12">
+        <div class="card-custom card-noticias mb-3">
+            <strong>{{ noticia.titulo }}</strong><br>
+            {{ noticia.texto }}
+        </div>
+    </div>
+    {% endfor %}
 </div>
+{% endif %}
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+        <div class="logo-card">
+            {# Soporta tanto string directo como objeto con atributo .url #}
+            <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
+        </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/contabilidad')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
-
-                const noticiasRow = document.getElementById('noticias-row');
-                if (data.noticias.length > 0) {
-                    noticiasRow.innerHTML = '';
-                    data.noticias.forEach(noticia => {
-                        noticiasRow.innerHTML += `
-                            <div class="col-12">
-                                <div class="card-custom card-noticias mb-3">
-                                    <strong>${noticia.titulo}</strong><br>
-                                    ${noticia.texto}
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    noticiasRow.innerHTML = '<p>No hay noticias disponibles.</p>';
-                }
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
+{# Bloque vacío: sin scripts de carga asíncrona #}
 {% endblock %}

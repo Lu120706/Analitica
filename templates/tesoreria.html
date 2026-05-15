@@ -6,86 +6,63 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tesoreria.css') }}">
 {% endblock %}
 
-{% block nav_links %}
-<a class="nav-link" href="#">Indicadores</a>
-<a class="nav-link" href="#">Reportes</a>
-{% endblock %}
-
 {% block content %}
 
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
-        <h5 id="saludo">Cargando...</h5>
+        <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
     </div>
 
-    <div class="reporte-dropdown">
-        <label for="reportes">Reportes</label>
-        <select id="reportes" name="reportes">
+    <div class="reporte-dropdown mb-5">
+        <label for="reportes" class="form-label fw-bold">Reportes de Tesorería</label>
+        <select id="reportes" name="reportes" class="form-select" onchange="if(this.value && this.value!='#') window.location.href=this.value">
             <option value="" disabled selected>Seleccione un reporte</option>
-            <option value="cartera">Reportes de cartera</option>
-            <option value="ibr">Reportes de IBR</option>
-            <option value="ventas_gestion">Reportes de ventas de gestión</option>
-            <option value="ventas_mostrador">Reportes de ventas de mostrador</option>
-            <option value="eva">Reportes EVA</option>
-            <option value="venta_perdida">Reportes de venta perdida</option>
-            <option value="cumplimiento_presupuestal">Reportes de cumplimiento presupuestal</option>
+            <option value="{{ url_for('cartera') }}">Reportes de cartera</option>
+            <option value="#">Reportes de IBR</option>
+            <option value="#">Reportes de ventas de gestión</option>
+            <option value="#">Reportes de ventas de mostrador</option>
+            <option value="#">Reportes EVA</option>
+            <option value="#">Reportes de venta perdida</option>
+            <option value="#">Reportes de cumplimiento presupuestal</option>
         </select>
     </div>
 
-    <div class="contenido-izquierda" id="noticias-content">
-        <p>Cargando noticias...</p>
+    <div class="contenido-izquierda">
+        {% if data.noticias and data.noticias|length > 0 %}
+            {# Muestra noticias si existen #}
+            <h5>Noticias</h5>
+            <hr>
+            {% for noticia in data.noticias %}
+                <div class="card-custom card-noticias mb-3">
+                    <strong>{{ noticia.titulo }}</strong>
+                    <p>{{ noticia.texto }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card-custom border-info">
+                <h5>Soporte Técnico TIC</h5>
+                <hr>
+                <p>No hay noticias recientes para esta sección.</p>
+                <p>Si presentas problemas con los reportes de Tesorería, contacta a soporte:</p>
+                <ul>
+                    <li><strong>Correo:</strong> soporte.it@gyj.com.co</li>
+                    <li><strong>Ticket:</strong> <a href="#" class="text-info">Plataforma de servicios</a></li>
+                </ul>
+            </div>
+        {% endif %}
     </div>
 
 </div>
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            <div class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
-{% endblock %}
-
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/tesoreria')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
-
-                const noticiasDiv = document.getElementById('noticias-content');
-                if (data.noticias.length > 0) {
-                    noticiasDiv.innerHTML = '<h5>Noticias</h5><hr>';
-                    data.noticias.forEach(noticia => {
-                        noticiasDiv.innerHTML += `
-                            <div class="card-custom card-noticias">
-                                <strong>${noticia.titulo}</strong>
-                                <p>${noticia.texto}</p>
-                            </div>
-                        `;
-                    });
-                } else {
-                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
-                }
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
 {% endblock %}

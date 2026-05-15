@@ -1,6 +1,5 @@
-from data import empresas_config
-from flask import request, redirect, url_for, session, jsonify
-from data import contactos_tic
+from flask import request, redirect, url_for, session, jsonify, render_template
+from data import empresas_config, contactos_tic
 from utils import (
     cargar_noticias,
     guardar_noticias,
@@ -14,10 +13,9 @@ from utils import (
 )
 
 @login_required
-def dashboard():
-    data = cargar_noticias()
+def dashboard_view():
+    data_noticias = cargar_noticias()
     usuario, empresa, logos = get_context()
-
     rol = session.get("rol")
     
     logos_transformados = []
@@ -28,15 +26,11 @@ def dashboard():
                 if nombre_emp != "Organizacion GYJ" and logo in conf.get("logos", []):
                     nombre_real = nombre_emp
                     break
-        
-        logos_transformados.append({
-            "nombre": nombre_real,
-            "url": logo
-        })
+        logos_transformados.append({"nombre": nombre_real, "url": logo})
 
-    noticias_filtradas = filtrar_noticias(data.get("general", []), usuario, rol)
+    noticias_filtradas = filtrar_noticias(data_noticias.get("general", []), usuario, rol)
 
-    return jsonify({
+    contexto = {
         "status": "success",
         "usuario": usuario,
         "empresa": empresa,
@@ -45,37 +39,37 @@ def dashboard():
         "noticias": noticias_filtradas,
         "logos": logos_transformados,
         "contactos_tic": contactos_tic
+    }
+    
+    return render_template('dashboard.html', data=contexto)
+
+@login_required
+def dashboard_api():
+    usuario, empresa, _ = get_context()
+    return jsonify({
+        "status": "success", 
+        "usuario": usuario, 
+        "empresa": empresa
     })
 
 
 @role_required(["admin"])
 @login_required
 def crear_noticia():
-    usuario, empresa, logos = get_context()
-    rol = session.get("rol")
-    
+    """Procesa la creación de noticias. Retorna JSON o renderiza el formulario."""
     if request.method == "POST":
-        if request.is_json:
-            payload = request.get_json(silent=True) or {}
-            seccion = payload.get("seccion")
-            titulo = payload.get("titulo")
-            texto = payload.get("texto")
-            roles_raw = payload.get("roles", "")
-            usuarios_raw = payload.get("usuarios", "")
-            fecha_expiracion = payload.get("fecha_expiracion", "").strip()
-        else:
-            seccion = request.form.get("seccion")
-            titulo = request.form.get("titulo")
-            texto = request.form.get("texto")
-            roles_raw = request.form.get("roles", "")
-            usuarios_raw = request.form.get("usuarios", "")
-            fecha_expiracion = request.form.get("fecha_expiracion", "").strip()
+        payload = request.get_json(silent=True) if request.is_json else request.form
+        seccion = payload.get("seccion")
+        titulo = payload.get("titulo")
+        texto = payload.get("texto")
+        roles_raw = payload.get("roles", "")
+        usuarios_raw = payload.get("usuarios", "")
+        fecha_expiracion = payload.get("fecha_expiracion", "").strip()
 
         roles = [r.strip().lower() for r in roles_raw.split(",") if r.strip()]
         usuarios = [u.strip().lower() for u in usuarios_raw.split(",") if u.strip()]
 
-        data = cargar_noticias()
-
+        data_noticias = cargar_noticias()
         nueva = {
             "titulo": titulo,
             "texto": texto,
@@ -84,28 +78,40 @@ def crear_noticia():
             "fecha_expiracion": fecha_expiracion if fecha_expiracion else None
         }
 
-        if seccion in data:
-            data[seccion].append(nueva)
-            guardar_noticias(data)
-            return jsonify({"status": "success", "message": "Noticia publicada"}), 200
+        if seccion in data_noticias:
+            data_noticias[seccion].append(nueva)
+            guardar_noticias(data_noticias)
+            if request.is_json:
+                return jsonify({"status": "success", "message": "Noticia publicada"}), 200
+            else:
+                from flask import flash
+                flash("Noticia publicada exitosamente", "success")
+                return redirect(url_for('crear_noticia'))
 
-        return jsonify({"status": "error", "message": "Sección inválida"}), 400
+        if request.is_json:
+            return jsonify({"status": "error", "message": "Sección inválida"}), 400
+        else:
+            from flask import flash
+            flash("Sección inválida", "danger")
+            return redirect(url_for('crear_noticia'))
 
-    return jsonify({
-        "status": "ready",
-        "message": "Envía POST JSON para publicar noticia",
-        "empresa": empresa,
+    usuario, empresa, logos = get_context()
+    contexto = {
         "usuario": usuario,
-        "rol": rol,
-        "secciones_disponibles": ["general", "tic", "contabilidad", "contraloria", "abastecimiento", "indicadores", "comercio", "tesoreria"]
-    })
-
+        "empresa": empresa,
+        "logos": logos,
+        "saludo": get_saludo(),
+        "rol": session.get("rol")
+    }
+    return render_template('crear_noticia.html', data=contexto)
 
 @login_required
 def api_comentarios():
+    """Ruta unificada para el sistema de soporte (POST para enviar, GET para listar)."""
+    usuario_real, empresa_real, _ = get_context()
+
     if request.method == "POST":
         datos_recibidos = request.get_json(silent=True) or {}
-        usuario_real, empresa_real, _ = get_context()
         datos_finales = {
             "nombre_usuario": usuario_real,
             "email": session.get("usuario"),
@@ -117,43 +123,27 @@ def api_comentarios():
         exito, error_msg = guardar_comentarios(datos_finales)
         if exito:
             return jsonify({"status": "success", "message": "Comentario registrado"}), 200
-        return jsonify({"status": "error", "message": "No se pudo guardar el comentario", "detail": error_msg}), 500
+        return jsonify({"status": "error", "message": error_msg}), 500
 
     comentarios = obtener_comentarios()
     return jsonify({"status": "success", "comments": comentarios}), 200
 
-
-@login_required
-def guardar_comentario():
-    datos_recibidos = request.get_json(silent=True) or {}
-
-    usuario_real, empresa_real, _ = get_context()
-    datos_finales = {
-        "nombre_usuario": usuario_real,
-        "email": session.get("usuario"),
-        "comentario": datos_recibidos.get("comentario"),
-        "empresa": empresa_real,
-        "fecha": datos_recibidos.get("fecha")
-    }
-
-    exito, error_msg = guardar_comentarios(datos_finales)
-    if exito:
-        return jsonify({"status": "success", "message": "Comentario registrado"}), 200
-    return jsonify({"status": "error", "message": "No se pudo guardar el comentario", "detail": error_msg}), 500
-
-
 @login_required
 def empresa(nombre):
-
+    """Renderiza la página de informes específicos de una empresa."""
     usuario, empresa_ctx, logos_ctx = get_context()
+    
+    # Buscamos la configuración de la empresa seleccionada
+    from data import empresas_config # Asegurar la importación
     config = empresas_config.get(nombre, {})
     informes = config.get("informes", [])
-
-    return jsonify({
-        "status": "success",
+    contexto = {
         "usuario": usuario,
-        "empresa_actual": empresa_ctx,
+        "empresa": empresa_ctx,
+        "saludo": get_saludo(),
         "nombre_empresa_informe": nombre,
         "informes": informes,
         "logos": logos_ctx
-    })
+    }
+
+    return render_template('empresa.html', data=contexto)

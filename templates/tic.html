@@ -2,76 +2,44 @@
 
 {% block title %}TIC{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/tic.css') }}">
-{% endblock %}
-
-{% block nav_links %}
-<a class="nav-link" href="#">Indicadores</a>
-<a class="nav-link" href="#">Reportes</a>
-{% endblock %}
-
 {% block content %}
-
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
-        <h5 id="saludo">Cargando...</h5>
+        <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
     </div>
 
-    <div class="contenido-izquierda" id="noticias-content">
-        <p>Cargando noticias...</p>
+    <div class="contenido-izquierda">
+        {% if data.noticias and data.noticias|length > 0 %}
+            <h5>Noticias TIC</h5>
+            <hr>
+            {% for noticia in data.noticias %}
+                <div class="card-custom card-noticias mb-3">
+                    <strong>{{ noticia.titulo }}</strong>
+                    <p>{{ noticia.texto }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card-custom">
+                <h5>Soporte TIC</h5>
+                <hr>
+                <p>No hay noticias activas. Para soporte técnico, escribe a:</p>
+                <strong>soporte.it@gyj.com.co</strong>
+            </div>
+        {% endif %}
     </div>
 
 </div>
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            <div class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}">
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
-
 {% endblock %}
 
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/tic')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
-
-                const noticiasDiv = document.getElementById('noticias-content');
-                if (data.noticias.length > 0) {
-                    noticiasDiv.innerHTML = '<h5>Noticias</h5><hr>';
-                    data.noticias.forEach(noticia => {
-                        noticiasDiv.innerHTML += `
-                            <div class="card-custom card-noticias">
-                                <strong>${noticia.titulo}</strong>
-                                <p>${noticia.texto}</p>
-                            </div>
-                        `;
-                    });
-                } else {
-                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
-                }
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
-{% endblock %}
+{% block extra_js %}{% endblock %}

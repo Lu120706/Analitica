@@ -1,47 +1,34 @@
 {% extends "base.html" %}
 
-{% block title %}Ventas{% endblock %}
+{% block title %}Informe Financiero{% endblock %}
 
 {% block content %}
 
-<h3 class="text-center">Informe Financiero</h3>
+<h3 class="text-center">{{ data.titulo if data.titulo else 'Informe Financiero' }}</h3>
 
 <div class="informe-container">
-
     <iframe
-        src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"></iframe>
-    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
+        src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"
+        allowFullScreen="true">
+    </iframe>
+    {# Llamamos a la función toggleZoom que ya tienes en informes.js #}
+    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶ Fullscreen</button>
 </div>
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            <div class="logo-card">
+                {# Soporta tanto la URL directa como el objeto logo #}
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/informe/financiero')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-            } else {
-                console.error('Error al cargar logos:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
-</script>
+{# Cargamos el archivo externo donde vive la lógica de zoom y otros efectos #}
+<script src="{{ url_for('static', filename='js/informes.js') }}"></script>
 {% endblock %}

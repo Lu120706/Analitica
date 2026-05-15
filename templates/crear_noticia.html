@@ -2,106 +2,67 @@
 {% block title %}Crear Noticia{% endblock %}
 
 {% block content %}
-<div class="card-custom" style="max-width: 600px; margin: auto;">
-    <h3>Crear nueva noticia</h3>
-    <div id="success-message" class="alert alert-success d-none"></div>
-    <div id="error-message" class="alert alert-danger d-none"></div>
-    <form id="crear-noticia-form">
+<div class="card-custom" style="max-width: 600px; margin: 40px auto;">
+    <h3 class="mb-4">Crear nueva noticia</h3>
+    
+    {# Flask puede enviar mensajes de confirmación usando 'flash' #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    {# El formulario ahora envía los datos directamente a Python #}
+    <form action="{{ url_for('crear_noticia') }}" method="POST">
         <div class="mb-3">
-            <label class="form-label">Sección</label>
+            <label class="form-label fw-bold">Sección de destino</label>
             <select name="seccion" class="form-select" required>
-                <option value="general">General</option>
+                <option value="general">General (Dashboard)</option>
                 <option value="tic">TIC</option>
                 <option value="contabilidad">Contabilidad</option>
                 <option value="contraloria">Contraloría</option>
                 <option value="abastecimiento">Abastecimiento</option>
                 <option value="indicadores">Indicadores</option>
-                <option value="comercio">Comercio</option>
+                <option value="comercio">Comercio Exterior</option>
                 <option value="tesoreria">Tesorería</option>
             </select>
         </div>
+        
         <div class="mb-3">
-            <label class="form-label">Título</label>
-            <input type="text" name="titulo" class="form-control" required>
+            <label class="form-label fw-bold">Título</label>
+            <input type="text" name="titulo" class="form-control" placeholder="Ej: Mantenimiento de Servidores" required>
         </div>
+        
         <div class="mb-3">
-            <label class="form-label">Contenido</label>
-            <textarea name="texto" class="form-control" rows="4" required></textarea>
+            <label class="form-label fw-bold">Contenido</label>
+            <textarea name="texto" class="form-control" rows="4" placeholder="Escribe el cuerpo de la noticia aquí..." required></textarea>
         </div>
+        
         <div class="mb-3">
-            <label class="form-label">Fecha de expiracion</label>
+            <label class="form-label fw-bold">Fecha de expiración</label>
             <input type="date" name="fecha_expiracion" class="form-control">
-            <div class="form-text">Si la dejas vacia, la noticia no vencerá.</div>
+            <div class="form-text">Si la dejas vacía, la noticia será permanente.</div>
         </div>
-        <button type="submit" class="btn btn-primary w-100 mt-2">Publicar Noticia</button>
+        
+        <button type="submit" class="btn btn-dark w-100 mt-2">Publicar Noticia</button>
     </form>
 </div>
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            <div class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo">
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
-
 {% endblock %}
 
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Cargar logos
-    fetch('/api/dashboard')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(logo => {
-                    logosDiv.innerHTML += `
-                        <a href="/empresa/${logo.nombre}" class="logo-card">
-                            <img src="${logo.url}" alt="logo ${logo.nombre}">
-                        </a>
-                    `;
-                });
-            }
-        })
-        .catch(error => console.error('Error cargando logos:', error));
-
-    // Manejar form
-    document.getElementById('crear-noticia-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const data = {
-            seccion: formData.get('seccion'),
-            titulo: formData.get('titulo'),
-            texto: formData.get('texto'),
-            fecha_expiracion: formData.get('fecha_expiracion') || null
-        };
-
-        fetch('/api/noticias', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.status === 'success') {
-                document.getElementById('success-message').textContent = result.message;
-                document.getElementById('success-message').classList.remove('d-none');
-                document.getElementById('error-message').classList.add('d-none');
-                this.reset();
-            } else {
-                document.getElementById('error-message').textContent = result.message;
-                document.getElementById('error-message').classList.remove('d-none');
-                document.getElementById('success-message').classList.add('d-none');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('error-message').textContent = 'Error de conexión';
-            document.getElementById('error-message').classList.remove('d-none');
-            document.getElementById('success-message').classList.add('d-none');
-        });
-    });
-});
-</script>
+{# Bloque totalmente vacío #}
 {% endblock %}

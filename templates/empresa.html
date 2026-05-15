@@ -1,17 +1,37 @@
-{% block title %}<span id="empresa-title">Empresa</span>{% endblock %}
+{% extends "base.html" %}
+
+{# El título de la pestaña ahora se carga dinámicamente sin JS #}
+{% block title %}{{ data.nombre_empresa_informe }}{% endblock %}
 
 {% block content %}
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Informes - <span id="empresa-name">Cargando...</span></h2>
+    {# Título principal con el nombre de la empresa #}
+    <h2 class="mb-4">Informes - <span>{{ data.nombre_empresa_informe }}</span></h2>
 
-    <div class="logos-fijos" id="logos-content">
-        <p>Cargando logos...</p>
+    <div class="logos-fijos">
+        {% if data.logos %}
+            {% for logo in data.logos %}
+                <div class="logo-card">
+                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo">
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
-    <ul class="lista-informes" id="informes-list">
-        <li>Cargando informes...</li>
+    <ul class="lista-informes">
+        {% if data.informes and data.informes|length > 0 %}
+            {% for informe in data.informes %}
+                <li class="item-informe">
+                    <span>{{ informe.nombre }}</span>
+                    <a href="{{ informe.ruta }}" class="btn btn-outline-dark btn-sm">Ver informe</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            {# Opcional: un mensaje si la empresa no tiene informes configurados todavía #}
+            <li class="text-muted">No hay informes disponibles para esta sede.</li>
+        {% endif %}
     </ul>
 
 </div>
@@ -19,48 +39,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const pathParts = window.location.pathname.split('/');
-    const nombre = pathParts[pathParts.length - 1];
-
-    document.title = nombre;
-
-    fetch(`/api/empresa/${nombre}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('empresa-title').textContent = data.nombre_empresa_informe;
-                document.getElementById('empresa-name').textContent = data.nombre_empresa_informe;
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-
-                const informesList = document.getElementById('informes-list');
-                informesList.innerHTML = '';
-                data.informes.forEach(informe => {
-                    informesList.innerHTML += `
-                        <li class="item-informe">
-                            <span>${informe.nombre}</span>
-                            <a href="${informe.ruta}">Ver informe</a>
-                        </li>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
+{# Bloque limpio: el script de fetch fue eliminado #}
 {% endblock %}

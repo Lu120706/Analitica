@@ -1,35 +1,38 @@
-from flask import jsonify
+from flask import render_template, session
 from utils import get_context, login_required
 
 @login_required
 def informe_ventas():
     usuario, empresa, logos = get_context()
-    return jsonify({
-        "status": "success",
-        "reporte": "informe_ventas",
+    contexto = {
         "usuario": usuario,
         "empresa": empresa,
-        "logos": logos
-    })
+        "logos": logos,
+        "titulo": "Informe de Ventas",
+        "rol": session.get("rol")
+    }
+    return render_template('informe_ventas.html', data=contexto)
 
 @login_required
 def balance_lineas():
     usuario, empresa, logos = get_context()
-    return jsonify({
-        "status": "success",
-        "reporte": "balance_lineas",
+    contexto = {
         "usuario": usuario,
         "empresa": empresa,
-        "logos": logos
-    })
+        "logos": logos,
+        "titulo": "Balance por Líneas",
+        "rol": session.get("rol")
+    }
+    return render_template('balance_lineas.html', data=contexto)
 
 @login_required
 def estado_financiero():
     usuario, empresa, logos = get_context()
-    return jsonify({
-        "status": "success",
-        "reporte": "estado_financiero",
+    contexto = {
         "usuario": usuario,
         "empresa": empresa,
-        "logos": logos
-    })
+        "logos": logos,
+        "titulo": "Estado Financiero",
+        "rol": session.get("rol")
+    }
+    return render_template('informe_financiero.html', data=contexto)

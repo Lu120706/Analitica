@@ -7,100 +7,62 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="saludo-container">
-    <h5 id="saludo">Cargando...</h5>
+    <h5 id="saludo">{{ data.saludo }}, {{ data.usuario }}</h5>
 </div>
 
 <div class="contenido-izquierda d-flex align-items-start gap-4 flex-wrap">
-
     <div class="card-custom card-noticias">
         <h5>Noticias</h5>
         <div id="noticias-content">
-            <p>Cargando noticias...</p>
+            {% if data.noticias %}
+                {% for n in data.noticias %}
+                    <p>
+                        <strong>{{ n.titulo }}</strong><br>
+                        {{ n.texto }}
+                    </p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No hay noticias disponibles.</p>
+            {% endif %}
         </div>
     </div>
-
 </div>
 
 <div class="card-custom card-tic">
     <h5>Contacto TIC</h5>
     <hr>
     <div class="row" id="contactos-tic">
-        <p>Cargando contactos...</p>
+        {% for c in data.contactos_tic %}
+        <div class="col-md-4 mb-2">
+            <strong>{{ c.nombre }}</strong><br>
+            <span>{{ c.rol }}</span><br>
+            <small>{{ c.email }}</small>
+        </div>
+        {% endfor %}
     </div>
-
-</div>
-
 </div>
 
 <div class="logos-fijos">
     <div class="search-container-fixed mb-3">
         <div class="position-relative">
-            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off"
-                placeholder="Buscar...">
+            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off" placeholder="Buscar...">
             <span class="lupa-icono">🔍</span>
-            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none"
-                style="z-index: 1000;"></div>
+            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none" style="z-index: 1000;"></div>
         </div>
     </div>
 
     <div id="logos-content">
-        <p>Cargando logos...</p>
+        {% for logo in data.logos %}
+        <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+            <img src="{{ logo.url }}" alt="logo {{ logo.nombre }}">
+        </a>
+        {% endfor %}
     </div>
 </div>
-
 {% endblock %}
 
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/dashboard')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
-
-                const noticiasDiv = document.getElementById('noticias-content');
-                if (data.noticias.length > 0) {
-                    noticiasDiv.innerHTML = '';
-                    data.noticias.forEach(n => {
-                        noticiasDiv.innerHTML += `<p><strong>${n.titulo}</strong><br>${n.texto}</p><hr>`;
-                    });
-                } else {
-                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
-                }
-
-                const contactosDiv = document.getElementById('contactos-tic');
-                contactosDiv.innerHTML = '';
-                data.contactos_tic.forEach(c => {
-                    contactosDiv.innerHTML += `
-                        <div class="col-md-4 mb-2">
-                            <strong>${c.nombre}</strong><br>
-                            <span>${c.rol}</span><br>
-                            <small>${c.email}</small>
-                        </div>
-                    `;
-                });
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(logo => {
-                    logosDiv.innerHTML += `
-                        <a href="/empresa/${logo.nombre}" class="logo-card">
-                            <img src="${logo.url}" alt="logo ${logo.nombre}">
-                        </a>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
 {% endblock %}

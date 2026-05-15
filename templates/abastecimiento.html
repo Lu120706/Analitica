@@ -15,60 +15,34 @@
 {% block content %}
 
 <div class="saludo-container">
-    <h1 id="saludo">Cargando...</h1>
+    <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
 </div>
 
-<div class="contenido" id="noticias-content">
-    <p>Cargando noticias...</p>
+<div class="contenido">
+    {% if data.noticias %}
+        <h4>Noticias</h4>
+        <hr>
+        {% for noticia in data.noticias %}
+            <div class="card-custom card-noticias mb-3">
+                <h5>{{ noticia.titulo }}</h5>
+                <p>{{ noticia.texto }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay noticias disponibles para Abastecimiento.</p>
+    {% endif %}
 </div>
 
-<div class="logos-fijos" id="logos-content">
-    <p>Cargando logos...</p>
+<div class="logos-fijos">
+    {% for logo in data.logos %}
+        <div class="logo-card">
+            {# Verificamos si es un objeto con .url o solo el string #}
+            <img src="{{ logo.url if logo.url else logo }}" alt="logo empresa">
+        </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
 
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/abastecimiento')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                document.getElementById('saludo').textContent = data.saludo + ', ' + data.usuario;
-
-                const noticiasDiv = document.getElementById('noticias-content');
-                if (data.noticias.length > 0) {
-                    noticiasDiv.innerHTML = '<h4>Noticias</h4><hr>';
-                    data.noticias.forEach(noticia => {
-                        noticiasDiv.innerHTML += `
-                            <div class="card-custom card-noticias mb-3">
-                                <h5>${noticia.titulo}</h5>
-                                <p>${noticia.texto}</p>
-                            </div>
-                        `;
-                    });
-                } else {
-                    noticiasDiv.innerHTML = '<p>No hay noticias disponibles.</p>';
-                }
-
-                const logosDiv = document.getElementById('logos-content');
-                logosDiv.innerHTML = '';
-                data.logos.forEach(url => {
-                    logosDiv.innerHTML += `
-                        <div class="logo-card">
-                            <img src="${url}">
-                        </div>
-                    `;
-                });
-            } else {
-                alert('Error al cargar datos: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectar con la API');
-        });
-});
-</script>
-{% endblock %}
+{# Dejamos el block js vacío o lo quitamos si no hay nada más que cargar #}
+{% block extra_js %}{% endblock %}

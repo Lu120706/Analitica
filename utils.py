@@ -1,5 +1,4 @@
 from flask import session, redirect, url_for
-from django.shortcuts import render
 from datetime import datetime
 from functools import wraps
 import pytz
@@ -9,10 +8,14 @@ import sqlite3
 from data import usuarios, contactos_tic, empresas_config
 
 def cargar_noticias():
-    with open("data/noticias.json", "r", encoding="utf-8") as archivo:
-        return json.load(archivo)
+    try:
+        with open("data/noticias.json", "r", encoding="utf-8") as archivo:
+            return json.load(archivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
 
 def guardar_noticias(data):
+    os.makedirs("data", exist_ok=True)
     with open("data/noticias.json", "w", encoding="utf-8") as archivo:
         json.dump(data, archivo, indent=4, ensure_ascii=False)
 
@@ -29,10 +32,13 @@ def get_context():
     usuario = session.get("usuario")
     if not usuario:
         return None, None, []
+    
     empresa = session.get("empresa", "Organizacion GYJ")
     config = empresas_config.get(empresa)
+    
     if not config or not isinstance(config, dict):
         config = empresas_config.get("Organizacion GYJ", {})
+        
     logos = config.get("logos", [])
     return usuario, empresa, logos
 
@@ -40,7 +46,7 @@ def login_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         if not session.get("usuario"):
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("login"))
         return f(*args, **kwargs)
     return wrapper
 
@@ -49,7 +55,7 @@ def role_required(roles_permitidos):
         @wraps(func)
         def decorated_function(*args, **kwargs):
             if "usuario" not in session:
-                return redirect(url_for("auth.login"))
+                return redirect(url_for("login"))
             rol = session.get("rol")
             if rol not in roles_permitidos:
                 return "No autorizado", 403
@@ -66,40 +72,34 @@ def _noticia_vigente(n):
         hoy = datetime.now(zona).date()
         vence = datetime.strptime(fecha_exp, "%Y-%m-%d").date()
         return hoy <= vence
-    except ValueError:
+    except (ValueError, TypeError):
         return True
 
 def filtrar_noticias(noticias_lista, usuario_actual, rol_actual):
     if not noticias_lista:
         return []
+    
     vigentes = [n for n in noticias_lista if _noticia_vigente(n)]
+    
     if rol_actual == "admin":
         return vigentes
     
     filtradas = []
     for n in vigentes:
-        roles_permitidos = n.get("roles", [])
-        usuarios_permitidos = n.get("usuarios", [])
+        roles_p = n.get("roles", [])
+        usuarios_p = n.get("usuarios", [])
         
-        if usuario_actual in usuarios_permitidos:
+        # Si no hay restricciones, todos ven (o solo gerentes según tu regla)
+        if not roles_p and not usuarios_p:
             filtradas.append(n)
             continue
-        if rol_actual in roles_permitidos:
+            
+        if usuario_actual in usuarios_p or rol_actual in roles_p:
             filtradas.append(n)
-            continue
-        if not roles_permitidos and not usuarios_permitidos:
-            if rol_actual == "gerente":
-                filtradas.append(n)
+            
     return filtradas
 
-def organizacion (request):
-    data =empresas_config ["Organizacion GyJ"]
-
-    empresas = data ["empresas"]
-    return render(request, "Organizacion.html", {"empresas": empresas, "empresas_config": empresas_config})
-    
 DB_PATH = os.path.join("data", "comentarios.db")
-
 
 def init_db():
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
@@ -109,22 +109,18 @@ def init_db():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre_usuario TEXT,
                 email TEXT,
-                comentario TEXT,
+                comment TEXT,
                 empresa TEXT,
                 fecha_envio TEXT
             )
         """)
-
 
 def guardar_comentarios(datos):
     try:
         init_db()
         with sqlite3.connect(DB_PATH) as conn:
             conn.execute(
-                """
-                INSERT INTO comentarios (nombre_usuario, email, comentario, empresa, fecha_envio)
-                VALUES (?, ?, ?, ?, ?)
-                """,
+                "INSERT INTO comentarios (nombre_usuario, email, comment, empresa, fecha_envio) VALUES (?, ?, ?, ?, ?)",
                 (
                     datos.get("nombre_usuario"),
                     datos.get("email"),
@@ -134,22 +130,12 @@ def guardar_comentarios(datos):
                 )
             )
         return True, None
-
     except Exception as e:
-        error_msg = str(e)
-        print("!!! ERROR DETECTADO AL GUARDAR EN SQLITE !!!")
-        print(f"Datos enviados: {datos}")
-        print(f"Mensaje de error: {error_msg}")
-        print("----------------------------------")
-        return False, error_msg
-
+        return False, str(e)
 
 def obtener_comentarios():
     init_db()
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
-        cursor = conn.execute(
-            "SELECT id, nombre_usuario, email, comentario, empresa, fecha_envio FROM comentarios ORDER BY id DESC"
-        )
+        cursor = conn.execute("SELECT * FROM comentarios ORDER BY id DESC")
         return [dict(row) for row in cursor.fetchall()]
-    

@@ -1,4 +1,4 @@
-from flask import request, session, jsonify
+from flask import request, session, jsonify, render_template, redirect, url_for, flash
 from data import usuarios
 
 def login():
@@ -15,12 +15,27 @@ def login():
             session["usuario"] = username
             session["empresa"] = usuarios[username]["empresa"]
             session["rol"] = usuarios[username]["rol"]
-            return jsonify({"status": "success", "message": "Logged in", "redirect": "/api/dashboard"}), 200
+            
+            if request.is_json:
+                return jsonify({
+                    "status": "success", 
+                    "message": "Logged in", 
+                    "redirect": "/dashboard"
+                }), 200
+            else:
+                return redirect(url_for("dashboard"))
 
-        return jsonify({"status": "error", "message": "Credenciales inválidas"}), 401
-
-    return jsonify({"status": "ready", "message": "Envía POST con usuario y password"}), 200
+        if request.is_json:
+            return jsonify({"status": "error", "message": "Credenciales inválidas"}), 401
+        else:
+            flash("Credenciales inválidas", "danger")
+            return redirect(url_for("login"))
+            
+    return render_template('login.html')
 
 def logout():
     session.clear()
-    return jsonify({"status": "success", "message": "Logged out"}), 200
+    if request.is_json:
+        return jsonify({"status": "success", "message": "Logged out", "redirect": "/login"}), 200
+    else:
+        return redirect(url_for("login"))
