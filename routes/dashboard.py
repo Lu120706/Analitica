@@ -1,21 +1,25 @@
-from flask import request, redirect, url_for, session, jsonify, render_template
+from flask import request, redirect, url_for, session, jsonify, render_template, flash
 from data import empresas_config, contactos_tic
 from utils import (
     cargar_noticias,
     guardar_noticias,
     get_saludo,
     get_context,
+    get_usuario_nombre,
     login_required,
     role_required,
     filtrar_noticias,
     guardar_comentarios,
     obtener_comentarios,
+    guardar_respuesta,
+    obtener_respuesta,
 )
 
 @login_required
 def dashboard_view():
     data_noticias = cargar_noticias()
     usuario, empresa, logos = get_context()
+    nombre_usuario = get_usuario_nombre()
     rol = session.get("rol")
     
     logos_transformados = []
@@ -33,6 +37,7 @@ def dashboard_view():
     contexto = {
         "status": "success",
         "usuario": usuario,
+        "nombre_usuario": nombre_usuario,
         "empresa": empresa,
         "rol": rol,
         "saludo": get_saludo(),
@@ -84,20 +89,20 @@ def crear_noticia():
             if request.is_json:
                 return jsonify({"status": "success", "message": "Noticia publicada"}), 200
             else:
-                from flask import flash
                 flash("Noticia publicada exitosamente", "success")
                 return redirect(url_for('crear_noticia'))
 
         if request.is_json:
             return jsonify({"status": "error", "message": "Sección inválida"}), 400
         else:
-            from flask import flash
             flash("Sección inválida", "danger")
             return redirect(url_for('crear_noticia'))
 
     usuario, empresa, logos = get_context()
+    nombre_usuario = get_usuario_nombre()
     contexto = {
         "usuario": usuario,
+        "nombre_usuario": nombre_usuario,
         "empresa": empresa,
         "logos": logos,
         "saludo": get_saludo(),
@@ -109,14 +114,22 @@ def crear_noticia():
 def api_comentarios():
     """Ruta unificada para el sistema de soporte (POST para enviar, GET para listar)."""
     usuario_real, empresa_real, _ = get_context()
+    
+    if not usuario_real:
+        return jsonify({"status": "error", "message": "Usuario no autenticado"}), 401
 
     if request.method == "POST":
         datos_recibidos = request.get_json(silent=True) or {}
+        comentario_text = datos_recibidos.get("comentario", "").strip()
+        
+        if not comentario_text:
+            return jsonify({"status": "error", "message": "El comentario no puede estar vacío"}), 400
+        
         datos_finales = {
             "nombre_usuario": usuario_real,
             "email": session.get("usuario"),
-            "comentario": datos_recibidos.get("comentario"),
-            "empresa": empresa_real,
+            "comentario": comentario_text,
+            "empresa": empresa_real or "Sin empresa",
             "fecha": datos_recibidos.get("fecha")
         }
 
@@ -132,13 +145,14 @@ def api_comentarios():
 def empresa(nombre):
     """Renderiza la página de informes específicos de una empresa."""
     usuario, empresa_ctx, logos_ctx = get_context()
+    nombre_usuario = get_usuario_nombre()
     
     # Buscamos la configuración de la empresa seleccionada
-    from data import empresas_config # Asegurar la importación
     config = empresas_config.get(nombre, {})
     informes = config.get("informes", [])
     contexto = {
         "usuario": usuario,
+        "nombre_usuario": nombre_usuario,
         "empresa": empresa_ctx,
         "saludo": get_saludo(),
         "nombre_empresa_informe": nombre,
@@ -147,3 +161,50 @@ def empresa(nombre):
     }
 
     return render_template('empresa.html', data=contexto)
+
+
+@role_required(["admin"])
+@login_required
+def ver_comentarios():
+    """Vista para que el admin vea todos los comentarios."""
+    usuario, empresa, logos = get_context()
+    nombre_usuario = get_usuario_nombre()
+    
+    comentarios = obtener_comentarios()
+    
+    # Agregar respuestas a cada comentario
+    for comentario in comentarios:
+        respuesta = obtener_respuesta(comentario.get("id"))
+        comentario["respuesta"] = respuesta
+    
+    contexto = {
+        "usuario": usuario,
+        "nombre_usuario": nombre_usuario,
+        "empresa": empresa,
+        "saludo": get_saludo(),
+        "comentarios": comentarios,
+        "logos": logos,
+        "rol": session.get("rol")
+    }
+    
+    return render_template('comentarios_admin.html', data=contexto)
+
+
+@role_required(["admin"])
+@login_required
+def responder_comentario():
+    """API para que el admin responda a un comentario."""
+    if request.method == "POST":
+        datos = request.get_json(silent=True) or {}
+        comentario_id = datos.get("comentario_id")
+        respuesta_text = datos.get("respuesta", "").strip()
+        
+        if not comentario_id or not respuesta_text:
+            return jsonify({"status": "error", "message": "Datos incompletos"}), 400
+        
+        exito, error_msg = guardar_respuesta(comentario_id, respuesta_text)
+        if exito:
+            return jsonify({"status": "success", "message": "Respuesta registrada"}), 200
+        return jsonify({"status": "error", "message": error_msg}), 500
+    
+    return jsonify({"status": "error", "message": "Método no permitido"}), 405

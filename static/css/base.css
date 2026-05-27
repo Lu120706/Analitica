@@ -1,5 +1,3 @@
-/* general.css */
-
 * {
     font-family: "Times New Roman", Times, serif !important;
 }
@@ -11,6 +9,7 @@ body {
     background-size: cover;
     background-attachment: fixed;
 }
+
 
 .navbar-custom {
     background-color: #F2E124 !important;
@@ -29,40 +28,44 @@ body {
     margin-right: 10px;
 }
 
-.logos-fijos {
-    position: fixed;
-    top: 150px;
-    right: 1cm;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 20px;
-    z-index: 2000;
-}
+.logo-nav-circular {
+    width: 40px;
+    height: 40px;
 
-.logo-card {
-    width: 120px;
-    height: 120px;
-    background: #9c9b8f;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.logo-card img {
-    max-width: 130px;
-    max-height: 130px;
-    width: auto;
-    height: auto;
     object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card-noticias {
-    max-width: 550px !important;
+.dropdown-menu {
+    background-color: #000 !important;
+    z-index: 3000;
+}
+
+
+.dropdown-item {
+    color: #fff !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item.active {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+
+.saludo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.saludo-container h5,
+.saludo-container h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000;
 }
 
 .card-custom {
@@ -72,6 +75,10 @@ body {
     margin-bottom: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     font-size: 18px;
+}
+
+.card-noticias {
+    max-width: 550px !important;
 }
 
 .card-custom p,
@@ -88,73 +95,53 @@ body {
     font-weight: bold;
 }
 
-.dropdown-menu {
-    background-color: #000 !important;
-}
 
-.dropdown-item {
-    color: #fff !important;
-}
-
-.dropdown-item:hover,
-.dropdown-item:active,
-.dropdown-item.active {
-    background-color: #000 !important;
-    color: #fff !important;
-}
-
-.saludo-container {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.saludo-container h5,
-.saludo-container h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #000;
-}
-
-.btn-soporte-flotante {
+.logos-fijos {
     position: fixed;
-    bottom: 28px;
-    left: 28px;
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #F2E124;
-    border: none;
-    font-size: 1.6rem;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    z-index: 9999;
-    transition: all 0.3s ease;
+    top: 150px;
+    right: 1cm;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 26px; /* separación uniforme en todas las páginas */
+    z-index: 2000;
+}
+
+.logo-card {
+    width: 110px;
+    height: 110px;
+    background: #9c9c8f;
+    border-radius: 50%;
+    display: flex;
     justify-content: center;
-}
-
-.btn-soporte-flotante:hover {
-    transform: scale(1.12) translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.modal-soporte {
-    max-width: 480px;
-}
-
-.modal-soporte-content {
-    background: rgba(255, 255, 255, 0.97);
-    border-radius: 16px;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
     overflow: hidden;
 }
 
-.modal-soporte-header {
-    background: #F2E124;
-    border-bottom: none;
+.logo-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
 
-/* Botón flotante */
+.logo-card:hover img {
+    transform: scale(1.00);
+}
+
+#logos-content .logo-card {
+    margin-bottom: 11px;
+}
+
+.dropdown-menu {
+    z-index: 3000;
+}
+
+#resultados-busqueda {
+    z-index: 1000;
+}
+
 .btn-soporte-flotante {
     position: fixed;
     bottom: 28px;
@@ -200,6 +187,7 @@ body {
     border: none;
     max-width: 100%;
 }
+
 
 .lista-informes {
     list-style: none;

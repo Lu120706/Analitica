@@ -1,11 +1,10 @@
 {
-    "general": [
-        {
-            "titulo": "a",
-            "texto": "dcfvbgnm,.-",
-            "roles": [],
-            "usuarios": [],
-            "fecha_expiracion": "2026-05-08"
-        }
-    ]
+    "general": [],
+    "tic": [],
+    "contabilidad": [],
+    "contraloria": [],
+    "abastecimiento": [],
+    "indicadores": [],
+    "comercio": [],
+    "tesoreria": []
 }

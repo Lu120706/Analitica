@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Comentarios{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/comentarios_admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <div class="saludo-container">
+        <h5>Buzón de Comentarios</h5>
+    </div>
+
+<div class="filtro-container">
+
+    <div class="filtro-dropdown">
+        <button class="filtro-toggle" id="toggleFiltros">⚙️</button>
+        
+        <div class="filtro-menu" id="filtroMenu">
+            <button class="filtro-btn active" data-filter="todos">Todos</button>
+            <button class="filtro-btn" data-filter="recientes">Recientes</button>
+            <button class="filtro-btn" data-filter="respondidos">Respondidos</button>
+            <button class="filtro-btn" data-filter="pendientes"> Pendientes</button>
+        </div>
+    </div>
+</div>
+
+    <div class="comentarios-container">
+        {% if data.comentarios %}
+            {% for comentario in data.comentarios %}
+            <div class="comentario-card {% if comentario.respuesta %}respondido{% else %}pendiente{% endif %}">
+                <div class="comentario-header">
+                    <div>
+                        <div class="comentario-autor">
+                            {{ comentario.nombre_usuario }}
+                        </div>
+
+                        <div class="comentario-fecha">
+                            {{ comentario.fecha_envio }}
+                        </div>
+                    </div>
+
+                    <span class="comentario-empresa">
+                        {{ comentario.empresa }}
+                    </span>
+                </div>
+                <div class="comentario-texto">
+                    <strong>Comentario:</strong><br>
+                    {{ comentario.comentario }}
+                </div>
+                <div style="font-size: 0.82rem; color: #666; margin-top: 5px;">
+                    {{ comentario.email }}
+                </div>
+                {% if comentario.respuesta %}
+
+                <div class="respuesta-container">
+
+                    <div class="respuesta-label">Respuesta del Admin</div>
+                    <div class="respuesta-texto">{{ comentario.respuesta.respuesta }}</div>
+                    <div style="font-size: 0.78rem; color: #666; margin-top: 5px;">{{ comentario.respuesta.fecha_respuesta }}</div>
+
+                </div>
+
+                {% else %}
+
+                {# Admin: no mostrar control de respuesta (solo vista). #}
+                <div class="form-respuesta" style="opacity: 0.65;">
+                    <div class="text-muted" style="font-size: 0.9rem;">Pendiente de respuesta</div>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+        <div class="no-comentarios">
+            <h5>No hay comentarios</h5>
+            <p>Los usuarios aparecerán aquí cuando envíen sus comentarios.</p>
+        </div>
+
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/comentarios_admin.js') }}"></script>
+
+<div class="logos-fijos">
+
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            {% if logo.nombre is defined %}
+
+            <a href="{{ url_for('empresa', nombre=logo.nombre) }}" class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+            </a>
+
+            {% else %}
+
+            <div class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo">
+            </div>
+
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+</div>
+
+{% endblock %}

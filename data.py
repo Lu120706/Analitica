@@ -1,10 +1,35 @@
-# Usuarios
-usuarios = {
+import os
+from dotenv import load_dotenv
 
-    "admin@organizacion.com": {"nombre": "admin", "password": "123", "empresa": "Organizacion GYJ", "rol": "admin"},
-    "juan@colmena.com": {"nombre": "juan", "password": "123", "empresa": "Colmena", "rol": "usuario"},
-    "maria@almasa.com": {"nombre": "maria", "password": "123", "empresa": "Almasa", "rol": "usuario"},
-    "mario@gyj.com": {"nombre": "mario", "password": "123", "empresa": "GyJ Ferreterias", "rol": "gerente"}
+# Cargar variables de entorno desde .env
+load_dotenv()
+
+# Usuarios - Credenciales leídas desde variables de entorno
+usuarios = {
+    os.getenv("ADMIN_EMAIL"): {
+        "nombre": os.getenv("ADMIN_NAME", "admin"),
+        "password": os.getenv("ADMIN_PASSWORD"),
+        "empresa": os.getenv("ADMIN_EMPRESA", "Organizacion GYJ"),
+        "rol": os.getenv("ADMIN_ROL", "admin")
+    },
+    os.getenv("USUARIO_JUAN_EMAIL"): {
+        "nombre": os.getenv("USUARIO_JUAN_NAME", "juan"),
+        "password": os.getenv("USUARIO_JUAN_PASSWORD"),
+        "empresa": os.getenv("USUARIO_JUAN_EMPRESA", "Colmena"),
+        "rol": os.getenv("USUARIO_JUAN_ROL", "usuario")
+    },
+    os.getenv("USUARIO_MARIA_EMAIL"): {
+        "nombre": os.getenv("USUARIO_MARIA_NAME", "maria"),
+        "password": os.getenv("USUARIO_MARIA_PASSWORD"),
+        "empresa": os.getenv("USUARIO_MARIA_EMPRESA", "Almasa"),
+        "rol": os.getenv("USUARIO_MARIA_ROL", "usuario")
+    },
+    os.getenv("USUARIO_MARIO_EMAIL"): {
+        "nombre": os.getenv("USUARIO_MARIO_NAME", "mario"),
+        "password": os.getenv("USUARIO_MARIO_PASSWORD"),
+        "empresa": os.getenv("USUARIO_MARIO_EMPRESA", "GyJ Ferreterias"),
+        "rol": os.getenv("USUARIO_MARIO_ROL", "gerente")
+    }
 }
 
 # contactos

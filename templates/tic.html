@@ -6,7 +6,7 @@
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
-        <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
     </div>
 
     <div class="contenido-izquierda">
@@ -19,13 +19,6 @@
                     <p>{{ noticia.texto }}</p>
                 </div>
             {% endfor %}
-        {% else %}
-            <div class="card-custom">
-                <h5>Soporte TIC</h5>
-                <hr>
-                <p>No hay noticias activas. Para soporte técnico, escribe a:</p>
-                <strong>soporte.it@gyj.com.co</strong>
-            </div>
         {% endif %}
     </div>
 

@@ -8,27 +8,9 @@
 
 {% block content %}
 <div class="saludo-container">
-    <h5 id="saludo">{{ data.saludo }}, {{ data.usuario }}</h5>
+    <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
 </div>
 
-<div class="contenido-izquierda d-flex align-items-start gap-4 flex-wrap">
-    <div class="card-custom card-noticias">
-        <h5>Noticias</h5>
-        <div id="noticias-content">
-            {% if data.noticias %}
-                {% for n in data.noticias %}
-                    <p>
-                        <strong>{{ n.titulo }}</strong><br>
-                        {{ n.texto }}
-                    </p>
-                    <hr>
-                {% endfor %}
-            {% else %}
-                <p>No hay noticias disponibles.</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
 
 <div class="card-custom card-tic">
     <h5>Contacto TIC</h5>

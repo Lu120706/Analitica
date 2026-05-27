@@ -14,9 +14,7 @@
 {% block content %}
 
 <div class="saludo-container">
-    {# El saludo y usuario cargan de inmediato desde Python #}
-    <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
-</div>
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
 
 {# Solo se renderiza el row si hay noticias, si no, no aparece ni el título ni el espacio #}
 {% if data.noticias and data.noticias|length > 0 %}
@@ -36,10 +34,10 @@
 </div>
 {% endif %}
 
-<div class="logos-fijos">
+<div class="logos-fijos" id="logos-fijos">
     {% if data.logos %}
         {% for logo in data.logos %}
-        <div class="logo-card">
+        <div class="logo-card" id="logo-card">
             {# Soporta tanto string directo como objeto con atributo .url #}
             <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
         </div>
@@ -52,3 +50,4 @@
 {% block extra_js %}
 {# Bloque vacío: sin scripts de carga asíncrona #}
 {% endblock %}
+

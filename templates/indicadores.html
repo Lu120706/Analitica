@@ -17,10 +17,9 @@
 
     <div class="saludo-container">
         {# Carga inmediata sin "Cargando..." #}
-        <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
     </div>
 
-    {# Solo se muestra si hay noticias reales #}
     {% if data.noticias and data.noticias|length > 0 %}
     <div class="contenido-izquierda">
         <h4 class="mb-2">Noticias</h4>

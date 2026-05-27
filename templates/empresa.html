@@ -25,7 +25,7 @@
             {% for informe in data.informes %}
                 <li class="item-informe">
                     <span>{{ informe.nombre }}</span>
-                    <a href="{{ informe.ruta }}" class="btn btn-outline-dark btn-sm">Ver informe</a>
+                    <a href="{{ url_for(informe.ruta) }}" class="btn btn-outline-dark btn-sm">Ver informe</a>
                 </li>
             {% endfor %}
         {% else %}

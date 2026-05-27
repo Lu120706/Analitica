@@ -14,22 +14,7 @@
 
 {% block content %}
 <div class="saludo-container">
-    <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
-</div>
-
-<div class="contenido-izquierda">
-    {# Solo mostramos el título y el contenedor si realmente existen noticias #}
-    {% if data.noticias and data.noticias|length > 0 %}
-        <h5>Noticias</h5>
-        <hr>
-        {% for noticia in data.noticias %}
-            <div class="card-custom card-noticias mb-3">
-                <strong>{{ noticia.titulo }}</strong>
-                <p>{{ noticia.texto }}</p>
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
 
 <div class="logos-fijos">
     {% if data.logos %}

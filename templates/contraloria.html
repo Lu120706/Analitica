@@ -16,7 +16,7 @@
 <div class="container-fluid mt-4">
 
     <div class="saludo-container">
-        <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
     </div>
 
     <div class="row">
@@ -39,10 +39,10 @@
 
 </div>
 
-<div class="logos-fijos">
+<div class="logos-fijos" id="logos-fijos">
     {% if data.logos %}
         {% for logo in data.logos %}
-            <div class="logo-card">
+            <div class="logo-card" id="logo-card">
                 <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
             </div>
         {% endfor %}

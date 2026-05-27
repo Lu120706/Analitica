@@ -15,34 +15,18 @@
 {% block content %}
 
 <div class="saludo-container">
-    <h1>{{ data.saludo }}, {{ data.usuario }}</h1>
+    <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
 </div>
 
-<div class="contenido">
-    {% if data.noticias %}
-        <h4>Noticias</h4>
-        <hr>
-        {% for noticia in data.noticias %}
-            <div class="card-custom card-noticias mb-3">
-                <h5>{{ noticia.titulo }}</h5>
-                <p>{{ noticia.texto }}</p>
+<div class="logos-fijos" id="logos-fijos">
+    {% if data.logos %}
+        {% for logo in data.logos %}
+            <div class="logo-card" id="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
             </div>
         {% endfor %}
-    {% else %}
-        <p>No hay noticias disponibles para Abastecimiento.</p>
     {% endif %}
 </div>
 
-<div class="logos-fijos">
-    {% for logo in data.logos %}
-        <div class="logo-card">
-            {# Verificamos si es un objeto con .url o solo el string #}
-            <img src="{{ logo.url if logo.url else logo }}" alt="logo empresa">
-        </div>
-    {% endfor %}
-</div>
-
 {% endblock %}
-
-{# Dejamos el block js vacío o lo quitamos si no hay nada más que cargar #}
 {% block extra_js %}{% endblock %}
