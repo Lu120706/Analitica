@@ -1,10 +1,7 @@
 import os
 from dotenv import load_dotenv
-
-# Cargar variables de entorno desde .env
 load_dotenv()
 
-# Usuarios - Credenciales leídas desde variables de entorno
 usuarios = {
     os.getenv("ADMIN_EMAIL"): {
         "nombre": os.getenv("ADMIN_NAME", "admin"),

@@ -6,63 +6,64 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tesoreria.css') }}">
 {% endblock %}
 
+{% block nav_links %}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="reportesDropdown"
+       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Reportes
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
+        <li><a class="dropdown-item" href="#">Reportes de cartera</a></li>
+        <li><a class="dropdown-item" href="#">Reporte IBR</a></li>
+        <li><a class="dropdown-item" href="#">Ventas de gestión</a></li>
+        <li><a class="dropdown-item" href="#">Ventas mostrador</a></li>
+        <li><a class="dropdown-item" href="#">Reporte EVA</a></li>
+        <li><a class="dropdown-item" href="#">Cumplimiento presupuestal</a></li>
+    </ul>
+</li>
+{% endblock %}
+
 {% block content %}
 
-<div class="container-fluid mt-4">
+<div class="saludo-container">
+    <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
+</div>
 
-    <div class="saludo-container">
-        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
+{# Noticias solo si existen #}
+{% if data.noticias and data.noticias|length > 0 %}
+<div class="row" id="noticias-row">
+    <div class="col-12">
+        <h5>Noticias</h5>
+        <hr>
     </div>
 
-    <div class="reporte-dropdown mb-5">
-        <label for="reportes" class="form-label fw-bold">Reportes de Tesorería</label>
-        <select id="reportes" name="reportes" class="form-select" onchange="if(this.value && this.value!='#') window.location.href=this.value">
-            <option value="" disabled selected>Seleccione un reporte</option>
-            <option value="{{ url_for('cartera') }}">Reportes de cartera</option>
-            <option value="#">Reportes de IBR</option>
-            <option value="#">Reportes de ventas de gestión</option>
-            <option value="#">Reportes de ventas de mostrador</option>
-            <option value="#">Reportes EVA</option>
-            <option value="#">Reportes de venta perdida</option>
-            <option value="#">Reportes de cumplimiento presupuestal</option>
-        </select>
+    {% for noticia in data.noticias %}
+    <div class="col-12">
+        <div class="card-custom card-noticias mb-3">
+            <strong>{{ noticia.titulo }}</strong><br>
+            {{ noticia.texto }}
+        </div>
     </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-    <div class="contenido-izquierda">
-        {% if data.noticias and data.noticias|length > 0 %}
-            {# Muestra noticias si existen #}
-            <h5>Noticias</h5>
-            <hr>
-            {% for noticia in data.noticias %}
-                <div class="card-custom card-noticias mb-3">
-                    <strong>{{ noticia.titulo }}</strong>
-                    <p>{{ noticia.texto }}</p>
-                </div>
+<div class="logos-fijos" id="logos-fijos">
+    <div id="logos-content">
+
+        {% if data.logos %}
+            {% for logo in data.logos %}
+            <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+            </a>
             {% endfor %}
-        {% else %}
-            <div class="card-custom border-info">
-                <h5>Soporte Técnico TIC</h5>
-                <hr>
-                <p>No hay noticias recientes para esta sección.</p>
-                <p>Si presentas problemas con los reportes de Tesorería, contacta a soporte:</p>
-                <ul>
-                    <li><strong>Correo:</strong> soporte.it@gyj.com.co</li>
-                    <li><strong>Ticket:</strong> <a href="#" class="text-info">Plataforma de servicios</a></li>
-                </ul>
-            </div>
         {% endif %}
+
     </div>
-
 </div>
 
-<div class="logos-fijos">
-    {% if data.logos %}
-        {% for logo in data.logos %}
-            <div class="logo-card">
-                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
+{% endblock %}
 
+{% block extra_js %}
+{# sin scripts #}
 {% endblock %}

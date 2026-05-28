@@ -11,8 +11,24 @@
     <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
 </div>
 
+{# Bloque de noticias compacto (El ÚNICO que queda) #}
+{% if data.noticias and data.noticias|length > 0 %}
+<div class="card-custom" style="max-width: 900px; padding: 15px; font-size: 0.9rem; margin: 0 auto 25px auto;">
+    <h6 class="mb-2">Noticias Generales</h6>
+    <hr class="my-2">
+    <div class="d-flex flex-wrap gap-3">
+        {% for noticia in data.noticias %}
+            <div class="p-2 border rounded" style="flex: 1 1 250px; background: rgba(255,255,255,0.3);">
+                <strong>{{ noticia.titulo }}</strong><br>
+                <p class="mb-1 text-truncate">{{ noticia.texto }}</p>
+                {% if noticia.link %}<a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver más</a>{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
-<div class="card-custom card-tic">
+<div class="card-custom card-tic" style="max-width: 900px; margin: 0 auto 25px auto;">
     <h5>Contacto TIC</h5>
     <hr>
     <div class="row" id="contactos-tic">

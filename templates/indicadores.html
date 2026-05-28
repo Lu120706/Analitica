@@ -36,13 +36,15 @@
 </div>
 
 <div class="logos-fijos">
+    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
-            <div class="logo-card">
-                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo">
-            </div>
+            <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+            </a>
         {% endfor %}
     {% endif %}
+    </div>
 </div>
 
 {% endblock %}

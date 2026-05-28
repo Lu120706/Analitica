@@ -1,4 +1,4 @@
-* {
+﻿* {
     font-family: "Times New Roman", Times, serif !important;
 }
 
@@ -10,9 +10,15 @@ body {
     background-attachment: fixed;
 }
 
+.navbar-nav {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+}
 
 .navbar-custom {
     background-color: #F2E124 !important;
+    padding: 0px 15px !important; 
+    height: 60px !important;
 }
 
 .navbar-brand {
@@ -20,12 +26,14 @@ body {
     font-weight: 800;
     font-size: 1rem;
     margin-right: 30px;
+    padding: 0 ;
 }
 
 .nav-link {
     color: #000 !important;
     font-size: 0.9rem;
     margin-right: 10px;
+    padding: 0 5px;
 }
 
 .logo-nav-circular {
@@ -103,7 +111,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 26px; /* separación uniforme en todas las páginas */
+    gap: 26px;
     z-index: 2000;
 }
 
@@ -118,6 +126,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .logo-card img {
@@ -208,4 +217,23 @@ body {
     text-decoration: none;
     color: #000;
     font-weight: 600;
+}
+
+.logos-fijos.ocultar-logos {
+    display: none !important;
+}
+
+.btn-soporte-flotante.ocultar-logos {
+    display: none !important;
+}
+
+#notificacion-campana-container img {
+    width: 30px !important;
+    height: 30px !important;
+    filter: brightness(0);
+}
+
+.dropdown button.btn-sm.dropdown-toggle img {
+    width: 30px !important;  
+    height: 30px !important;
 }

@@ -10,7 +10,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<body data-rol="{{ data.rol if data else '' }}">
 
     <nav class="navbar navbar-expand-lg navbar-custom px-4">
         <div class="container-fluid">
@@ -40,30 +40,26 @@
                     <a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
                     {% endblock %}
                 </div>
-
-                {% if data and data.rol != "admin" %}
-                <div class="position-relative me-3" id="notificacion-campana-container" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalNotificaciones" title="Ver tus notificaciones">
-                    <span style="font-size: 1.3rem;">🔔</span>
-                    <span id="badge-notificacion" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle d-none">
-                        <span class="visually-hidden">Nueva respuesta</span>
-                    </span>
+                <div class="notificacion-container" id="notificacion-campana-container" data-bs-toggle="modal" data-bs-target="#modalNotificaciones" title="Ver tus notificaciones">
+                    <img src="https://img.icons8.com/ios-filled/512/bell.png" alt="Notificaciones" class="icono-campana">
+                    <span id="badge-notificacion" class="badge-notificacion d-none"></span>
                 </div>
-                {% endif %}
 
+                <!-- Usuario -->
                 <div class="dropdown">
-                    <button class="btn btn-sm dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: none; border: none;">
-                        👤
+                    <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnUsuario">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Usuario" class="icono-usuario">
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         {% if data and data.rol == "admin" %}
-                        <li><h6 class="dropdown-header">Administración</h6></li>
-                        <li><a class="dropdown-item" href="{{ url_for('crear_noticia') }}">Crear noticia</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('ver_comentarios') }}">Ver comentarios</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('crear_noticia') }}">Noticias</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('ver_comentarios') }}">Comentarios</a></li>
                         <li><hr class="dropdown-divider"></li>
                         {% endif %}
                         <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
-                    </ul>
+                    </ul> 
                 </div>
+
             </div>
         </div>
     </nav>
@@ -99,7 +95,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header py-2">
-                    <h6 class="modal-title fw-bold mb-0">🔔 Tus Notificaciones</h6>
+x                    <h6 class="modal-title fw-bold mb-0">🔔</h6>
                     <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="contenedor-notificaciones-list">

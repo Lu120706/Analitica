@@ -21,6 +21,7 @@
         <div class="filtro-menu" id="filtroMenu">
             <button class="filtro-btn active" data-filter="todos">Todos</button>
             <button class="filtro-btn" data-filter="recientes">Recientes</button>
+            <button class="filtro-btn" data-filter="archivados">Archivados</button>
             <button class="filtro-btn" data-filter="respondidos">Respondidos</button>
             <button class="filtro-btn" data-filter="pendientes"> Pendientes</button>
         </div>
@@ -30,7 +31,7 @@
     <div class="comentarios-container">
         {% if data.comentarios %}
             {% for comentario in data.comentarios %}
-            <div class="comentario-card {% if comentario.respuesta %}respondido{% else %}pendiente{% endif %}">
+            <div class="comentario-card {% if comentario.respuesta %}respondido{% else %}pendiente{% endif %}" data-id="{{ comentario.id }}">
                 <div class="comentario-header">
                     <div>
                         <div class="comentario-autor">
@@ -65,9 +66,10 @@
 
                 {% else %}
 
-                {# Admin: no mostrar control de respuesta (solo vista). #}
-                <div class="form-respuesta" style="opacity: 0.65;">
-                    <div class="text-muted" style="font-size: 0.9rem;">Pendiente de respuesta</div>
+                {# Formulario para responder #}
+                <div class="form-respuesta mt-3">
+                    <textarea class="form-control mb-2" data-comentario-id="{{ comentario.id }}" rows="2" placeholder="Escribe tu respuesta..."></textarea>
+                    <button class="btn btn-primary btn-sm btn-enviar-respuesta" data-comentario-id="{{ comentario.id }}">Enviar Respuesta</button>
                 </div>
 
                 {% endif %}
@@ -77,12 +79,6 @@
             {% endfor %}
 
         {% else %}
-
-        <div class="no-comentarios">
-            <h5>No hay comentarios</h5>
-            <p>Los usuarios aparecerán aquí cuando envíen sus comentarios.</p>
-        </div>
-
         {% endif %}
     </div>
 
@@ -91,7 +87,7 @@
 <script src="{{ url_for('static', filename='js/comentarios_admin.js') }}"></script>
 
 <div class="logos-fijos">
-
+    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
             {% if logo.nombre is defined %}
@@ -109,7 +105,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-
+    </div>
 </div>
 
 {% endblock %}

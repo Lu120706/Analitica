@@ -12,10 +12,11 @@
         allowFullScreen="true">
     </iframe>
     {# El botón usa la función global del archivo informes.js #}
-    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶ Fullscreen</button>
+    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
 </div>
 
 <div class="logos-fijos">
+    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
             <div class="logo-card">
@@ -23,6 +24,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    </div>
 </div>
 
 {% endblock %}

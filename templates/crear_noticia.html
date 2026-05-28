@@ -2,8 +2,8 @@
 {% block title %}Crear Noticia{% endblock %}
 
 {% block content %}
-<div class="card-custom" style="max-width: 600px; margin: 40px auto;">
-    <h3 class="mb-4">Crear nueva noticia</h3>
+<div class="card-custom" style="max-width: 500px; margin: 20px auto; padding: 15px;">
+    <h5 class="mb-3">Crear nueva noticia</h5>
     
     {# Flask puede enviar mensajes de confirmación usando 'flash' #}
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -43,6 +43,11 @@
         </div>
         
         <div class="mb-3">
+            <label class="form-label fw-bold">Link (Opcional)</label>
+            <input type="url" name="link" class="form-control" placeholder="https://ejemplo.com/informe">
+        </div>
+        
+        <div class="mb-3">
             <label class="form-label fw-bold">Fecha de expiración</label>
             <input type="date" name="fecha_expiracion" class="form-control">
             <div class="form-text">Si la dejas vacía, la noticia será permanente.</div>
@@ -53,6 +58,7 @@
 </div>
 
 <div class="logos-fijos">
+    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
             <div class="logo-card">
@@ -60,6 +66,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    </div>
 </div>
 {% endblock %}
 

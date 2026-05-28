@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     filtroBtns.forEach(b => b.classList.remove('active'));
     const btnPendiente = document.querySelector('[data-filter="pendientes"]');
     if (btnPendiente) btnPendiente.classList.add('active');
-
-    // En esta pantalla el admin ya no tiene botón/textarea de respuesta (solo vista).
-    // Si existieran botones por algún render antiguo, evitamos errores.
     const botones = document.querySelectorAll('.btn-enviar-respuesta');
     if (botones && botones.length > 0) {
         botones.forEach((boton) => {
@@ -46,10 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         boton.innerText = 'Enviar Respuesta';
                         return;
                     }
-
-                    // Si el UI no existe, no intentamos manipular DOM.
-                    boton.disabled = false;
-                    boton.innerText = 'Enviar Respuesta';
+                    alert('Respuesta enviada correctamente.');
+                    window.location.reload();
                 } catch (error) {
                     console.error(error);
                     alert('Error de conexión');
@@ -85,9 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.style.display = card.classList.contains('respondido') ? 'flex' : 'none';
                 } else if (filtro === 'pendientes') {
                     card.style.display = card.classList.contains('pendiente') ? 'flex' : 'none';
-                } else if (filtro === 'recientes') {
-                    card.style.display = 'flex';
-                }
+            } else if (filtro === 'recientes') {
+                const ordenados = Array.from(comentarios).sort((a, b) => b.dataset.id - a.dataset.id);
+                comentarios.forEach((card, index) => {
+                    card.style.display = index < 10 ? 'flex' : 'none';
+                });
+            } else if (filtro === 'archivados') {
+                const ordenados = Array.from(comentarios).sort((a, b) => b.dataset.id - a.dataset.id);
+                comentarios.forEach((card, index) => {
+                    card.style.display = index >= 10 ? 'flex' : 'none';
+                });
+            }
+
             });
 
             if (filtroMenu) filtroMenu.classList.remove('active');

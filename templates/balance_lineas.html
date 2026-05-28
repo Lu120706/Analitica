@@ -11,8 +11,7 @@
         src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"
         allowFullScreen="true">
     </iframe>
-    {# El botón llama a la función que ya tienes en tu JS externo #}
-    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶ Fullscreen</button>
+    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
 </div>
 
 <div class="logos-fijos">
@@ -28,6 +27,5 @@
 {% endblock %}
 
 {% block extra_js %}
-{# Aquí cargas tu JS donde vive toggleZoom y cualquier otra lógica de informes #}
 <script src="{{ url_for('static', filename='js/informes.js') }}"></script>
 {% endblock %}

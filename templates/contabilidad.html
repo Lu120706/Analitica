@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block nav_links %}
-<a class="nav-link" href="#">Auditoría</a>
-<a class="nav-link" href="#">Revisión Fiscal</a>
+<a class="nav-link" href="{{ url_for('auditoria') }}">Auditoría</a>
+<a class="nav-link" href="{{ url_for('revision_fiscal') }}">Revisión Fiscal</a>
 {% endblock %}
 
 {% block content %}
@@ -35,14 +35,15 @@
 {% endif %}
 
 <div class="logos-fijos" id="logos-fijos">
-    {% if data.logos %}
-        {% for logo in data.logos %}
-        <div class="logo-card" id="logo-card">
-            {# Soporta tanto string directo como objeto con atributo .url #}
-            <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
-        </div>
-        {% endfor %}
-    {% endif %}
+    <div id="logos-content">
+        {% if data.logos %}
+            {% for logo in data.logos %}
+            <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+            </a>
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}

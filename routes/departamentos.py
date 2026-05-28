@@ -1,5 +1,19 @@
 from flask import request, session, render_template
+from data import empresas_config
 from utils import cargar_noticias, get_saludo, get_context, get_usuario_nombre, login_required, filtrar_noticias
+
+def _transformar_logos(logos, empresa, rol):
+    """Convierte la lista de URLs en dicts {nombre, url} igual que el dashboard."""
+    logos_transformados = []
+    for logo in logos:
+        nombre_real = empresa
+        if rol == "admin" and empresa == "Organizacion GYJ":
+            for nombre_emp, conf in empresas_config.items():
+                if nombre_emp != "Organizacion GYJ" and logo in conf.get("logos", []):
+                    nombre_real = nombre_emp
+                    break
+        logos_transformados.append({"nombre": nombre_real, "url": logo})
+    return logos_transformados
 
 def _obtener_contexto_seccion(seccion_key, usuario, empresa, logos, rol):
     data_noticias = cargar_noticias()
@@ -11,7 +25,7 @@ def _obtener_contexto_seccion(seccion_key, usuario, empresa, logos, rol):
         "rol": rol,
         "saludo": get_saludo(),
         "noticias": noticias_filtradas,
-        "logos": logos,
+        "logos": _transformar_logos(logos, empresa, rol),
         "seccion": seccion_key
     }
 
@@ -77,3 +91,22 @@ def tesoreria():
     contexto = _obtener_contexto_seccion("tesoreria", usuario, empresa, logos, rol)
     contexto["nombre_usuario"] = nombre_usuario
     return render_template('tesoreria.html', data=contexto)
+@login_required
+def auditoria():
+    usuario, empresa, logos = get_context()
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Auditoría", "rol": session.get("rol"), "saludo": get_saludo()
+    }
+    return render_template('auditoria.html', data=contexto)
+
+@login_required
+def revision_fiscal():
+    usuario, empresa, logos = get_context()
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Revisión Fiscal", "rol": session.get("rol"), "saludo": get_saludo()
+    }
+    return render_template('revision_fiscal.html', data=contexto)

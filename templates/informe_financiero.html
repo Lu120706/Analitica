@@ -11,11 +11,11 @@
         src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"
         allowFullScreen="true">
     </iframe>
-    {# Llamamos a la función toggleZoom que ya tienes en informes.js #}
-    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶ Fullscreen</button>
+    <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
 </div>
 
 <div class="logos-fijos">
+    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
             <div class="logo-card">
@@ -24,6 +24,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    </div>
 </div>
 
 {% endblock %}

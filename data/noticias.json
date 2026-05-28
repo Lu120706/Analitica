@@ -1,5 +1,30 @@
 {
-    "general": [],
+    "general": [
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "informe",
+            "link": "https://img.icons8.com/ios-filled/50/000000/bell--v1.png",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-05-27"
+        },
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "hola",
+            "link": "https://img.icons8.com/ios-filled/50/000000/bell--v1.png",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-05-28"
+        },
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "drftyu",
+            "link": "https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-05-28"
+        }
+    ],
     "tic": [],
     "contabilidad": [],
     "contraloria": [],
