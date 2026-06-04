@@ -1,4 +1,4 @@
-﻿﻿* {
+﻿* {
     font-family: "Times New Roman", Times, serif !important;
 }
 
@@ -29,15 +29,6 @@ body {
     z-index: 2000 !important;
 }
 
-body {
-    margin: 0;
-    padding-top: 60px !important; /* Espacio para que el contenido no se oculte bajo el navbar */
-    background:
-        linear-gradient(rgba(20, 30, 60, 0.15), rgba(60, 40, 20, 0.2)),
-        url("https://i.postimg.cc/zBq4wWCg/Gemini-Generated-Image-estpntestpntestp.png");
-    background-size: cover;
-    background-attachment: fixed;
-}
 
 .navbar-brand {
     color: #000 !important;
@@ -82,8 +73,15 @@ body {
 
 
 .saludo-container {
-    text-align: center;
-    margin-bottom: 30px;
+    text-align: center !important;
+    margin-top: 5px !important;
+}
+
+.saludo-container h5,
+.saludo-container h1 {
+    font-size: 1.6rem;
+    font-weight: 400 !important;
+    color: #000;
 }
 
 .saludo-container h5,
@@ -159,10 +157,10 @@ body {
 
 .btn-soporte-flotante {
     position: fixed;
-    bottom: 28px;
-    left: 28px;
-    width: 58px;
-    height: 58px;
+    bottom: 5px;
+    left: 1300px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #F2E124;
     border: none;
@@ -181,8 +179,27 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-.modal-soporte {
-    max-width: 480px;
+/* Estilo limpio para el formulario de soporte */
+#formComentario textarea#comentario {
+    width: 100% !important;
+    min-height: 100px !important;
+    padding: 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    display: block !important;
+    margin-bottom: 10px !important;
+}
+
+#formComentario button[type="submit"] {
+    width: 100% !important;
+    padding: 10px !important;
+    background-color: #000 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    display: block !important;
 }
 
 .modal-soporte-content {
@@ -245,17 +262,17 @@ body {
 }
 .search-container-fixed {
     position: fixed;
-    top: 140px; /* Bajado significativamente para quedar sobre los logos */
+    top: 140px; 
     right: 20px;
     width: 220px;
     z-index: 100;
 }
 
 .logos-fijos {
-    position: fixed !important;
-    top: 160px !important;
+    position: absolute !important;
+    top: 150px !important;
     right: 20px !important;
-    z-index: 50 !important; 
+    z-index: 5 !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 15px !important;
@@ -294,7 +311,7 @@ body {
 .lupa-icono {
     position: absolute;
     right: 15px;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     pointer-events: none;
 }
@@ -302,7 +319,7 @@ body {
 #resultados-busqueda {
     position: absolute;
     width: 100%;
-    z-index: 5000; /* Asegurar que los resultados estén siempre al frente */
+    z-index: 5000;
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -321,5 +338,3 @@ body {
 .dropdown-divider {
     margin: 2px 0 !important;
 }
-
-.logos-fijos.ocultar-logos { display: none !important; }

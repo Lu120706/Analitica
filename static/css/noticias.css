@@ -16,6 +16,7 @@ body {
     transition: 0.3s;
     max-width: 550px;
     margin-left: 0;
+    top: 15px;
 }
 
 .card-custom:hover {

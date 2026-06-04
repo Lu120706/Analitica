@@ -30,15 +30,7 @@
 
             <div class="d-flex align-items-center ms-auto">
                 <div class="navbar-nav me-4">
-                    {% block nav_links %}
-                    <a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
-                    <a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
-                    <a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
-                    <a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
-                    <a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
-                    <a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
-                    <a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
-                    {% endblock %}
+                    {% block nav_links %}{% endblock %}
                 </div>
                 
                 <div class="notificacion-container" id="notificacion-campana-container" data-bs-toggle="modal" data-bs-target="#modalNotificaciones" title="Ver tus notificaciones">
@@ -69,7 +61,7 @@
     </div>
 
     {% if data and data.rol != "admin" %}
-    <button class="btn-soporte-flotante" data-bs-toggle="modal" data-bs-target="#modalSoporte" title="Enviar comentario a TIC">Envia tu comentario</button>
+    <button class="btn-soporte-flotante" data-bs-toggle="modal" data-bs-target="#modalSoporte" title="Enviar comentario a TIC">☁️</button>
     {% endif %}
 
     <div class="modal fade" id="modalSoporte" tabindex="-1" aria-hidden="true">

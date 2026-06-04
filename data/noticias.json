@@ -1,5 +1,14 @@
 {
-    "general": [],
+    "general": [
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "JHOLGFD",
+            "link": "https://outlook.cloud.microsoft/mail/inbox/id/AAQkADgyMWU1MDg3LTQwZDUtNGI4ZC05NjMzLWRhMzI3MDUwMTliMQAQAIGui%2BVvNVBDv43%2FXjNf24M%3D?deeplink=mail%2F",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-04"
+        }
+    ],
     "tic": [],
     "contabilidad": [],
     "contraloria": [],

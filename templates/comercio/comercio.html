@@ -7,16 +7,18 @@
 {% endblock %}
 
 {% block nav_links %}
-<a class="nav-link" href="#">Campañas</a>
-<a class="nav-link" href="#">Clientes</a>
-<a class="nav-link" href="#">Ventas</a>
+<a class="nav-link" href="{{ url_for('comercio_campañas') }}">Campañas</a>
+<a class="nav-link" href="{{ url_for('comercio_clientes') }}">Clientes</a>
+<a class="nav-link" href="{{ url_for('comercio_ventas') }}">Ventas</a>
 {% endblock %}
 
 {% block content %}
-<div class="saludo-container">
-        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
 
-<div class="logos-fijos">
+<div class="saludo-container" style="margin-top: 20px !important;">
+    <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
+</div>
+
+<div class="logos-fijos" id="logos-fijos">
     <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
@@ -30,5 +32,5 @@
 {% endblock %}
 
 {% block extra_js %}
-{# Bloque vacío ya que quitamos el fetch #}
-{% endblock %}ss
+{# Bloque vacío #}
+{% endblock %}

@@ -77,11 +77,42 @@ def tic():
 @login_required
 def comercio():
     usuario, empresa, logos = get_context()
-    nombre_usuario = get_usuario_nombre()
-    rol = session.get("rol")
-    contexto = _obtener_contexto_seccion("comercio", usuario, empresa, logos, rol)
-    contexto["nombre_usuario"] = nombre_usuario
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Comercio", "rol": session.get("rol"), "saludo": get_saludo()
+    }
     return render_template('comercio/comercio.html', data=contexto)
+
+@login_required
+def comercio_campañas():
+    usuario, empresa, logos = get_context()
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Campañas de Comercio", "rol": session.get("rol"), "saludo": get_saludo()
+    }
+    return render_template('comercio/campañas.html', data=contexto)
+
+@login_required
+def comercio_clientes():
+    usuario, empresa, logos = get_context()
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Clientes de Comercio", "rol": session.get("rol"), "saludo": get_saludo()
+    }
+    return render_template('comercio/clientes.html', data=contexto)
+
+@login_required
+def comercio_ventas():
+    usuario, empresa, logos = get_context()
+    contexto = {
+        "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
+        "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
+        "titulo": "Ventas de Comercio", "rol": session.get("rol"), "saludo": get_saludo()
+    }
+    return render_template('comercio/ventas.html', data=contexto)
 
 
 @login_required
@@ -118,34 +149,34 @@ def auditoria():
     return render_template('contabilidad/auditoria.html', data=contexto)
 
 @login_required
-def revision_fiscal():
+def nomina():
     usuario, empresa, logos = get_context()
     contexto = {
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
         "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
-        "titulo": "Revisión Fiscal", "rol": session.get("rol"), "saludo": get_saludo()
+        "titulo": "Nomina", "rol": session.get("rol"), "saludo": get_saludo()
     }
-    return render_template('contabilidad/revision_fiscal.html', data=contexto)
+    return render_template('contabilidad/nomina.html', data=contexto)
 
 @login_required
-def indicador_1():
+def indicador_financiero():
     usuario, empresa, logos = get_context()
     contexto = {
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
         "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
-        "titulo": "Indicador 1", "rol": session.get("rol"), "saludo": get_saludo()
+        "titulo": "Indicador financiero", "rol": session.get("rol"), "saludo": get_saludo()
     }
-    return render_template('contraloria/indicador_1.html', data=contexto)
+    return render_template('contraloria/indicador_financiero.html', data=contexto)
 
 @login_required
-def indicador_2():
+def indicador_gestion():
     usuario, empresa, logos = get_context()
     contexto = {
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
         "empresa": empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
-        "titulo": "Indicador 2", "rol": session.get("rol"), "saludo": get_saludo()
+        "titulo": "Indicador de gestión", "rol": session.get("rol"), "saludo": get_saludo()
     }
-    return render_template('contraloria/indicador_2.html', data=contexto)
+    return render_template('contraloria/indicador_gestion.html', data=contexto)
 
 @login_required
 def contraloria_reportes():
@@ -163,7 +194,7 @@ def campañas():
     contexto = {
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(),
         "empresa":empresa, "logos": _transformar_logos(logos, empresa, session.get("rol")),
-        "titulo": "Campañas de abastecimiento", "rol": session.get("rol"), "saludo": get_saludo()
+        "titulo": "Campañas", "rol": session.get("rol"), "saludo": get_saludo()
     } 
 
     return render_template('abastecimiento/campañas.html', data=contexto)

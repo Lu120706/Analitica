@@ -49,10 +49,11 @@ def crear_noticia():
         fecha_exp = payload.get("fecha_expiracion", "")
         
         data_noticias = cargar_noticias()
+
         if seccion not in data_noticias:
             flash("Sección inválida", "danger")
-            return redirect(url_for('crear_noticia'))
-            
+            return redirect(url_for("crear_noticia"))  # o el endpoint correcto
+
         data_noticias[seccion].append({
             "titulo": titulo,
             "texto": texto,
@@ -61,24 +62,25 @@ def crear_noticia():
             "usuarios": [],
             "fecha_expiracion": fecha_exp if fecha_exp else None
         })
-        guardar_noticias(data_noticias)
-        flash("Noticia publicada exitosamente", "success")
-        return redirect(url_for('crear_noticia'))
 
-            
-        data_noticias[seccion].append({
-            "titulo": titulo, "texto": texto, "roles": [],
-            "usuarios": [], "fecha_expiracion": fecha_exp if fecha_exp else None
-        })
         guardar_noticias(data_noticias)
         flash("Noticia publicada exitosamente", "success")
-        return redirect(url_for('crear_noticia'))
+
+        return redirect(url_for("crear_noticia"))
 
     usuario, empresa, logos = get_context()
-    return render_template('crear_noticia.html', data={
-        "usuario": usuario, "nombre_usuario": get_usuario_nombre(), "empresa": empresa,
-        "logos": logos, "saludo": get_saludo(), "rol": session.get("rol")
-    })
+
+    return render_template(
+        "noticias/crear_noticia.html",
+        data={
+            "usuario": usuario,
+            "nombre_usuario": get_usuario_nombre(),
+            "empresa": empresa,
+            "logos": logos,
+            "saludo": get_saludo(),
+            "rol": session.get("rol")
+        }
+    )
 
 @login_required
 def api_comentarios():
@@ -154,7 +156,7 @@ def ver_comentarios():
     usuario, empresa, logos = get_context()
     comentarios = obtener_comentarios()
     for c in comentarios: c["respuesta"] = obtener_respuesta(c.get("id"))
-    return render_template('comentarios_admin.html', data={
+    return render_template('admin/comentarios_admin.html', data={
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(), "empresa": empresa,
         "saludo": get_saludo(), "comentarios": comentarios, "logos": logos, "rol": session.get("rol")
     })

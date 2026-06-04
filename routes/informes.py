@@ -13,7 +13,7 @@ def informe_ventas():
         "titulo": "Informe de Ventas",
         "rol": session.get("rol")
     }
-    return render_template('informe_ventas.html', data=contexto)
+    return render_template('informes/informe_ventas.html', data=contexto)
 
 @login_required
 def balance_lineas():
@@ -27,7 +27,7 @@ def balance_lineas():
         "titulo": "Balance por Líneas",
         "rol": session.get("rol")
     }
-    return render_template('balance_lineas.html', data=contexto)
+    return render_template('informes/balance_lineas.html', data=contexto)
 
 @login_required
 def estado_financiero():
@@ -41,4 +41,4 @@ def estado_financiero():
         "titulo": "Estado Financiero",
         "rol": session.get("rol")
     }
-    return render_template('informe_financiero.html', data=contexto)
+    return render_template('informes/informe_financiero.html', data=contexto)

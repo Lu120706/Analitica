@@ -6,24 +6,29 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
 
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
+
 {% block content %}
-<!-- Contenedor flex para alinear buscador a la derecha y saludo al centro -->
-<div class="d-flex justify-content-between align-items-center px-4" style="margin-top: 10px;">
-    
-    <!-- Espacio vacío a la izquierda para empujar los demás al centro/derecha -->
-    <div style="width: 250px;"></div>
 
-    <!-- Saludo centrado -->
-    <div class="saludo-container" style="margin: 0;">
-        <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
-    </div>
-
-    <!-- Buscador alineado a la derecha -->
+<div class="d-flex justify-content-end px-90" style="margin-top: 10px;">
     <div style="position: relative; width: 250px;">
         <input type="text" class="form-control buscador-lupa" placeholder="Buscar informes..." id="busqueda-informes">
         <span class="lupa-icono">🔍</span>
         <div id="resultados-busqueda" class="list-group shadow-sm mt-1" style="position: absolute; width: 100%; z-index: 5000; background: white;"></div>
     </div>
+</div>
+
+
+<div class="saludo-container px-4" style="margin-top: -35px !important; text-align: center;">
+    <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
 </div>
 
 {% if data.noticias and data.noticias|length > 0 %}
@@ -35,7 +40,7 @@
             <div class="p-2 border rounded" style="flex: 1 1 250px; background: rgba(255,255,255,0.3);">
                 <strong>{{ noticia.titulo }}</strong><br>
                 <p class="mb-1 text-truncate">{{ noticia.texto }}</p>
-                {% if noticia.link %}<a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver mÃ¡s</a>{% endif %}
+                {% if noticia.link %}<a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver mas</a>{% endif %}
             </div>
         {% endfor %}
     </div>
@@ -58,8 +63,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-    const informesData = {{ informes_buscador | tojson | safe }};
-</script>
 <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
 {% endblock %}

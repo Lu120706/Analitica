@@ -5,8 +5,8 @@ from .dashboard import (
     api_notificaciones, api_marcar_leido_admin, api_marcar_leido_usuario
 )
 from .departamentos import (
-    contabilidad, auditoria, revision_fiscal, contraloria, 
-    indicador_1, indicador_2, contraloria_reportes,
+    contabilidad, auditoria, nomina, contraloria, 
+    indicador_financiero, indicador_gestion, contraloria_reportes,
     abastecimiento, indicadores, tic, comercio, tesoreria, campañas
 )
 
