@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ data.titulo }}{% endblock %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="saludo-container">
+        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
+    </div>
+    <div class="card-custom" style="max-width: 800px; margin: 20px auto;">
+        <h5>Información relevante</h5>
+        <hr>
+        <p>Aquí se visualizarán los reportes de {{ data.titulo }} próximamente. Estamos integrando los indicadores clave de desempeño para esta sección.</p>
+    </div>
+</div>
+
+<div class="logos-fijos" id="logos-fijos">
+    <div id="logos-content">
+        {% if data.logos %}
+            {% for logo in data.logos %}
+            <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+            </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

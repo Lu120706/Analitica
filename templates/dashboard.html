@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
 {% block title %}Dashboard{% endblock %}
 
@@ -7,13 +7,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="saludo-container">
-    <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
+<!-- Contenedor flex para alinear buscador a la derecha y saludo al centro -->
+<div class="d-flex justify-content-between align-items-center px-4" style="margin-top: 10px;">
+    
+    <!-- Espacio vacío a la izquierda para empujar los demás al centro/derecha -->
+    <div style="width: 250px;"></div>
+
+    <!-- Saludo centrado -->
+    <div class="saludo-container" style="margin: 0;">
+        <h5 id="saludo">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
+    </div>
+
+    <!-- Buscador alineado a la derecha -->
+    <div style="position: relative; width: 250px;">
+        <input type="text" class="form-control buscador-lupa" placeholder="Buscar informes..." id="busqueda-informes">
+        <span class="lupa-icono">🔍</span>
+        <div id="resultados-busqueda" class="list-group shadow-sm mt-1" style="position: absolute; width: 100%; z-index: 5000; background: white;"></div>
+    </div>
 </div>
 
-{# Bloque de noticias compacto (El ÚNICO que queda) #}
 {% if data.noticias and data.noticias|length > 0 %}
-<div class="card-custom" style="max-width: 900px; padding: 15px; font-size: 0.9rem; margin: 0 auto 25px auto;">
+<div class="card-custom card-noticias">
     <h6 class="mb-2">Noticias Generales</h6>
     <hr class="my-2">
     <div class="d-flex flex-wrap gap-3">
@@ -21,14 +35,14 @@
             <div class="p-2 border rounded" style="flex: 1 1 250px; background: rgba(255,255,255,0.3);">
                 <strong>{{ noticia.titulo }}</strong><br>
                 <p class="mb-1 text-truncate">{{ noticia.texto }}</p>
-                {% if noticia.link %}<a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver más</a>{% endif %}
+                {% if noticia.link %}<a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver mÃ¡s</a>{% endif %}
             </div>
         {% endfor %}
     </div>
 </div>
 {% endif %}
 
-<div class="card-custom card-tic" style="max-width: 900px; margin: 0 auto 25px auto;">
+<div class="card-custom card-tic">
     <h5>Contacto TIC</h5>
     <hr>
     <div class="row" id="contactos-tic">
@@ -41,26 +55,11 @@
         {% endfor %}
     </div>
 </div>
-
-<div class="logos-fijos">
-    <div class="search-container-fixed mb-3">
-        <div class="position-relative">
-            <input type="text" id="buscador-informes" class="form-control buscador-lupa" autocomplete="off" placeholder="Buscar...">
-            <span class="lupa-icono">🔍</span>
-            <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow-lg mt-1 d-none" style="z-index: 1000;"></div>
-        </div>
-    </div>
-
-    <div id="logos-content">
-        {% for logo in data.logos %}
-        <a href="/empresa/{{ logo.nombre }}" class="logo-card">
-            <img src="{{ logo.url }}" alt="logo {{ logo.nombre }}">
-        </a>
-        {% endfor %}
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    const informesData = {{ informes_buscador | tojson | safe }};
+</script>
 <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
 {% endblock %}

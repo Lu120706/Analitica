@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("buscador-informes");
+    // Corregido: el ID en el HTML es 'busqueda-informes'
+    const input = document.getElementById("busqueda-informes"); 
     const contenedor = document.getElementById("resultados-busqueda");
+    // Asumimos que informesData viene de informes_data.js incluido en el template
     const informes = typeof informesData !== 'undefined' ? informesData : [];
 
     input.addEventListener("input", (e) => {
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const encontrados = informes.filter(inf => {
             return inf.nombre.toLowerCase().includes(busqueda) ||
-                   inf.keywords.some(p => p.includes(busqueda));
+                   inf.keywords.some(p => p.toLowerCase().includes(busqueda));
         });
 
         mostrarResultados(encontrados);

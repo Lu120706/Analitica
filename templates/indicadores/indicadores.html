@@ -7,8 +7,16 @@
 {% endblock %}
 
 {% block nav_links %}
-<a class="nav-link" href="#">Indicador desempeño</a>
-<a class="nav-link" href="#">Indicador eficiencia</a>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="indicadoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Indicadores
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="indicadoresDropdown">
+        <li><a class="dropdown-item" href="#">Indicador desempeño</a></li>
+        <li><a class="dropdown-item" href="#">Indicador eficiencia</a></li>
+    </ul>
+</li>
+<a class="nav-link" href="#">Reportes</a>
 {% endblock %}
 
 {% block content %}

@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% block title %}{{ data.titulo }}{% endblock %}
+
+{% block extra_css %}
+<link rel = "stylesheet" href = "{{url_for ('static', filename='css/abastecimiento.css')}}">
+{% endblock %}
+
+{% block nav_links %}
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid mt-4">
     <div class="saludo-container">
         <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
-        <h3>Módulo de {{ data.titulo }}</h3>
     </div>
     <div class="card-custom" style="max-width: 800px; margin: 20px auto;">
         <h5>Información relevante</h5>
         <hr>
-        <p>Aquí se visualizarán los dictámenes de {{ data.titulo }} y el estado de cumplimiento normativo.</p>
+        <p>Aquí se visualizarán los reportes de {{ data.titulo }} próximamente. Estamos integrando los indicadores clave de desempeño para esta sección.</p>
     </div>
 </div>
 

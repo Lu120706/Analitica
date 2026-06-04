@@ -96,3 +96,11 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/"
     }
 }
+
+informes_buscador = [
+    {"nombre": "Informe de Ventas", "url": "/informe/ventas", "keywords": ["ventas", "comercial", "dinero", "ingresos"]},
+    {"nombre": "Balance de Líneas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario"]},
+    {"nombre": "Estado Financiero", "url": "/informe/financiero", "keywords": ["financiero", "contable", "estado", "utilidad"]},
+    {"nombre": "Reporte IBR", "url": "#", "keywords": ["ibr", "indicadores", "tasas"]},
+    {"nombre": "Reporte de Cartera", "url": "#", "keywords": ["cartera", "deuda", "cobro"]}
+]

@@ -7,8 +7,24 @@
 {% endblock %}
 
 {% block nav_links %}
-<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
-<a class="nav-link" href="#">Reportes</a>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="indicadoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Indicadores
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="indicadoresDropdown">
+        <li><a class="dropdown-item" href="{{ url_for('indicador_1') }}">Indicador 1</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('indicador_2') }}">Indicador 2</a></li>
+    </ul>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="reportesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Reportes
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
+        <li><a class="dropdown-item" href="{{ url_for('contraloria_reportes') }}">Reporte 1</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('contraloria_reportes') }}">Reporte 2</a></li>
+    </ul>
+</li>
 {% endblock %}
 
 {% block content %}

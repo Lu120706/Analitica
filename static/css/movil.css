@@ -1,0 +1,36 @@
+﻿@media (max-width: 991px) {
+    .navbar-collapse {
+        background: #F2E124;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 15px;
+        z-index: 2000;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: center !important;
+        margin-right: 0 !important;
+    }
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0 !important;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .logos-fijos {
+        position: relative !important;
+        top: 0 !important;
+        right: 0 !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        margin: 10px auto !important;
+        gap: 10px !important;
+    }
+    .logo-card {
+        width: 60px !important;
+        height: 60px !important;
+    }
+}

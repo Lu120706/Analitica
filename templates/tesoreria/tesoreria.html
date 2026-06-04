@@ -13,12 +13,12 @@
         Reportes
     </a>
     <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
-        <li><a class="dropdown-item" href="#">Reportes de cartera</a></li>
-        <li><a class="dropdown-item" href="#">Reporte IBR</a></li>
-        <li><a class="dropdown-item" href="#">Ventas de gestión</a></li>
-        <li><a class="dropdown-item" href="#">Ventas mostrador</a></li>
-        <li><a class="dropdown-item" href="#">Reporte EVA</a></li>
-        <li><a class="dropdown-item" href="#">Cumplimiento presupuestal</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Reporte de Cartera') }}">Reportes de cartera</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Reporte IBR') }}">Reporte IBR</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Ventas de gestión') }}">Ventas de gestión</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Ventas mostrador') }}">Ventas mostrador</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Reporte EVA') }}">Reporte EVA</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('tesoreria_reporte', nombre='Cumplimiento presupuestal') }}">Cumplimiento presupuestal</a></li>
     </ul>
 </li>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Abastecimiento{% endblock %}
 
@@ -7,9 +7,8 @@
 {% endblock %}
 
 {% block nav_links %}
-<a class="nav-link" href="#">Campañas</a>
-<a class="nav-link" href="#">Clientes</a>
-<a class="nav-link" href="#">Ventas</a>
+<a class="nav-link" href="{{ url_for('campañas') }}">campañas</a>
+<a class="nav-link" href="{{ url_for('revision_fiscal') }}">Revisión Fiscal</a>
 {% endblock %}
 
 {% block content %}

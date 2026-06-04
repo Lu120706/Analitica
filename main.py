@@ -6,8 +6,14 @@ from utils import init_db
 
 load_dotenv()
 
+from data import informes_buscador
+
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "analitics_erp_2026")
+
+@app.context_processor
+def inject_globals():
+    return dict(informes_buscador=informes_buscador)
 
 init_db()
 
@@ -30,11 +36,16 @@ app.add_url_rule("/contabilidad", "contabilidad", departamentos.contabilidad)
 app.add_url_rule("/auditoria", "auditoria", departamentos.auditoria)
 app.add_url_rule("/revision-fiscal", "revision_fiscal", departamentos.revision_fiscal)
 app.add_url_rule("/contraloria", "contraloria", departamentos.contraloria)
+app.add_url_rule("/contraloria/indicador-1", "indicador_1", departamentos.indicador_1)
+app.add_url_rule("/contraloria/indicador-2", "indicador_2", departamentos.indicador_2)
+app.add_url_rule("/contraloria/reportes", "contraloria_reportes", departamentos.contraloria_reportes)
 app.add_url_rule("/abastecimiento", "abastecimiento", departamentos.abastecimiento)
+app.add_url_rule("/abastecimiento/campañas", "campañas", departamentos.campañas)
 app.add_url_rule("/indicadores", "indicadores", departamentos.indicadores)
 app.add_url_rule("/tic", "tic", departamentos.tic)
 app.add_url_rule("/comercio", "comercio", departamentos.comercio)
 app.add_url_rule("/tesoreria", "tesoreria", departamentos.tesoreria)
+app.add_url_rule("/tesoreria/reporte/<nombre>", "tesoreria_reporte", departamentos.tesoreria_reporte)
 
 app.add_url_rule("/informe/ventas", "informe_ventas", informes.informe_ventas)
 app.add_url_rule("/informe/balance", "balance_lineas", informes.balance_lineas)
