@@ -2,6 +2,16 @@
 
 {% block title %}Ventas{% endblock %}
 
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
+
 {% block content %}
 
 <h3 class="text-center">{{ data.titulo if data.titulo else 'Informe de Ventas' }}</h3>
