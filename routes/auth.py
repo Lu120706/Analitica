@@ -13,7 +13,7 @@ def login():
 
         if username in usuarios and usuarios[username]["password"] == password:
             session["usuario"] = username
-            session["empresa"] = usuarios[username]["empresa"]
+            session["tenant_id"] = usuarios[username]["empresa"]
             session["rol"] = usuarios[username]["rol"]
             
             if request.is_json:
@@ -31,7 +31,7 @@ def login():
             flash("Credenciales inválidas", "danger")
             return redirect(url_for("login"))
             
-    return render_template('login.html')
+    return render_template('login.html', data={"rol": "guest"})
 
 def logout():
     session.clear()

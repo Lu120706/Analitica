@@ -34,12 +34,16 @@ def get_saludo():
     elif hora < 18: return "Buenas tardes"
     return "Buenas noches"
 
+def get_tenant_data():
+    tenant_id = session.get("tenant_id", "Organizacion GYJ")
+    config = empresas_config.get(tenant_id, empresas_config.get("Organizacion GYJ", {}))
+    return tenant_id, config.get("logos", [])
+
 def get_context():
     usuario = session.get("usuario")
     if not usuario: return None, None, []
-    empresa = session.get("empresa", "Organizacion GYJ")
-    config = empresas_config.get(empresa, empresas_config.get("Organizacion GYJ", {}))
-    return usuario, empresa, config.get("logos", [])
+    tenant_id, logos = get_tenant_data()
+    return usuario, tenant_id, logos
 
 def get_usuario_nombre():
     usuario = session.get("usuario")
@@ -92,18 +96,26 @@ def init_db():
 def guardar_comentarios(datos):
     try:
         init_db()
+        tenant_id = session.get("tenant_id")
         with sqlite3.connect(DB_PATH) as conn:
             conn.execute("INSERT INTO comentarios (nombre_usuario, email, comentario, empresa, fecha_envio, leido_admin) VALUES (?, ?, ?, ?, ?, 0)", 
-                         (datos.get("nombre_usuario"), datos.get("email"), datos.get("comentario"), datos.get("empresa"), datos.get("fecha")))
+                         (datos.get("nombre_usuario"), datos.get("email"), datos.get("comentario"), tenant_id, datos.get("fecha")))
             conn.commit()
         return True, None
     except Exception as e: return False, str(e)
 
 def obtener_comentarios():
     init_db()
+    tenant_id = session.get("tenant_id")
+    rol = session.get("rol")
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
-        return [dict(row) for row in conn.execute("SELECT * FROM comentarios ORDER BY id DESC").fetchall()]
+        if rol == "admin":
+            query = "SELECT * FROM comentarios ORDER BY id DESC"
+            return [dict(row) for row in conn.execute(query).fetchall()]
+        else:
+            query = "SELECT * FROM comentarios WHERE empresa = ? ORDER BY id DESC"
+            return [dict(row) for row in conn.execute(query, (tenant_id,)).fetchall()]
 
 def guardar_respuesta(comentario_id, respuesta):
     try:

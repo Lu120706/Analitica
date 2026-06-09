@@ -12,13 +12,13 @@
 
     <div class="logos-fijos">
         <div id="logos-content">
-        {% if data.logos %}
-            {% for logo in data.logos %}
+            {% if data.logos %}
+                {% for logo in data.logos %}
                 <a href="/empresa/{{ logo.nombre }}" class="logo-card">
-                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="Logo {{ logo.nombre }}">
                 </a>
-            {% endfor %}
-        {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 

@@ -51,7 +51,8 @@ empresas_config = {
             {"nombre": "IBR Colmena", "ruta": "estado_financiero"},
             {"nombre": "Inventario a un corte", "ruta": "balance_lineas"},
             {"nombre": "Venta perdida", "ruta": "estado_financiero"}
-        ]
+        ],
+        "kpis": {"meta_ventas": "85%", "meta_despachos": "92%"}
     },
 
     "Almasa": {
@@ -66,7 +67,8 @@ empresas_config = {
             {"nombre": "IBR Almasa","ruta": "balance_lineas"},
             {"nombre": "Informe ventas", "ruta": "informe_ventas"},
             {"nombre": "Venta perdida", "ruta": "estado_financiero"}
-        ]
+        ],
+        "kpis": {"meta_ventas": "78%", "meta_despachos": "88%"}
     },
 
     "GyJ Ferreterias": {
@@ -83,7 +85,8 @@ empresas_config = {
             {"nombre": "IBR GyJ","ruta": "balance_lineas"},
             {"nombre": "Informe ventas","ruta": "informe_ventas"},
             {"nombre": "Venta perdida","ruta": "estado_financiero"}
-        ]
+        ],
+        "kpis": {"meta_ventas": "95%", "meta_despachos": "98%"}
     },
 
     "Organizacion GYJ": {

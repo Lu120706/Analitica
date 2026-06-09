@@ -1,19 +1,30 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, session, g, request, url_for
 from routes import auth, dashboard, departamentos, informes
 from utils import init_db
 
 load_dotenv()
 
-from data import informes_buscador
+from data import informes_buscador, empresas_config
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "analitics_erp_2026")
 
+@app.before_request
+def set_tenant_context():
+    # Permitir acceso público a login, static, y la raíz si no hay sesión
+    if request.endpoint in ['login', 'static', 'home']:
+        return
+    if 'tenant_id' not in session:
+        return redirect(url_for('login'))
+    g.tenant_id = session['tenant_id']
+
 @app.context_processor
 def inject_globals():
-    return dict(informes_buscador=informes_buscador)
+    tenant_id = session.get('tenant_id')
+    informes_filtrados = empresas_config.get(tenant_id, {}).get("informes", informes_buscador)
+    return dict(informes_buscador=informes_filtrados, tenant_id=tenant_id, empresas_config=empresas_config)
 
 init_db()
 

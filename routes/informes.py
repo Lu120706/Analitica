@@ -1,58 +1,45 @@
 from flask import render_template, session
 from utils import get_context, get_usuario_nombre, login_required
 
+def _get_informe_context(titulo):
+    usuario = session.get("usuario")
+    tenant_id = session.get("tenant_id")
+    rol = session.get("rol")
+    
+    # Filtramos logos: Si es admin, mostramos todos (o podrías definir lógica para admin). 
+    # Si es usuario, solo los suyos.
+    from data import empresas_config
+    if rol == "admin":
+        logos = []
+        for conf in empresas_config.values():
+            if conf.get("logos"):
+                logos.extend(conf["logos"])
+        # Eliminamos duplicados manteniendo orden
+        logos = list(dict.fromkeys(logos))
+    else:
+        logos = empresas_config.get(tenant_id, {}).get("logos", [])
+        
+    return {
+        "usuario": usuario,
+        "nombre_usuario": get_usuario_nombre(),
+        "empresa": tenant_id,
+        "logos": logos,
+        "titulo": titulo,
+        "rol": rol
+    }
+
 @login_required
 def informe_ventas():
-    usuario, empresa, logos = get_context()
-    nombre_usuario = get_usuario_nombre()
-    contexto = {
-        "usuario": usuario,
-        "nombre_usuario": nombre_usuario,
-        "empresa": empresa,
-        "logos": logos,
-        "titulo": "Informe de Ventas",
-        "rol": session.get("rol")
-    }
-    return render_template('informes/informe_ventas.html', data=contexto)
+    return render_template('informes/informe_ventas.html', data=_get_informe_context("Informe de Ventas"))
 
 @login_required
 def balance_lineas():
-    usuario, empresa, logos = get_context()
-    nombre_usuario = get_usuario_nombre()
-    contexto = {
-        "usuario": usuario,
-        "nombre_usuario": nombre_usuario,
-        "empresa": empresa,
-        "logos": logos,
-        "titulo": "Balance por Líneas",
-        "rol": session.get("rol")
-    }
-    return render_template('informes/balance_lineas.html', data=contexto)
+    return render_template('informes/balance_lineas.html', data=_get_informe_context("Balance por Líneas"))
 
 @login_required
 def estado_financiero():
-    usuario, empresa, logos = get_context()
-    nombre_usuario = get_usuario_nombre()
-    contexto = {
-        "usuario": usuario,
-        "nombre_usuario": nombre_usuario,
-        "empresa": empresa,
-        "logos": logos,
-        "titulo": "Estado Financiero",
-        "rol": session.get("rol")
-    }
-    return render_template('informes/informe_financiero.html', data=contexto)
+    return render_template('informes/informe_financiero.html', data=_get_informe_context("Estado Financiero"))
 
 @login_required
 def informe_produccion():
-    usuario, empresa, logos = get_context()
-    nombre_usuario = get_usuario_nombre()
-    contexto = {
-        "usuario": usuario,
-        "nombre_usuario": nombre_usuario,
-        "empresa": empresa,
-        "logos": logos,
-        "titulo": "Informe de producción: corte de laminas",
-        "rol": session.get("rol")
-    }
-    return render_template('informes/informe_produccion.html', data=contexto)
+    return render_template('informes/informe_produccion.html', data=_get_informe_context("Informe de producción: corte de laminas"))

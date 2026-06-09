@@ -14,6 +14,10 @@ def dashboard_view():
     usuario, empresa, logos = get_context()
     nombre_usuario = get_usuario_nombre()
     rol = session.get("rol")
+    tenant_id = session.get("tenant_id")
+    informes_del_tenant = empresas_config.get(tenant_id, {}).get("informes", [])
+    kpis = empresas_config.get(tenant_id, {}).get("kpis", {}) # <-- Capturamos los KPIs
+
     logos_transformados = []
     for logo in logos:
         nombre_real = empresa
@@ -26,9 +30,10 @@ def dashboard_view():
     noticias_filtradas = filtrar_noticias(data_noticias.get("general", []), usuario, rol)
     contexto = {
         "status": "success", "usuario": usuario, "nombre_usuario": nombre_usuario,
-        "empresa": empresa, "rol": rol, "saludo": get_saludo(),
+        "empresa": tenant_id, "rol": rol, "saludo": get_saludo(),
         "noticias": noticias_filtradas, "logos": logos_transformados,
-        "contactos_tic": contactos_tic, "informes_buscador": informes_buscador
+        "contactos_tic": contactos_tic, "informes_buscador": informes_del_tenant,
+        "kpis": kpis # <-- Pasamos al contexto
     }
     return render_template('dashboard.html', data=contexto)
 
@@ -71,7 +76,7 @@ def crear_noticia():
     usuario, empresa, logos = get_context()
 
     return render_template(
-        "crear_noticia.html",
+        "noticias/crear_noticia.html",
         data={
             "usuario": usuario,
             "nombre_usuario": get_usuario_nombre(),
@@ -132,21 +137,39 @@ def api_marcar_leido_usuario():
 
 @login_required
 def empresa(nombre):
+    # El admin puede ver todas, los otros solo su propio tenant
+    if session.get("rol") != "admin" and session.get("tenant_id") != nombre:
+        flash("No tienes permiso para acceder a esta sede", "danger")
+        return redirect(url_for("dashboard"))
+
     usuario, empresa_ctx, logos_ctx = get_context()
     rol = session.get("rol")
-    logos_transformados = []
-    for logo in logos_ctx:
-        nombre_real = empresa_ctx
-        if rol == "admin" and empresa_ctx == "Organizacion GYJ":
-            for nombre_emp, conf in empresas_config.items():
-                if nombre_emp != "Organizacion GYJ" and logo in conf.get("logos", []):
-                    nombre_real = nombre_emp
-                    break
-        logos_transformados.append({"nombre": nombre_real, "url": logo})
-    config = empresas_config.get(nombre, {})
+    
+    # Si es admin, dejamos que nombre sea el solicitado, si no, forzamos el del tenant
+    nombre_a_mostrar = nombre if session.get("rol") == "admin" else session.get("tenant_id")
+    
+    # Si es admin y pide una empresa específica, mostramos sus informes. Si pide la suya, mostramos los suyos.
+    # Si es admin y quiere ver todos los informes, eso requeriría un cambio estructural, 
+    # por ahora mostramos los informes de la empresa solicitada en la URL.
+    config = empresas_config.get(nombre_a_mostrar, {})
+    
+    # Lista de logos únicos para el admin (todos) o para el tenant (solo el suyo)
+    if rol == "admin":
+        logos_transformados = []
+        # En lugar de filtrar por URL (que oculta Colmena si comparte imagen), 
+        # filtramos por nombre de empresa (tenant) para garantizar que aparezcan todas.
+        nombres_vistos = set()
+        for nombre_emp, conf in empresas_config.items():
+            if nombre_emp != "Organizacion GYJ" and conf.get("logos"):
+                if nombre_emp not in nombres_vistos:
+                    logos_transformados.append({"nombre": nombre_emp, "url": conf["logos"][0]})
+                    nombres_vistos.add(nombre_emp)
+    else:
+        logos_transformados = [{"nombre": nombre_a_mostrar, "url": logo} for logo in config.get("logos", [])]
+
     return render_template('empresa.html', data={
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(), "empresa": empresa_ctx,
-        "saludo": get_saludo(), "nombre_empresa_informe": nombre, "informes": config.get("informes", []),
+        "saludo": get_saludo(), "nombre_empresa_informe": nombre_a_mostrar, "informes": config.get("informes", []),
         "logos": logos_transformados, "rol": rol
     })
 
@@ -156,7 +179,7 @@ def ver_comentarios():
     usuario, empresa, logos = get_context()
     comentarios = obtener_comentarios()
     for c in comentarios: c["respuesta"] = obtener_respuesta(c.get("id"))
-    return render_template('comentarios_admin.html', data={
+    return render_template('admin/comentarios_admin.html', data={
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(), "empresa": empresa,
         "saludo": get_saludo(), "comentarios": comentarios, "logos": logos, "rol": session.get("rol")
     })

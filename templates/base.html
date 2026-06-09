@@ -27,7 +27,7 @@
             </div>
 
             <a class="navbar-brand fw-bold" href="{{ data.url_inicio_modulo if data and data.url_inicio_modulo else url_for('dashboard') }}">
-                {{ data.empresa | upper if data and data.empresa else 'G Y J RAMÍREZ S.A.' }}
+                {{ session.get('tenant_id') | upper if session.get('tenant_id') else 'G Y J RAMÍREZ S.A.' }}
             </a>
 
             <div class="d-flex align-items-center ms-auto">
@@ -106,12 +106,29 @@
     {% block extra_js %}{% endblock %}
     <div class="logos-fijos" id="logos-fijos">
         <div id="logos-content">
-            {% if data and data.logos %}
-                {% for logo in data.logos %}
-                <a href="/empresa/{{ logo.nombre }}" class="logo-card">
-                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
-                </a>
+            {% set current_tenant = session.get('tenant_id') %}
+            {% set current_rol = session.get('rol') %}
+
+            {% if current_rol == 'admin' %}
+                {# Admin: muestra logos de todas las empresas #}
+                {% for tenant, conf in empresas_config.items() %}
+                    {% if tenant != 'Organizacion GYJ' and conf.get('logos') %}
+                        {% for logo_url in conf.get('logos') %}
+                        <a href="/empresa/{{ tenant }}" class="logo-card">
+                            <img src="{{ logo_url }}" alt="Logo {{ tenant }}">
+                        </a>
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
+            {% else %}
+                {# Usuario: muestra solo los logos de su tenant #}
+                {% if current_tenant and empresas_config.get(current_tenant) %}
+                    {% for logo_url in empresas_config.get(current_tenant).get('logos', []) %}
+                    <a href="/empresa/{{ current_tenant }}" class="logo-card">
+                        <img src="{{ logo_url }}" alt="Logo {{ current_tenant }}">
+                    </a>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
