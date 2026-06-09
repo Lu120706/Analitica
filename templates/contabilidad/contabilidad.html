@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Contabilidad{% endblock %}
 
@@ -13,24 +13,29 @@
 
 {% block content %}
 
-<div class="saludo-container" style="margin-top: 20px !important;">
-        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
-
+<div class="row align-items-center px-4" style="margin-top: 5px;">
+    <div class="col-3"></div>
+    <div class="col-6 text-center">
+        <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
+    </div>
+    <div class="col-3"></div>
+</div>
 
 {% if data.noticias and data.noticias|length > 0 %}
-<div class="row" id="noticias-row">
-    <div class="col-12">
-        <h5>Noticias</h5>
-        <hr>
+<div class="card-custom">
+    <h6 class="mb-3">Noticias</h6>
+    <hr class="my-2">
+    <div class="noticias-lista">
+        {% for noticia in data.noticias %}
+            <div class="noticia-item" style="padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <strong>{{ noticia.titulo }}</strong><br>
+                <p class="mb-1">{{ noticia.texto }}</p>
+                {% if noticia.link %}
+                    <a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver más</a>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
-    {% for noticia in data.noticias %}
-    <div class="col-12">
-        <div class="card-custom card-noticias mb-3">
-            <strong>{{ noticia.titulo }}</strong><br>
-            {{ noticia.texto }}
-        </div>
-    </div>
-    {% endfor %}
 </div>
 {% endif %}
 

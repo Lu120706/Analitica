@@ -53,8 +53,17 @@ app.add_url_rule("/tesoreria/reporte/<nombre>", "tesoreria_reporte", departament
 app.add_url_rule("/informe/ventas", "informe_ventas", informes.informe_ventas)
 app.add_url_rule("/informe/balance", "balance_lineas", informes.balance_lineas)
 app.add_url_rule("/informe/financiero", "estado_financiero", informes.estado_financiero)
+app.add_url_rule("/informe/produccion", "informe_produccion", informes.informe_produccion)
 
 app.add_url_rule("/", "home", lambda: redirect("/login"))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     app.run(debug=True)

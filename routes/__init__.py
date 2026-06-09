@@ -10,4 +10,4 @@ from .departamentos import (
     abastecimiento, indicadores, tic, comercio, tesoreria, campañas
 )
 
-from .informes import informe_ventas, balance_lineas, estado_financiero
+from .informes import informe_ventas, balance_lineas, estado_financiero, informe_produccion

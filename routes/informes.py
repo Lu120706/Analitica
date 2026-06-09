@@ -42,3 +42,17 @@ def estado_financiero():
         "rol": session.get("rol")
     }
     return render_template('informes/informe_financiero.html', data=contexto)
+
+@login_required
+def informe_produccion():
+    usuario, empresa, logos = get_context()
+    nombre_usuario = get_usuario_nombre()
+    contexto = {
+        "usuario": usuario,
+        "nombre_usuario": nombre_usuario,
+        "empresa": empresa,
+        "logos": logos,
+        "titulo": "Informe de producción: corte de laminas",
+        "rol": session.get("rol")
+    }
+    return render_template('informes/informe_produccion.html', data=contexto)

@@ -102,5 +102,6 @@ informes_buscador = [
     {"nombre": "Balance de Líneas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario"]},
     {"nombre": "Estado Financiero", "url": "/informe/financiero", "keywords": ["financiero", "contable", "estado", "utilidad"]},
     {"nombre": "Reporte IBR", "url": "#", "keywords": ["ibr", "indicadores", "tasas"]},
-    {"nombre": "Reporte de Cartera", "url": "#", "keywords": ["cartera", "deuda", "cobro"]}
+    {"nombre": "Reporte de Cartera", "url": "#", "keywords": ["cartera", "deuda", "cobro"]},
+    {"nombre": "Informe de producción: corte de láminas", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas"]}
 ]

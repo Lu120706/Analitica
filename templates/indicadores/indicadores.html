@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Indicadores{% endblock %}
 
@@ -21,12 +21,13 @@
 
 {% block content %}
 
-<div class="container-fluid mt-4">
-
-    <div class="saludo-container">
-        {# Carga inmediata sin "Cargando..." #}
-        <h1>{{ data.saludo }}, {{ data.nombre_usuario }}</h1>
+<div class="row align-items-center px-4" style="margin-top: 5px;">
+    <div class="col-3"></div>
+    <div class="col-6 text-center">
+        <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
     </div>
+    <div class="col-3"></div>
+</div>
 
     {% if data.noticias and data.noticias|length > 0 %}
     <div class="contenido-izquierda">

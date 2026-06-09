@@ -14,6 +14,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
+            <!-- Dropdown y Logo aquí... -->
             <div class="dropdown me-2" style="margin-left: -15px;">
                 <button class="btn btn-sm dropdown-toggle border-0" type="button" data-bs-toggle="dropdown"
                     style="background: transparent; font-size: 1.4rem; color: #000;">☰</button>
@@ -21,10 +22,11 @@
                     <li><a class="dropdown-item" href="{{ url_for('informe_ventas') }}">Informe Ventas</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('balance_lineas') }}">Balance de Líneas</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('estado_financiero') }}">Informe Financiero</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('informe_produccion') }}">Informe de producción: corte de laminas</a></li>
                 </ul>
             </div>
 
-            <a class="navbar-brand fw-bold" href="{{ url_for('dashboard') }}">
+            <a class="navbar-brand fw-bold" href="{{ data.url_inicio_modulo if data and data.url_inicio_modulo else url_for('dashboard') }}">
                 {{ data.empresa | upper if data and data.empresa else 'G Y J RAMÍREZ S.A.' }}
             </a>
 
@@ -51,7 +53,6 @@
                         <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Cerrar sesion</a></li>
                     </ul> 
                 </div>
-
             </div>
         </div>
     </nav>

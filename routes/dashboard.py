@@ -1,5 +1,5 @@
 ﻿from flask import request, redirect, url_for, session, jsonify, render_template, flash
-from data import empresas_config, contactos_tic
+from data import empresas_config, contactos_tic, informes_buscador
 from utils import (
     cargar_noticias, guardar_noticias, get_saludo, get_context,
     get_usuario_nombre, login_required, role_required,
@@ -28,7 +28,7 @@ def dashboard_view():
         "status": "success", "usuario": usuario, "nombre_usuario": nombre_usuario,
         "empresa": empresa, "rol": rol, "saludo": get_saludo(),
         "noticias": noticias_filtradas, "logos": logos_transformados,
-        "contactos_tic": contactos_tic
+        "contactos_tic": contactos_tic, "informes_buscador": informes_buscador
     }
     return render_template('dashboard.html', data=contexto)
 
@@ -52,7 +52,7 @@ def crear_noticia():
 
         if seccion not in data_noticias:
             flash("Sección inválida", "danger")
-            return redirect(url_for("crear_noticia"))  # o el endpoint correcto
+            return redirect(url_for("crear_noticia"))
 
         data_noticias[seccion].append({
             "titulo": titulo,
@@ -71,7 +71,7 @@ def crear_noticia():
     usuario, empresa, logos = get_context()
 
     return render_template(
-        "noticias/crear_noticia.html",
+        "crear_noticia.html",
         data={
             "usuario": usuario,
             "nombre_usuario": get_usuario_nombre(),
@@ -156,7 +156,7 @@ def ver_comentarios():
     usuario, empresa, logos = get_context()
     comentarios = obtener_comentarios()
     for c in comentarios: c["respuesta"] = obtener_respuesta(c.get("id"))
-    return render_template('admin/comentarios_admin.html', data={
+    return render_template('comentarios_admin.html', data={
         "usuario": usuario, "nombre_usuario": get_usuario_nombre(), "empresa": empresa,
         "saludo": get_saludo(), "comentarios": comentarios, "logos": logos, "rol": session.get("rol")
     })
