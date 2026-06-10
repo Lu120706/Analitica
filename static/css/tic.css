@@ -1,31 +1,38 @@
-
-.contenido-izquierda {
-    max-width: 600px;
-    margin-left: 1cm;
-}
-
 .card-custom {
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
+    padding: 20px; 
+    margin-bottom: 25px; 
+    margin-top: 20px !important;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    max-width: 550px;
+    width: 50% !important;
+    max-width: 800px !important; 
+    margin-left: 20px !important;
+    margin-right: auto !important;
 }
 
-.card-custom h5 {
-    font-size: 18px;
-}
-
-.card-custom p {
+.noticia-item strong {
+    display: block;
+    margin-bottom: 5px !important;
     color: #000;
-    font-size: 18px;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
 }
 
-.form-soporte-container {
-    max-width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
+.noticia-item p {
+    margin: 0 0 5px 0 !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    color: #333;
+    line-height: 1.2 !important;
+}
+
+.card-custom h6 {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 4px !important;
+}
+
+.card-custom hr {
+    margin: 6px 0 !important;
 }

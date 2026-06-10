@@ -45,13 +45,13 @@ body.fullscreen-active {
     padding: 0 !important;
 }
 body.fullscreen-active .navbar {
-    display: none;
+    display: flex !important;
 }
 
 .btn-full {
     position: absolute;
     bottom: 10px;
-    right: 10px;
+    left: 10px;
     z-index: 10;
 }
 

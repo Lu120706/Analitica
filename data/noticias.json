@@ -1,19 +1,213 @@
 {
     "general": [
         {
-            "titulo": "Nuevo informe generado",
-            "texto": "JHOLGFD",
-            "link": "https://outlook.cloud.microsoft/mail/inbox/id/AAQkADgyMWU1MDg3LTQwZDUtNGI4ZC05NjMzLWRhMzI3MDUwMTliMQAQAIGui%2BVvNVBDv43%2FXjNf24M%3D?deeplink=mail%2F",
+            "titulo": "Nuevo informe generadoZF",
+            "texto": "XGCHVJBKNLMÑ{,}",
+            "link": "http://127.0.0.1:5000/noticias",
             "roles": [],
             "usuarios": [],
-            "fecha_expiracion": "2026-06-04"
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "Nuevo informe generadoZF",
+            "texto": "WQERDFTGYUIOP",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
         }
     ],
-    "tic": [],
-    "contabilidad": [],
-    "contraloria": [],
-    "abastecimiento": [],
-    "indicadores": [],
-    "comercio": [],
-    "tesoreria": []
+    "tic": [
+        {
+            "titulo": "asdcfvgbhjk",
+            "texto": "sdfghjkl",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asdcfvgbhjk",
+            "texto": "sdfghjklñ-",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asdcfvgbhjk",
+            "texto": "jscdc",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "contabilidad": [
+        {
+            "titulo": "asxfdgh",
+            "texto": "asdfghjk",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "asdfghjklñ.",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "contraloria": [
+        {
+            "titulo": "asxfdgh",
+            "texto": "SADFGHJ",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "ASDFGHJKL",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "abastecimiento": [
+        {
+            "titulo": "XZCFVGBHJNMKL",
+            "texto": "qwertyuio",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "XZCFVGBHJNMKL",
+            "texto": "sdfcvghjnkl.",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "indicadores": [
+        {
+            "titulo": "asxfdgh",
+            "texto": "sadfghjnmk,.",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "zxcvbnm,.",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "comercio": [
+        {
+            "titulo": "XZCFVGBHJNMKL",
+            "texto": "<dzfvxgbcnhjmk,nl.m",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "wsedfghjk,",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "asdfghjkl\r\n",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "ASDFRGTHJUK",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "SDFGHJKL",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "ASDFGHJKL",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "zxcvbnm,.",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "tesoreria": [
+        {
+            "titulo": "asxfdgh",
+            "texto": "nmjkj,.lcñ-vbnm",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "asxfdgh",
+            "texto": "dc<xsj<kscbj<fvblkg<f",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ],
+    "recursos humanos": [],
+    "recursos_humanos": [
+        {
+            "titulo": "Nuevo informe generado",
+            "texto": "ASDFGHJKLÑ",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        },
+        {
+            "titulo": "XZCFVGBHJNMKL",
+            "texto": "CVBNM,.-",
+            "link": "http://127.0.0.1:5000/noticias",
+            "roles": [],
+            "usuarios": [],
+            "fecha_expiracion": "2026-06-10"
+        }
+    ]
 }

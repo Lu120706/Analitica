@@ -56,8 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 logosDiv.innerHTML = '';
 
-                data.logos.forEach(logo => {
+                // Definir el orden fijo
+                const ordenLogos = {
+                    "https://cdn.phototourl.com/free/2026-05-08-c4138ab4-2de9-48d8-a38a-0c85bc40a293.png": 0,
+                    "https://cdn.phototourl.com/free/2026-05-08-5729c248-9b06-4eec-85a9-656cabf66c54.png": 1,
+                    "https://cdn.phototourl.com/free/2026-05-08-96a31c18-592e-4d88-ad11-2b32bc4c58aa.png": 2
+                };
 
+                const logosOrdenados = data.logos.sort((a, b) => (ordenLogos[a.url] || 99) - (ordenLogos[b.url] || 99));
+
+                logosOrdenados.forEach(logo => {
                     logosDiv.innerHTML += `
                         <a href="/empresa/${logo.nombre}" class="logo-card">
                             <img src="${logo.url}" alt="logo ${logo.nombre}">

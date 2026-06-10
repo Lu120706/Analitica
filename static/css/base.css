@@ -1,5 +1,7 @@
-﻿* {
-    font-family: "Times New Roman", Times, serif !important;
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif !important;
 }
 
 body {
@@ -33,16 +35,24 @@ body {
 .navbar-brand {
     color: #000 !important;
     font-weight: 800;
-    font-size: 1rem;
-    margin-right: 30px;
-    padding: 0 ;
+    font-size: 0.85rem; /* Reducido de 1rem a 0.85rem */
+    margin-right: 15px; /* Reducido de 30px a 15px */
+    padding: 0;
 }
 
 .nav-link {
     color: #000 !important;
-    font-size: 0.9rem;
-    margin-right: 10px;
-    padding: 0.5px;
+    font-size: 0.8rem;
+    margin-right: 2px;
+    padding: 2px 3px;
+}
+
+.navbar-brand {
+    color: #000 !important;
+    font-weight: 800;
+    font-size: 0.8rem; /* Igualado a 0.8rem */
+    margin-right: 15px;
+    padding: 0;
 }
 
 .logo-nav-circular {
@@ -79,17 +89,17 @@ body {
     margin: 0 !important;
 }
 
+#saludo {
+    font-size: 1.25rem !important;
+    font-weight: 400 !important;
+    color: #000 !important;
+    margin: 0 !important;
+}
+
 .saludo-container {
     text-align: center !important;
     margin-top: 10px !important;
     margin-bottom: 20px !important;
-}
-
-.saludo-container h5 {
-    font-size: 1.6rem !important;
-    font-weight: 400 !important;
-    color: #000 !important;
-    margin: 0 !important;
 }
 
 .saludo-container h1, 
@@ -202,12 +212,14 @@ body {
 
 #formComentario textarea#comentario {
     width: 100% !important;
-    min-height: 100px !important;
+    min-height: 78px !important;
+    height: 78px !important;
     padding: 10px !important;
     border: 1px solid #ccc !important;
     border-radius: 8px !important;
     display: block !important;
     margin-bottom: 10px !important;
+    resize: vertical !important;
 }
 
 #formComentario button[type="submit"] {
@@ -222,10 +234,20 @@ body {
     display: block !important;
 }
 
+#modalSoporte .modal-body {
+    padding-top: 16px;
+    padding-bottom: 18px;
+}
+
 .modal-soporte-content {
     background: rgba(255, 255, 255, 0.97);
     border-radius: 16px;
     overflow: hidden;
+}
+
+.modal-soporte-dialog {
+    max-width: 520px;
+    width: calc(100% - 2rem);
 }
 
 .modal-soporte-header {
@@ -252,8 +274,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 14px;
 }
 
 .lista-informes a {
@@ -274,6 +296,28 @@ body {
     width: 25px !important;
     height: 25px !important;
     filter: brightness(0);
+}
+
+#notificacion-campana-container {
+    position: relative !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#badge-notificacion {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border-radius: 50%;
+    background: #d00;
+    display: inline-block;
+    border: 2px solid #F2E124;
+    z-index: 1;
+    transform: translate(55%, -55%);
 }
 
 .dropdown button.btn-sm.dropdown-toggle img {

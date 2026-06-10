@@ -1,16 +1,38 @@
 .card-custom {
-    background: rgba(255,255,255,0.45);
-    border-radius: 10px;
-    padding: 25px;
-    margin-bottom: 25px;
-    max-width: 700px;
-    margin-left: 40px;
-    color: #000;
-    font-size: 18px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 20px; 
+    margin-bottom: 25px; 
+    margin-top: 20px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    width: 50% !important;
+    max-width: 800px !important; 
+    margin-left: 20px !important;
+    margin-right: auto !important;
 }
 
-.card-custom p {
+.noticia-item strong {
+    display: block;
+    margin-bottom: 5px !important;
     color: #000;
-    margin-bottom: 5px;
-    line-height: 1.2;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+}
+
+.noticia-item p {
+    margin: 0 0 5px 0 !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    color: #333;
+    line-height: 1.2 !important;
+}
+
+.card-custom h6 {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 4px !important;
+}
+
+.card-custom hr {
+    margin: 6px 0 !important;
 }

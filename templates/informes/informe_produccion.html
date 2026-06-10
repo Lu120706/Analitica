@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Producción{% endblock %}
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
 
 {% block content %}
-
-<h3 class="text-center">{{ data.titulo if data.titulo else 'Informe de producción' }}</h3>
+<h3 class="text-center">{{ data.titulo if data.titulo else 'Informe de Producción' }}</h3>
 
 <div class="informe-container">
     <iframe
@@ -15,7 +23,6 @@
 </div>
 
 <div class="logos-fijos">
-    <div id="logos-content">
     {% if data.logos %}
         {% for logo in data.logos %}
             <div class="logo-card">
@@ -23,11 +30,5 @@
             </div>
         {% endfor %}
     {% endif %}
-    </div>
 </div>
-
-{% endblock %}
-
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/informes.js') }}"></script>
 {% endblock %}

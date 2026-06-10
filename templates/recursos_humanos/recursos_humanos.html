@@ -1,14 +1,18 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 
-{% block title %}TIC{% endblock %}
+{% block title %}Recursos Humanos{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/tic.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recursos_humanos.css') }}">
+{% endblock %}
+
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('gestion_documental') }}">Gestion documental</a>
+<a class="nav-link" href="{{ url_for('seguridad_y_salud') }}">Seguridad y salud</a>
 {% endblock %}
 
 {% block content %}
-
-<div class="row align-items-center px-4" style="margin-top: 5px;">
+<div class="row align-items-center px-4" style="margin-top: 40px;">
     <div class="col-3"></div>
     <div class="col-6 text-center">
         <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
@@ -16,7 +20,6 @@
     <div class="col-3"></div>
 </div>
 
-    <div class="contenido-izquierda">
 {% if data.noticias and data.noticias|length > 0 %}
 <div class="card-custom">
     <h6 class="mb-3">Noticias</h6>
@@ -34,21 +37,22 @@
     </div>
 </div>
 {% endif %}
-    </div>
 
-</div>
-
-<div class="logos-fijos">
+<div class="logos-fijos" id="logos-fijos">
     <div id="logos-content">
-    {% if data.logos %}
-        {% for logo in data.logos %}
+        {% if data.logos %}
+            {% for logo in data.logos %}
             <a href="/empresa/{{ logo.nombre }}" class="logo-card">
-                <img src="{{ logo.url if logo.url is defined else logo }}">
+                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
             </a>
-        {% endfor %}
-    {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
+
 {% endblock %}
 
-{% block extra_js %}{% endblock %}
+{% block extra_js %}
+{# Bloque vacío: sin scripts de carga asíncrona #}
+{% endblock %}
+

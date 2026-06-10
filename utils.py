@@ -1,4 +1,4 @@
-from flask import session, redirect, url_for
+﻿from flask import session, redirect, url_for
 from datetime import datetime
 from functools import wraps
 import pytz
@@ -9,7 +9,7 @@ from data import usuarios, contactos_tic, empresas_config
 
 DEFAULT_NOTICIAS_STRUCTURE = {
     "general": [], "tic": [], "contabilidad": [], "contraloria": [],
-    "abastecimiento": [], "indicadores": [], "comercio": [], "tesoreria": []
+    "abastecimiento": [], "indicadores": [], "comercio": [], "tesoreria": [], "recursos_humanos": []
 }
 
 def cargar_noticias():

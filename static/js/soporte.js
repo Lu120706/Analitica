@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const contenedorNotificaciones = document.getElementById("contenedor-notificaciones-list");
     const API_URL = formComentario ? formComentario.getAttribute("data-api-url") : "/api/comentarios";
     
-    // --- LÓGICA DE NOTIFICACIONES ---
     function verificarNotificaciones() {
         if (!badgeNotificacion) return;
         fetch("/api/notificaciones")
@@ -13,16 +12,27 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.count > 0) {
                     badgeNotificacion.classList.remove("d-none");
+                    badgeNotificacion.textContent = '';
+                    badgeNotificacion.title = `${data.count} notificaciones`;
                 } else {
                     badgeNotificacion.classList.add("d-none");
+                    badgeNotificacion.textContent = '';
+                    badgeNotificacion.title = '';
                 }
             })
             .catch(err => console.error("Error al verificar:", err));
     }
-    setInterval(verificarNotificaciones, 15000); // 15 segundos para mayor reactividad
+    setInterval(verificarNotificaciones, 15000);
     verificarNotificaciones();
 
     if (formComentario && txtComentario) {
+        txtComentario.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                formComentario.requestSubmit();
+            }
+        });
+
         formComentario.addEventListener("submit", function (e) {
             e.preventDefault();
             const texto = txtComentario.value.trim();
@@ -58,13 +68,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Filtramos: Admin ve pendientes, Usuario ve sus respuestas no leídas
                     let lista = esAdmin ? todos.filter(c => !c.leido_admin) : todos.filter(c => c.respuesta && !c.leido_usuario);
 
+                    const total = lista.length;
+
                     if (lista.length === 0) {
                         contenedorNotificaciones.innerHTML = '<p class="text-center my-3">Sin notificaciones nuevas.</p>';
                         return;
                     }
 
-                    contenedorNotificaciones.innerHTML = lista.map(c => `
-                        <div class="p-3 mb-2 rounded bg-light border-start border-3 border-primary">
+                    contenedorNotificaciones.innerHTML = `
+                        <div class="mb-3 p-2 rounded bg-white border text-center">
+                            <strong>${total} notificación${total === 1 ? '' : 'es'} nueva${total === 1 ? '' : 's'}</strong>
+                        </div>
+                    `;
+
+                    contenedorNotificaciones.innerHTML += lista.map(c => `
+                        <a href="${esAdmin ? `/comentarios#comentario-${c.id}` : '#'}" class="d-block text-decoration-none text-dark p-3 mb-2 rounded bg-light border-start border-3 border-primary notif-item" data-comentario-id="${c.id}">
                             <div class="text-muted small">📅 ${c.fecha_envio || 'Reciente'}</div>
                             <div class="text-dark"><strong>${esAdmin ? c.nombre_usuario : "Soporte TIC"}:</strong> "${esAdmin ? c.comentario : c.comentario}"</div>
                             ${c.respuesta ? `
@@ -73,10 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <p class="mb-0 text-secondary">"${c.respuesta.respuesta}"</p>
                                 </div>
                             ` : ''}
-                        </div>
+                        </a>
                     `).join('');
-                    
-                    // Marcar como leído
                     lista.forEach(c => {
                         fetch(esAdmin ? "/api/notificaciones/leido_admin" : "/api/notificaciones/leido_usuario", {
                             method: "POST",

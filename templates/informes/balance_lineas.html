@@ -1,19 +1,17 @@
-{% extends "base.html" %}
-
-{% block title %}Balance de Líneas{% endblock %}
+﻿{% extends "base.html" %}
 
 {% block nav_links %}
-<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
-<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
 <a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
 <a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
-<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
 <a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
 <a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
 {% endblock %}
 
 {% block content %}
-
 <h3 class="text-center">{{ data.titulo if data.titulo else 'Balance de Líneas' }}</h3>
 
 <div class="informe-container">
@@ -33,7 +31,6 @@
         {% endfor %}
     {% endif %}
 </div>
-
 {% endblock %}
 
 {% block extra_js %}

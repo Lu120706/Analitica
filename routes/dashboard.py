@@ -16,7 +16,6 @@ def dashboard_view():
     rol = session.get("rol")
     tenant_id = session.get("tenant_id")
     informes_del_tenant = empresas_config.get(tenant_id, {}).get("informes", [])
-    kpis = empresas_config.get(tenant_id, {}).get("kpis", {}) # <-- Capturamos los KPIs
 
     logos_transformados = []
     for logo in logos:
@@ -32,8 +31,7 @@ def dashboard_view():
         "status": "success", "usuario": usuario, "nombre_usuario": nombre_usuario,
         "empresa": tenant_id, "rol": rol, "saludo": get_saludo(),
         "noticias": noticias_filtradas, "logos": logos_transformados,
-        "contactos_tic": contactos_tic, "informes_buscador": informes_del_tenant,
-        "kpis": kpis # <-- Pasamos al contexto
+        "contactos_tic": contactos_tic, "informes_buscador": informes_del_tenant
     }
     return render_template('dashboard.html', data=contexto)
 

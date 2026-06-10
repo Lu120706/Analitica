@@ -1,12 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Corregido: el ID en el HTML es 'busqueda-informes'
     const input = document.getElementById("busqueda-informes"); 
+    if (!input) return; // Salir si la barra de búsqueda no existe en la página actual
+
     const contenedor = document.getElementById("resultados-busqueda");
-    // Asumimos que informesData viene de informes_data.js incluido en el template
-    const informes = typeof informesData !== 'undefined' ? informesData : [];
+    
+    // Inicializar informesData si viene desde el HTML
+    const dataContainer = document.getElementById('informes-data-container');
+    if (dataContainer && dataContainer.dataset.informes) {
+        window.informesData = JSON.parse(dataContainer.dataset.informes);
+    }
+    
+    const informes = typeof window.informesData !== 'undefined' ? window.informesData : [];
+    let selectedIndex = -1;
 
     input.addEventListener("input", (e) => {
         const busqueda = e.target.value.toLowerCase().trim();
+        selectedIndex = -1;
 
         if (busqueda.length === 0) {
             contenedor.classList.add("d-none");
@@ -20,6 +29,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         mostrarResultados(encontrados);
     });
+
+    input.addEventListener("keydown", (e) => {
+        const items = contenedor.querySelectorAll(".list-group-item");
+        if (contenedor.classList.contains("d-none") || items.length === 0) return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            selectedIndex = (selectedIndex + 1) % items.length;
+            updateSelection(items);
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+            updateSelection(items);
+        } else if (e.key === "Enter" && selectedIndex >= 0) {
+            e.preventDefault();
+            items[selectedIndex].click();
+        }
+    });
+
+    function updateSelection(items) {
+        items.forEach((item, index) => {
+            item.classList.toggle("active", index === selectedIndex);
+        });
+    }
 
     function mostrarResultados(lista) {
         contenedor.innerHTML = "";

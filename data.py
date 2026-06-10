@@ -36,7 +36,7 @@ contactos_tic = [
     {"nombre": "Carlos López", "rol": "Analista TIC", "email": "carlos.lopez@empresa.com"}
 ]
 
-# empresasx
+# empresas con informes por empresa
 empresas_config = {
     "Colmena": {
         "logos": [
@@ -45,14 +45,18 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Gestion Col","ruta": "informe_ventas"},
-            {"nombre": "Informe despachos", "ruta": "balance_lineas"},
-            {"nombre": "Informe ventas", "ruta": "informe_ventas"},
-            {"nombre": "IBR Colmena", "ruta": "estado_financiero"},
-            {"nombre": "Inventario a un corte", "ruta": "balance_lineas"},
-            {"nombre": "Venta perdida", "ruta": "estado_financiero"}
+            {"nombre": "Gestion Col", "url": "/informe/ventas", "keywords": ["gestion", "col", "colmena", "ventas"]},
+            {"nombre": "Informe despachos", "url": "/informe/balance", "keywords": ["despachos", "balance", "lineas", "inventario"]},
+            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "IBR Colmena", "url": "/informe/financiero", "keywords": ["ibr", "colmena", "indicadores", "financiero"]},
+            {"nombre": "Inventario a un corte", "url": "/informe/balance", "keywords": ["inventario", "balance", "corte", "stock"]},
+            {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
         ],
-        "kpis": {"meta_ventas": "85%", "meta_despachos": "92%"}
+        "kpis": {"meta_ventas": "85%", "meta_despachos": "92%"},
+        "auditoria": {
+            "ultimos_hallazgos": ["Conciliación Bancaria", "Cuentas por pagar", "Revisión IVA"],
+            "fecha_ultima_auditoria": "2026-05-15"
+        }
     },
 
     "Almasa": {
@@ -62,13 +66,17 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Contraloria", "ruta": "estado_financiero"},
-            {"nombre": "Gestion clientes", "ruta": "informe_ventas"},
-            {"nombre": "IBR Almasa","ruta": "balance_lineas"},
-            {"nombre": "Informe ventas", "ruta": "informe_ventas"},
-            {"nombre": "Venta perdida", "ruta": "estado_financiero"}
+            {"nombre": "Contraloria", "url": "/informe/financiero", "keywords": ["contraloria", "auditoria", "financiero", "estado"]},
+            {"nombre": "Gestion clientes", "url": "/informe/ventas", "keywords": ["gestion", "clientes", "comercio", "cartera"]},
+            {"nombre": "IBR Almasa", "url": "/informe/balance", "keywords": ["ibr", "almasa", "indicadores", "balance"]},
+            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
         ],
-        "kpis": {"meta_ventas": "78%", "meta_despachos": "88%"}
+        "kpis": {"meta_ventas": "78%", "meta_despachos": "88%"},
+        "auditoria": {
+            "ultimos_hallazgos": ["Activos fijos", "Caja menor"],
+            "fecha_ultima_auditoria": "2026-04-20"
+        }
     },
 
     "GyJ Ferreterias": {
@@ -79,14 +87,18 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Gestion clientes", "ruta": "informe_ventas"},
-            {"nombre": "Balance de lineas","ruta": "balance_lineas"},
-            {"nombre": "Cupo UNES", "ruta": "estado_financiero"},
-            {"nombre": "IBR GyJ","ruta": "balance_lineas"},
-            {"nombre": "Informe ventas","ruta": "informe_ventas"},
-            {"nombre": "Venta perdida","ruta": "estado_financiero"}
+            {"nombre": "Gestion clientes", "url": "/informe/ventas", "keywords": ["gestion", "clientes", "comercio", "cartera"]},
+            {"nombre": "Balance de lineas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario"]},
+            {"nombre": "Cupo UNES", "url": "/informe/financiero", "keywords": ["cupo", "unes", "credito", "financiero"]},
+            {"nombre": "IBR GyJ", "url": "/informe/balance", "keywords": ["ibr", "gyj", "indicadores", "balance"]},
+            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
         ],
-        "kpis": {"meta_ventas": "95%", "meta_despachos": "98%"}
+        "kpis": {"meta_ventas": "95%", "meta_despachos": "98%"},
+        "auditoria": {
+            "ultimos_hallazgos": ["Inventarios", "Auditoría de nomina"],
+            "fecha_ultima_auditoria": "2026-06-01"
+        }
     },
 
     "Organizacion GYJ": {
@@ -101,10 +113,14 @@ empresas_config = {
 }
 
 informes_buscador = [
-    {"nombre": "Informe de Ventas", "url": "/informe/ventas", "keywords": ["ventas", "comercial", "dinero", "ingresos"]},
-    {"nombre": "Balance de Líneas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario"]},
-    {"nombre": "Estado Financiero", "url": "/informe/financiero", "keywords": ["financiero", "contable", "estado", "utilidad"]},
-    {"nombre": "Reporte IBR", "url": "#", "keywords": ["ibr", "indicadores", "tasas"]},
-    {"nombre": "Reporte de Cartera", "url": "#", "keywords": ["cartera", "deuda", "cobro"]},
-    {"nombre": "Informe de producción: corte de láminas", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas"]}
+    {"nombre": "Informe de Ventas", "url": "/informe/ventas", "keywords": ["ventas", "comercial", "dinero", "ingresos", "venta", "reportes"]},
+    {"nombre": "Balance de Líneas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario", "stock", "reportes"]},
+    {"nombre": "Estado Financiero", "url": "/informe/financiero", "keywords": ["financiero", "contable", "estado", "utilidad", "ingresos", "reportes"]},
+    {"nombre": "Informe de Producción", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas", "fabricacion", "reportes"]},
+    {"nombre": "Reporte IBR", "url": "/informe/balance", "keywords": ["ibr", "indicadores", "tasas", "rendimiento", "reportes"]},
+    {"nombre": "Reporte de Cartera", "url": "/informe/ventas", "keywords": ["cartera", "deuda", "cobro", "cliente", "reportes"]},
+    {"nombre": "Gestión de Clientes", "url": "/informe/ventas", "keywords": ["gestion", "clientes", "comercio", "cartera", "reportes"]},
+    {"nombre": "Control de Inventario", "url": "/informe/balance", "keywords": ["inventario", "balance", "corte", "stock", "reportes"]},
+    {"nombre": "Cupo y Créditos", "url": "/informe/financiero", "keywords": ["cupo", "credito", "financiero", "unes", "reportes"]},
+    {"nombre": "Auditoría y Control", "url": "/informe/financiero", "keywords": ["auditoria", "control", "contraloria", "financiero", "reportes"]}
 ]

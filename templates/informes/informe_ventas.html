@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Ventas{% endblock %}
-
 {% block nav_links %}
-<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
-<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
 <a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
 <a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
-<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
 <a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
 <a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
 {% endblock %}
+
+{% block title %}Ventas{% endblock %}
 
 {% block content %}
 
@@ -21,7 +22,6 @@
         src="https://app.powerbi.com/view?r=eyJrIjoiYmQwNDljYzEtY2EwMS00YWU1LWIyYzctODBiZGMxMmE2YWE5IiwidCI6Ijg3ZTNmYWVmLTg5YWItNGYzMC05OTU3LTU2YjVmOTBhYWQwOCJ9"
         allowFullScreen="true">
     </iframe>
-    {# El botón usa la función global del archivo informes.js #}
     <button onclick="toggleZoom()" class="btn btn-dark btn-sm btn-full">⛶</button>
 </div>
 

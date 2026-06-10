@@ -6,6 +6,17 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/comentarios_admin.css') }}">
 {% endblock %}
 
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
+
 {% block content %}
 
 <div class="row align-items-center px-4" style="margin-top: 5px;">
@@ -19,7 +30,9 @@
 <div class="filtro-container">
 
     <div class="filtro-dropdown">
-        <button class="filtro-toggle" id="toggleFiltros">⚙️</button>
+        <div class="filtro-toggle">
+            <img src="https://cdn.phototourl.com/free/2026-06-10-7386405b-a62b-4cbd-83a1-f10e1f454555.png" alt="Filtros" style="width: 25px; height: 25px;">
+        </div>
         
         <div class="filtro-menu" id="filtroMenu">
             <button class="filtro-btn active" data-filter="todos">Todos</button>
@@ -34,7 +47,7 @@
     <div class="comentarios-container">
         {% if data.comentarios %}
             {% for comentario in data.comentarios %}
-            <div class="comentario-card {% if comentario.respuesta %}respondido{% else %}pendiente{% endif %}" data-id="{{ comentario.id }}">
+            <div class="comentario-card {% if comentario.respuesta %}respondido{% else %}pendiente{% endif %}" id="comentario-{{ comentario.id }}" data-id="{{ comentario.id }}">
                 <div class="comentario-header">
                     <div>
                         <div class="comentario-autor">

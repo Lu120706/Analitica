@@ -13,7 +13,6 @@ app.secret_key = os.getenv("SECRET_KEY", "analitics_erp_2026")
 
 @app.before_request
 def set_tenant_context():
-    # Permitir acceso público a login, static, y la raíz si no hay sesión
     if request.endpoint in ['login', 'static', 'home']:
         return
     if 'tenant_id' not in session:
@@ -23,7 +22,12 @@ def set_tenant_context():
 @app.context_processor
 def inject_globals():
     tenant_id = session.get('tenant_id')
-    informes_filtrados = empresas_config.get(tenant_id, {}).get("informes", informes_buscador)
+    rol = session.get('rol')
+    if rol == 'admin':
+        informes_filtrados = informes_buscador
+    else:
+        informes_filtrados = empresas_config.get(tenant_id, {}).get("informes", [])
+        
     return dict(informes_buscador=informes_filtrados, tenant_id=tenant_id, empresas_config=empresas_config)
 
 init_db()
@@ -60,6 +64,9 @@ app.add_url_rule("/comercio/clientes", "comercio_clientes", departamentos.comerc
 app.add_url_rule("/comercio/ventas", "comercio_ventas", departamentos.comercio_ventas)
 app.add_url_rule("/tesoreria", "tesoreria", departamentos.tesoreria)
 app.add_url_rule("/tesoreria/reporte/<nombre>", "tesoreria_reporte", departamentos.tesoreria_reporte)
+app.add_url_rule("/recursos_humanos", "recursos_humanos", departamentos.recursos_humanos)
+app.add_url_rule("/recursos_humanos/gestion_documental", "gestion_documental", departamentos.gestion_documental)
+app.add_url_rule("/recursos_humanos/seguridad_y_salud", "seguridad_y_salud", departamentos.seguridad_y_salud)
 
 app.add_url_rule("/informe/ventas", "informe_ventas", informes.informe_ventas)
 app.add_url_rule("/informe/balance", "balance_lineas", informes.balance_lineas)
@@ -70,11 +77,7 @@ app.add_url_rule("/", "home", lambda: redirect("/login"))
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
+    return "Página no encontrada", 404
 
 if __name__ == "__main__":
     app.run(debug=True)

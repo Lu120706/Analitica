@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+        const target = document.getElementById(hash);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            target.classList.add('destacado');
+            setTimeout(() => target.classList.remove('destacado'), 2500);
+        }
+    }
+
     const comentarios = document.querySelectorAll('.comentario-card');
     comentarios.forEach(card => {
         if (card.classList.contains('respondido')) {
@@ -15,9 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const botones = document.querySelectorAll('.btn-enviar-respuesta');
     if (botones && botones.length > 0) {
         botones.forEach((boton) => {
+            const comentarioId = boton.dataset.comentarioId;
+            const textarea = document.querySelector(`textarea[data-comentario-id="${comentarioId}"]`);
+
+            if (textarea) {
+                textarea.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        boton.click();
+                    }
+                });
+            }
+
             boton.addEventListener('click', async () => {
-                const comentarioId = boton.dataset.comentarioId;
-                const textarea = document.querySelector(`textarea[data-comentario-id="${comentarioId}"]`);
                 if (!textarea) return;
 
                 const respuesta = textarea.value.trim();
@@ -58,10 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleFiltros = document.getElementById('toggleFiltros');
     const filtroMenu = document.getElementById('filtroMenu');
 
+    // El filtro ya no depende del toggle, removemos la funcionalidad
     if (toggleFiltros) {
-        toggleFiltros.addEventListener('click', () => {
-            filtroMenu.classList.toggle('active');
-        });
+        toggleFiltros.style.cursor = 'default';
+    }
+    // Asegurar que el menú esté siempre visible
+    if (filtroMenu) {
+        filtroMenu.classList.add('active');
     }
 
     filtroBtns.forEach(btn => {
@@ -94,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
 
-            if (filtroMenu) filtroMenu.classList.remove('active');
+            // Mantener el menú siempre visible
+            if (filtroMenu) filtroMenu.classList.add('active');
         });
     });
 });
-

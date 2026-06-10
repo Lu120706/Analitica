@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
+
 {# El título de la pestaña ahora se carga dinámicamente sin JS #}
 {% block title %}{{ data.nombre_empresa_informe }}{% endblock %}
 
@@ -12,13 +23,13 @@
 
     <div class="logos-fijos">
         <div id="logos-content">
-            {% if data.logos %}
-                {% for logo in data.logos %}
+        {% if data.logos %}
+            {% for logo in data.logos %}
                 <a href="/empresa/{{ logo.nombre }}" class="logo-card">
-                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="Logo {{ logo.nombre }}">
+                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
                 </a>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% endif %}
         </div>
     </div>
 
@@ -27,7 +38,7 @@
             {% for informe in data.informes %}
                 <li class="item-informe">
                     <span>{{ informe.nombre }}</span>
-                    <a href="{{ url_for(informe.ruta) }}" class="btn btn-outline-dark btn-sm">Ver informe</a>
+                    <a href="{{ informe.url }}" class="btn btn-outline-dark btn-sm">Ver informe</a>
                 </li>
             {% endfor %}
         {% else %}
@@ -41,5 +52,4 @@
 {% endblock %}
 
 {% block extra_js %}
-{# Bloque limpio: el script de fetch fue eliminado #}
 {% endblock %}

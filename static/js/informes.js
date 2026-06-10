@@ -14,3 +14,13 @@ function toggleZoom() {
         if (soporte) soporte.classList.remove("ocultar-logos");
     }
 }
+
+// Escuchar tecla Escape para salir de pantalla completa
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        const cont = document.querySelector(".informe-container");
+        if (cont && cont.classList.contains("fullscreen")) {
+            toggleZoom();
+        }
+    }
+});

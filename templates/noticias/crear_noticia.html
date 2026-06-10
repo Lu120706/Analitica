@@ -1,75 +1,78 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Crear Noticia{% endblock %}
 
-{% block content %}
-<div class="card-custom" style="max-width: 500px; margin: 20px auto; padding: 15px;">
-    <h5 class="mb-3">Crear nueva noticia</h5>
-    
-    {# Flask puede enviar mensajes de confirmación usando 'flash' #}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    
-    {# El formulario ahora envía los datos directamente a Python #}
-    <form action="{{ url_for('crear_noticia') }}" method="POST">
-        <div class="mb-3">
-            <label class="form-label fw-bold">Sección de destino</label>
-            <select name="seccion" class="form-select" required>
-                <option value="general">General (Dashboard)</option>
-                <option value="tic">TIC</option>
-                <option value="contabilidad">Contabilidad</option>
-                <option value="contraloria">Contraloría</option>
-                <option value="abastecimiento">Abastecimiento</option>
-                <option value="indicadores">Indicadores</option>
-                <option value="comercio">Comercio Exterior</option>
-                <option value="tesoreria">Tesorería</option>
-            </select>
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Título</label>
-            <input type="text" name="titulo" class="form-control" placeholder="Ej: Mantenimiento de Servidores" required>
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Contenido</label>
-            <textarea name="texto" class="form-control" rows="4" placeholder="Escribe el cuerpo de la noticia aquí..." required></textarea>
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Link (Opcional)</label>
-            <input type="url" name="link" class="form-control" placeholder="https://ejemplo.com/informe">
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Fecha de expiración</label>
-            <input type="date" name="fecha_expiracion" class="form-control">
-            <div class="form-text">Si la dejas vacía, la noticia será permanente.</div>
-        </div>
-        
-        <button type="submit" class="btn btn-dark w-100 mt-2">Publicar Noticia</button>
-    </form>
-</div>
+{% block nav_links %}
+<a class="nav-link" href="{{ url_for('abastecimiento') }}">Abastecimiento</a>
+<a class="nav-link" href="{{ url_for('comercio') }}">Comercio</a>
+<a class="nav-link" href="{{ url_for('contabilidad') }}">Contabilidad</a>
+<a class="nav-link" href="{{ url_for('contraloria') }}">Contraloría</a>
+<a class="nav-link" href="{{ url_for('indicadores') }}">Indicadores</a>
+<a class="nav-link" href="{{ url_for('recursos_humanos') }}">Recursos Humanos</a>
+<a class="nav-link" href="{{ url_for('tesoreria') }}">Tesorería</a>
+<a class="nav-link" href="{{ url_for('tic') }}">TIC</a>
+{% endblock %}
 
-<div class="logos-fijos">
-    <div id="logos-content">
-    {% if data.logos %}
-        {% for logo in data.logos %}
-            <div class="logo-card">
-                <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo">
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card-custom mt-4 mb-4">
+
+            <h5 class="text-center mb-3">Crear nueva noticia</h5>
+
+                <form id="formNoticia" action="{{ url_for('crear_noticia') }}" method="POST">
+                    {# ... resto del contenido igual ... #}
+                <div class="mb-3">
+                    <label for="seccion" class="form-label">Sección de destino</label>
+                    <select id="seccion" name="seccion" class="form-control" required>
+                        <option value="general">General (Dashboard)</option>
+                        <option value="tic">TIC</option>
+                        <option value="contabilidad">Contabilidad</option>
+                        <option value="contraloria">Contraloría</option>
+                        <option value="abastecimiento">Abastecimiento</option>
+                        <option value="indicadores">Indicadores</option>
+                        <option value="comercio">Comercio Exterior</option>
+                        <option value="tesoreria">Tesorería</option>
+                        <option value="recursos_humanos">Recursos Humanos</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" id="titulo" name="titulo" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="texto" class="form-label">Contenido</label>
+                    <textarea id="texto" name="texto" rows="3" class="form-control" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="link" class="form-label">Link (Opcional)</label>
+                    <input type="url" id="link" name="link" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha_expiracion" class="form-label">Fecha de expiración</label>
+                    <input type="date" id="fecha_expiracion" name="fecha_expiracion" class="form-control">
+                </div>
+
+                    <button type="submit" id="btnPublicar" class="btn btn-dark w-100">
+                        Publicar Noticia
+                    </button>
+                </form>
+
             </div>
-        {% endfor %}
-    {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-{# Bloque totalmente vacío #}
+<script src="{{ url_for('static', filename='js/noticias.js') }}"></script>
 {% endblock %}

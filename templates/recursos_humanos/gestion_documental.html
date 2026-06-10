@@ -1,16 +1,13 @@
-﻿{% extends "base.html" %}
-{% block title %}{{ data.titulo }}{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Gestión Documental{% endblock %}
 
 {% block extra_css %}
-<link rel = "stylesheet" href = "{{url_for ('static', filename='css/abastecimiento.css')}}">
-{% endblock %}
-
-{% block nav_links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recursos_humanos.css') }}">
 {% endblock %}
 
 {% block content %}
-
-<div class="row align-items-center px-4" style="margin-top: 10px;">
+<div class="row align-items-center px-4" style="margin-top: 40px;">
     <div class="col-3"></div>
     <div class="col-6 text-center">
         <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>

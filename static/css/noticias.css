@@ -1,22 +1,15 @@
-body {
-    background: #f4f6f9;
-}
-
-.contenido-izquierda {
-    max-width: 600px;
-    margin-left: 3cm;
-}
-
 .card-custom {
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    transition: 0.3s;
+    padding: 25px;
+    width: 100%;
     max-width: 550px;
-    margin-left: 0;
-    top: 15px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
 }
 
 .card-custom:hover {
@@ -27,6 +20,7 @@ body {
     font-weight: 700;
     margin-bottom: 15px;
     color: #111827;
+    text-align: center;
 }
 
 .card-custom p {
@@ -38,7 +32,23 @@ body {
     color: gray;
 }
 
-@media(max-width: 992px) {
+.form-label {
+    color: #111827;
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+}
+
+.btn-dark {
+    border-radius: 8px;
+}
+
+@media (max-width: 992px) {
+    .card-custom {
+        max-width: 95%;
+    }
 
     .logos-fijos {
         position: static;
@@ -46,9 +56,4 @@ body {
         justify-content: center;
         margin-top: 30px;
     }
-
-    .contenido-izquierda {
-        max-width: 100%;
-    }
-
 }

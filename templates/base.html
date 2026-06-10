@@ -14,7 +14,6 @@
 
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <!-- Dropdown y Logo aquí... -->
             <div class="dropdown me-2" style="margin-left: -15px;">
                 <button class="btn btn-sm dropdown-toggle border-0" type="button" data-bs-toggle="dropdown"
                     style="background: transparent; font-size: 1.4rem; color: #000;">☰</button>
@@ -22,12 +21,11 @@
                     <li><a class="dropdown-item" href="{{ url_for('informe_ventas') }}">Informe Ventas</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('balance_lineas') }}">Balance de Líneas</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('estado_financiero') }}">Informe Financiero</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('informe_produccion') }}">Informe de producción: corte de laminas</a></li>
                 </ul>
             </div>
 
             <a class="navbar-brand fw-bold" href="{{ data.url_inicio_modulo if data and data.url_inicio_modulo else url_for('dashboard') }}">
-                {{ session.get('tenant_id') | upper if session.get('tenant_id') else 'G Y J RAMÍREZ S.A.' }}
+                {{ data.empresa | upper if data and data.empresa else 'G Y J RAMÍREZ S.A.' }}
             </a>
 
             <div class="d-flex align-items-center ms-auto">
@@ -53,6 +51,7 @@
                         <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Cerrar sesion</a></li>
                     </ul> 
                 </div>
+
             </div>
         </div>
     </nav>
@@ -62,7 +61,7 @@
     </div>
 
     {% if data and data.rol != "admin" %}
-    <button class="btn-soporte-flotante" data-bs-toggle="modal" data-bs-target="#modalSoporte" title="Enviar comentario a TIC">☁️</button>
+    <button class="btn-soporte-flotante" data-bs-toggle="modal" data-bs-target="#modalSoporte" title="Enviar comentario a TIC">Envia tu comentario</button>
     {% endif %}
 
     <div class="modal fade" id="modalSoporte" tabindex="-1" aria-hidden="true">
@@ -99,36 +98,18 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Ya no cargamos informes_data.js -->
     <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
     <script src="{{ url_for('static', filename='js/informes.js') }}"></script>
     <script src="{{ url_for('static', filename='js/soporte.js') }}"></script>
     {% block extra_js %}{% endblock %}
     <div class="logos-fijos" id="logos-fijos">
         <div id="logos-content">
-            {% set current_tenant = session.get('tenant_id') %}
-            {% set current_rol = session.get('rol') %}
-
-            {% if current_rol == 'admin' %}
-                {# Admin: muestra logos de todas las empresas #}
-                {% for tenant, conf in empresas_config.items() %}
-                    {% if tenant != 'Organizacion GYJ' and conf.get('logos') %}
-                        {% for logo_url in conf.get('logos') %}
-                        <a href="/empresa/{{ tenant }}" class="logo-card">
-                            <img src="{{ logo_url }}" alt="Logo {{ tenant }}">
-                        </a>
-                        {% endfor %}
-                    {% endif %}
+            {% if data and data.logos %}
+                {% for logo in data.logos %}
+                <a href="/empresa/{{ logo.nombre }}" class="logo-card">
+                    <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo {{ logo.nombre }}">
+                </a>
                 {% endfor %}
-            {% else %}
-                {# Usuario: muestra solo los logos de su tenant #}
-                {% if current_tenant and empresas_config.get(current_tenant) %}
-                    {% for logo_url in empresas_config.get(current_tenant).get('logos', []) %}
-                    <a href="/empresa/{{ current_tenant }}" class="logo-card">
-                        <img src="{{ logo_url }}" alt="Logo {{ current_tenant }}">
-                    </a>
-                    {% endfor %}
-                {% endif %}
             {% endif %}
         </div>
     </div>

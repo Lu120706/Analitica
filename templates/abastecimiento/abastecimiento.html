@@ -11,9 +11,8 @@
 <a class="nav-link" href="{{ url_for('nomina') }}">Nómina</a>
 {% endblock %}
 
-{% block content %}
-
-<div class="row align-items-center px-4" style="margin-top: 5px;">
+{% block content %} 
+<div class="row align-items-center px-4" style="margin-top: 35px;">
     <div class="col-3"></div>
     <div class="col-6 text-center">
         <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
@@ -27,9 +26,9 @@
     <hr class="my-2">
     <div class="noticias-lista">
         {% for noticia in data.noticias %}
-            <div class="noticia-item" style="padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
-                <strong>{{ noticia.titulo }}</strong><br>
-                <p class="mb-1">{{ noticia.texto }}</p>
+            <div class="noticia-item" style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <strong>{{ noticia.titulo }}</strong>
+                <p style="margin: 5px; padding: 5px;">{{ noticia.texto }}</p>
                 {% if noticia.link %}
                     <a href="{{ noticia.link }}" target="_blank" class="btn btn-sm btn-link p-0">Ver más</a>
                 {% endif %}

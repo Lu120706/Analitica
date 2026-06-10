@@ -3,6 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block extra_css %}
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
 
@@ -11,62 +12,77 @@
 <div class="row align-items-center px-4" style="margin-top: 5px;">
     <div class="col-3"></div>
     <div class="col-6 text-center">
-        <h5 id="saludo" class="m-0">{{ data.saludo }}, {{ data.nombre_usuario }}</h5>
+        <h5 id="saludo" class="m-0">
+            {{ data.saludo }}, {{ data.nombre_usuario }}
+        </h5>
     </div>
     <div class="col-3"></div>
 </div>
 
-    <div class="contenido-izquierda">
+<div class="contenido-izquierda">
+{% if data.noticias and data.noticias|length > 0 %}
+<div class="card-custom mb-4">
+    <h5>Noticias Generales</h5>
+    <hr>
 
-        {% if data.noticias and data.noticias|length > 0 %}
-        <div class="card-custom mb-4">
-            <h5>Noticias generales</h5>
-            <hr>
+    {% for n in data.noticias %}
+    <div class="card-noticias">
+        <strong>{{ n.titulo }}</strong>
 
-            {% for n in data.noticias %}
-            <div class="mb-3 card-noticias">
-                <strong>{{ n.titulo }}</strong>
-                <p class="mb-1">{{ n.texto }}</p>
-                {% if n.fecha_expiracion %}
-                    <small class="text-muted">Vence: {{ n.fecha_expiracion }}</small>
-                {% endif %}
-            </div>
-            {% if not loop.last %}<hr>{% endif %}
-            {% endfor %}
-        </div>
+        <p>{{ n.texto }}</p>
+
+        {% if n.fecha_expiracion %}
+        <small class="text-muted">
+            Vence: {{ n.fecha_expiracion }}
+        </small>
         {% endif %}
-
-        <div class="card-custom">
-            <h5>Contacto TIC</h5>
-            <div class="row mt-3">
-                {% if data.contactos_tic %}
-                    {% for c in data.contactos_tic %}
-                    <div class="col-md-4 mb-3">
-                        <div class="p-2 border rounded shadow-sm">
-                            <strong class="d-block">{{ c.nombre }}</strong>
-                            <span class="badge bg-secondary">{{ c.rol }}</span><br>
-                            <small class="text-primary">{{ c.email }}</small>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <p class="text-muted ps-3">No hay contactos de soporte asignados.</p>
-                {% endif %}
-            </div>
-        </div>
     </div>
+
+    {% if not loop.last %}
+    <hr>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card-custom">
+    <h5>Contacto TIC</h5>
+
+    <div class="row mt-3">
+        {% if data.contactos_tic %}
+            {% for c in data.contactos_tic %}
+            <div class="col-md-4 mb-3">
+                <div class="p-2 border rounded shadow-sm">
+                    <strong class="d-block">{{ c.nombre }}</strong>
+                    <span class="badge bg-secondary">{{ c.rol }}</span><br>
+                    <small class="text-primary">{{ c.email }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted ps-3">
+                No hay contactos de soporte asignados.
+            </p>
+        {% endif %}
+    </div>
+</div>
 </div>
 
 <div class="logos-fijos">
     <div id="logos-content">
-    {% if data.logos %}
-        {% for logo in data.logos %}
-        <div class="logo-card">
-            <img src="{{ logo.url if logo.url is defined else logo }}" alt="logo empresa">
-        </div>
-        {% endfor %}
-    {% endif %}
+        {% if data.logos %}
+            {% for logo in data.logos %}
+            <div class="logo-card">
+                <img src="{{ logo.url if logo.url is defined else logo }}"
+                     alt="logo empresa">
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+{# Bloque vacío: sin scripts de carga asíncrona #}
 {% endblock %}
