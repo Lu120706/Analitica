@@ -12,6 +12,7 @@ def login():
             password = request.form.get("password")
 
         if username in usuarios and usuarios[username]["password"] == password:
+            print(f"DEBUG: Login exitoso para {username}. Rol asignado: {usuarios[username]['rol']}")
             session["usuario"] = username
             session["tenant_id"] = usuarios[username]["empresa"]
             session["rol"] = usuarios[username]["rol"]
@@ -25,6 +26,7 @@ def login():
             else:
                 return redirect(url_for("dashboard"))
 
+        print(f"DEBUG: Fallo de login para {username}. ¿Usuario existe? {username in usuarios}")
         if request.is_json:
             return jsonify({"status": "error", "message": "Credenciales inválidas"}), 401
         else:
