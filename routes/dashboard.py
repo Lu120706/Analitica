@@ -17,15 +17,11 @@ def dashboard_view():
     tenant_id = session.get("tenant_id")
     informes_del_tenant = empresas_config.get(tenant_id, {}).get("informes", [])
 
-    logos_transformados = []
-    for logo in logos:
-        nombre_real = empresa
-        if rol == "admin" and empresa == "Organizacion GYJ":
-            for nombre_emp, conf in empresas_config.items():
-                if nombre_emp != "Organizacion GYJ" and logo in conf.get("logos", []):
-                    nombre_real = nombre_emp
-                    break
-        logos_transformados.append({"nombre": nombre_real, "url": logo})
+    # Importar _transformar_logos para asegurar consistencia
+    from routes.departamentos import _transformar_logos
+    
+    logos_transformados = _transformar_logos(logos, empresa, rol)
+    
     noticias_filtradas = filtrar_noticias(data_noticias.get("general", []), usuario, rol)
     contexto = {
         "status": "success", "usuario": usuario, "nombre_usuario": nombre_usuario,

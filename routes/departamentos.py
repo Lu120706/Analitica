@@ -5,11 +5,10 @@ from utils import cargar_noticias, get_saludo, get_context, get_usuario_nombre, 
 def _transformar_logos(logos, empresa, rol):
     logos_transformados = []
     
-    # Definir el orden fijo deseado: Ferreterias, Colmena, Almasa
     orden_logos = {
-        "https://cdn.phototourl.com/free/2026-05-08-c4138ab4-2de9-48d8-a38a-0c85bc40a293.png": 0, # GyJ Ferreterias
-        "https://cdn.phototourl.com/free/2026-05-08-5729c248-9b06-4eec-85a9-656cabf66c54.png": 1, # Colmena
-        "https://cdn.phototourl.com/free/2026-05-08-96a31c18-592e-4d88-ad11-2b32bc4c58aa.png": 2  # Almasa
+        "https://cdn.phototourl.com/free/2026-05-08-c4138ab4-2de9-48d8-a38a-0c85bc40a293.png": 1, # GyJ Ferreterias (Arriba)
+        "https://cdn.phototourl.com/free/2026-05-08-5729c248-9b06-4eec-85a9-656cabf66c54.png": 2, # Colmena (Medio)
+        "https://cdn.phototourl.com/free/2026-05-08-96a31c18-592e-4d88-ad11-2b32bc4c58aa.png": 3  # Almasa (Abajo)
     }
     
     for logo in logos:

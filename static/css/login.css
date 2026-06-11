@@ -27,7 +27,8 @@ body::before {
     position: relative;
     z-index: 1;
 
-    width: 360px;
+    width: 90%; /* Ajuste para móviles */
+    max-width: 360px; /* Tamaño máximo en escritorio */
     padding: 35px;
     border-radius: 15px;
 
@@ -36,6 +37,16 @@ body::before {
     border: 1px solid rgba(255, 255, 255, 0.1);
 
     backdrop-filter: blur(6px);
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+    }
+    
+    .login-box h2 {
+        font-size: 1.5rem;
+    }
 }
 
 .login-box h2 {

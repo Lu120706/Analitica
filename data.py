@@ -45,9 +45,10 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
-            {"nombre": "Gestion Col", "url": "/informe/ventas", "keywords": ["gestion", "col", "colmena", "ventas"]},
-            {"nombre": "Informe despachos", "url": "/informe/balance", "keywords": ["despachos", "balance", "lineas", "inventario"]},
             {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "Informe de Producción", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas", "fabricacion", "reportes"]},
+            {"nombre": "Informe despachos", "url": "/informe/balance", "keywords": ["despachos", "balance", "lineas", "inventario"]},
+            {"nombre": "Gestion Col", "url": "/informe/ventas", "keywords": ["gestion", "col", "colmena", "ventas"]},
             {"nombre": "IBR Colmena", "url": "/informe/financiero", "keywords": ["ibr", "colmena", "indicadores", "financiero"]},
             {"nombre": "Inventario a un corte", "url": "/informe/balance", "keywords": ["inventario", "balance", "corte", "stock"]},
             {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
@@ -66,10 +67,11 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
+            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "Informe de Producción", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas", "fabricacion", "reportes"]},
             {"nombre": "Contraloria", "url": "/informe/financiero", "keywords": ["contraloria", "auditoria", "financiero", "estado"]},
             {"nombre": "Gestion clientes", "url": "/informe/ventas", "keywords": ["gestion", "clientes", "comercio", "cartera"]},
             {"nombre": "IBR Almasa", "url": "/informe/balance", "keywords": ["ibr", "almasa", "indicadores", "balance"]},
-            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
             {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
         ],
         "kpis": {"meta_ventas": "78%", "meta_despachos": "88%"},
@@ -87,11 +89,12 @@ empresas_config = {
         "pbi": "https://app.powerbi.com/",
 
         "informes": [
+            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
+            {"nombre": "Informe de Producción", "url": "/informe/produccion", "keywords": ["produccion", "corte", "laminas", "fabricacion", "reportes"]},
             {"nombre": "Gestion clientes", "url": "/informe/ventas", "keywords": ["gestion", "clientes", "comercio", "cartera"]},
             {"nombre": "Balance de lineas", "url": "/informe/balance", "keywords": ["balance", "lineas", "produccion", "inventario"]},
             {"nombre": "Cupo UNES", "url": "/informe/financiero", "keywords": ["cupo", "unes", "credito", "financiero"]},
             {"nombre": "IBR GyJ", "url": "/informe/balance", "keywords": ["ibr", "gyj", "indicadores", "balance"]},
-            {"nombre": "Informe ventas", "url": "/informe/ventas", "keywords": ["ventas", "ingresos", "comercial"]},
             {"nombre": "Venta perdida", "url": "/informe/ventas", "keywords": ["venta", "perdida", "oportunidad"]}
         ],
         "kpis": {"meta_ventas": "95%", "meta_despachos": "98%"},
